@@ -2,10 +2,10 @@ import NavBar from "@/components/NavBar";
 import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import coinsImage from "../../public/Group 1691.png";
-import rocketImg from '../../public/rocket.svg'
-import vaultImg from '../../public/vault.svg'
-import wifiImg from '../../public/wifi.svg'
+import deviceImage from "../../public/devices.svg";
+import rocketImg from "../../public/rocket.svg";
+import vaultImg from "../../public/vault.svg";
+import wifiImg from "../../public/wifi.svg";
 
 export default function Home() {
   useEffect(() => {
@@ -28,29 +28,43 @@ export default function Home() {
       });
   }, []);
   return (
-    <main className="min-h-screen relative">
-      <div>
+    <main className="h-full relative">
+      <div className="min-h-[5em]">
         <NavBar />
       </div>
-      <section className="flex flex-col justify-center gap-8 h-screen px-12">
-        <h1 className="text-3xl font-semibold">Welcome, Emmanuel!</h1>
-        <div className="grid grid-cols-4 items-center justify-items-center">
-          <Link href={'/overview'} className="rounded-md w-full h-full grid justify-center">
-            <Image src={coinsImage} alt="coins" className="mx-auto" />
-            <p>Estimation Lab</p>
-          </Link>
-          <Link href={'/overview'} className="rounded-md w-full h-full grid justify-center">
-            <Image src={rocketImg} alt="coins" className="mx-auto" />
-            <p>Projects Control System</p>
-          </Link>
-          <Link href={'/overview'} className="rounded-md w-full h-full grid justify-center">
-            <Image src={vaultImg} alt="coins" className="mx-auto" />
-            <p>Resources Module</p>
-          </Link>
-          <Link href={'/overview'} className="rounded-md w-full h-full grid justify-center">
-            <Image src={wifiImg} alt="coins" className="mx-auto" />
-            <p>Reports</p>
-          </Link>
+      <section className="grid items-center px-12 min-h-[85vh]">
+        <div className="">
+          <h1 className="text-3xl font-semibold mb-10">Welcome, Emmanuel!</h1>
+          <div className="grid grid-cols-2 md:grid-cols-4 items-center justify-items-center">
+            <Link
+              href={"/overview"}
+              className="rounded-md w-full text-center h-full grid gap-4 justify-center"
+            >
+              <Image src={deviceImage} alt="coins" className="mx-auto" />
+              <p>Mechanic Management System</p>
+            </Link>
+            <Link
+              href={"/overview"}
+              className="rounded-md w-full text-center h-full grid gap-4 justify-center"
+            >
+              <Image src={vaultImg} alt="coins" className="mx-auto" />
+              <p>Insurance</p>
+            </Link>
+            <Link
+              href={"/overview"}
+              className="rounded-md w-full text-center h-full grid gap-4 justify-center"
+            >
+              <Image src={rocketImg} alt="coins" className="mx-auto" />
+              <p>Fleet Management</p>
+            </Link>
+            <Link
+              href={"/overview"}
+              className="rounded-md w-full text-center h-full grid gap-4 justify-center"
+            >
+              <Image src={wifiImg} alt="coins" className="mx-auto" />
+              <p>Customer-As-A-Service</p>
+            </Link>
+          </div>
         </div>
       </section>
     </main>

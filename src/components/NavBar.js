@@ -4,12 +4,8 @@ import { IoNotifications } from "react-icons/io5";
 import { Dialog } from "@headlessui/react";
 import Link from "next/link";
 
-
 const navigation = [
-  { name: "Estimation Lab", to: "/" },
-  { name: "Projects Control System", to: "/" },
-  { name: "Resources Module", to: "/" },
-  { name: "Reports", to: "/" },
+  { name: "Billing", to: "/" },
 ];
 
 const NavBar = () => {

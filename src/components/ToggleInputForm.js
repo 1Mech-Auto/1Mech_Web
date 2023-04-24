@@ -1,6 +1,5 @@
-import React,{useState} from 'react'
+import React, { useState } from "react";
 import { Switch } from "@headlessui/react";
-
 
 const ToggleInputForm = ({ label }) => {
   const [enabled, setEnabled] = useState(false);
@@ -21,8 +20,9 @@ const ToggleInputForm = ({ label }) => {
         />
       </Switch>
       <label className="text-gray-400">{label}</label>
+
     </div>
   );
 };
 
-export default ToggleInputForm
+export default ToggleInputForm;
