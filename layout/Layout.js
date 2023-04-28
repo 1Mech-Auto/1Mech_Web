@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import Link from "next/link";
 import {
   RiPulseLine,
   RiFileList3Fill,
@@ -9,9 +10,11 @@ import {
 import { BsFillClipboard2CheckFill, BsChatDotsFill } from "react-icons/bs";
 import NewVehicleForm from "@/components/NewVehicleForm";
 import { FaUser, FaUserClock } from "react-icons/fa";
-import { BiPlus } from "react-icons/bi";
+import { BiPlus, BiUser, BiChevronDown, BiDoughnutChart } from "react-icons/bi";
 import { HiArrowNarrowLeft } from "react-icons/hi";
-
+import { CiSettings } from "react-icons/ci";
+import { TbMessageDots } from "react-icons/tb";
+import { HiOutlineLogout } from "react-icons/hi";
 
 const menuItems = [
   {
@@ -20,6 +23,7 @@ const menuItems = [
       {
         name: "Overview",
         icon: <RiPulseLine />,
+        href: "/overview",
       },
     ],
   },
@@ -30,22 +34,44 @@ const menuItems = [
       {
         name: "Clients",
         icon: <FaUser />,
+        href: "/clients",
       },
       {
         name: "Job Center",
         icon: <RiFileList3Fill />,
+        href: "#",
+        subMenus: [
+          { name: "Jobs / Vehicles", href: "/jobs" },
+          { name: "Pending Tasks", href: "/pendingTasks" },
+          { name: "Expected Parts", href: "/expectedParts" },
+          { name: "Unpaid Parts", href: "/unpaidParts" },
+        ],
       },
       {
         name: "Accounting",
         icon: <RiMoneyPoundCircleFill />,
+        href: "#",
+        subMenus: [
+          { name: "Quotes", href: "/quotes" },
+          { name: "Invoices", href: "/invoices" },
+          { name: "Payments", href: "/payments" },
+        ],
       },
       {
         name: "Inventory",
         icon: <BsFillClipboard2CheckFill />,
+        href: "#",
+        subMenus: [
+          { name: "Inventory List", href: "/inventoryList" },
+          { name: "Receivables", href: "/receivables" },
+          { name: "Issueables", href: "/issueables" },
+          { name: "Suppliers", href: "/suppliers" },
+        ],
       },
       {
         name: "Marketing",
         icon: <BsChatDotsFill />,
+        href: "/marketing",
       },
     ],
   },
@@ -55,55 +81,67 @@ const menuItems = [
       {
         name: "Team Members",
         icon: <FaUserClock />,
+        href: "/teamMembers",
       },
       {
         name: "Settings",
         icon: <RiSettings3Fill />,
+        href: "/settings/personal",
       },
     ],
   },
 ];
 
+const SingleLink = ({ href, toggleDropdown, name, icon }) => {
+  return (
+    <Link
+      href={href}
+      className="font-medium capitalize flex items-center gap-4 py-3 mx-4 px-4  rounded-md hover:bg-gray-200 hover:text-blue-500"
+      onClick={toggleDropdown}
+    >
+      <div className="text-2xl">{icon}</div>
+      <div className="text-md font-bold">{name}</div>
+    </Link>
+  );
+};
+const SubmenuDropdown = ({ href, name, expand }) => {
+  return (
+    <ul
+      className={`sub-menu pl-[5.1em] max-h-0 overflow-hidden transition-[max-height] duration-200s ease-in grid ${
+        expand ? "max-h-[200px]" : null
+      }`}
+    >
+      <Link href={href}>
+        <button
+          className={` my-1.5 text-sm font-normal inline-block transition-opacity "opacity-100" duration-200s ease-in`}
+        >
+          {name}
+        </button>
+      </Link>
+    </ul>
+  );
+};
+
 const Layout = ({ children }) => {
-  // const [screenSize, setScreenSize] = useState(undefined);
   const [activeMenu, setActiveMenu] = useState(false);
-  const [toggleVehicle, setToggleVehicle] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [expand, setExpand] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+  const toggleDropdown = () => setExpand(!expand);
 
-  const toggleVehicleForm = () => {
-    setToggleVehicle(!toggleVehicle);
-  };
-  // useEffect(() => {
-  //   const handleResize = () => setScreenSize(window.innerWidth);
-
-  //   window.addEventListener("resize", handleResize);
-
-  //   handleResize();
-
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []);
-
-  // useEffect(() => {
-  //   if (screenSize <= 900) {
-  //     setActiveMenu(false);
-  //   } else {
-  //     setActiveMenu(true);
-  //   }
-  // }, [screenSize]);
   return (
     <main className="flex relative">
       {activeMenu && (
         <div
-          className="fixed z-[800] inset-0 bg-[#10192466] transition duration-200s"
+          className="fixed z-20 inset-0 bg-[#10192466] transition duration-200s"
           onClick={() => {
             setActiveMenu(false);
           }}
         ></div>
       )}
-      {toggleVehicle ? (
-        <NewVehicleForm toggleVehicleForm={toggleVehicleForm} />
-      ) : null}
+      {open ? <NewVehicleForm open={open} setOpen={setOpen} /> : null}
       <div
-        className={`fixed min-h-screen top-0 left-0 w-72 overflow-auto h-full xl:w-72 xl:translate-x-0 transition-{transform,width} duration-500 linear z-[999] bg-white ${
+        className={`fixed min-h-screen top-0 left-0 w-72 overflow-auto h-full xl:w-72 xl:translate-x-0 transition-{transform,width} duration-500 linear z-30 bg-white ${
           activeMenu ? "translate-x-0 w-72" : "-translate-x-full"
         } pt-8`}
       >
@@ -130,12 +168,25 @@ const Layout = ({ children }) => {
               </div>
               {menu.links.map((item) => {
                 return (
-                  <div
-                    key={item.name}
-                    className="font-medium capitalize flex items-center gap-4 py-3 px-8"
-                  >
-                    <div className="text-2xl">{item.icon}</div>
-                    <div className="text-md font-bold">{item.name}</div>
+                  <div key={item.name}>
+                    <SingleLink
+                      href={item.href}
+                      toggleDropdown={item.subMenus && toggleDropdown}
+                      name={item.name}
+                      icon={item.icon}
+                    />
+                    {item.subMenus &&
+                      expand &&
+                      item.subMenus.map((menu, index) => {
+                        return (
+                          <SubmenuDropdown
+                            key={index}
+                            href={menu.href}
+                            name={menu.name}
+                            expand={expand}
+                          />
+                        );
+                      })}
                   </div>
                 );
               })}
@@ -144,7 +195,7 @@ const Layout = ({ children }) => {
         })}
       </div>
       <div className=" xl:ml-72 ml-0 duration-300 linear w-full">
-        <div className="h-16 w-full fixed z-30 bg-white flex items-center">
+        <div className="h-16 w-full fixed z-10 bg-white flex items-center shadow-md">
           <div className="flex w-full justify-between items-center pr-8">
             <div className="flex gap-4 items-center xl:hidden pl-8">
               <div className="text-xl">
@@ -158,17 +209,68 @@ const Layout = ({ children }) => {
 
               <h3 className="text-2xl font-extrabold">1MECH</h3>
             </div>
-            <div
-              className="flex items-center gap-2 bg-blue-500 p-2 rounded-md text-xs text-white xl:mr-[18rem] cursor-pointer font-bold ml-auto"
-              onClick={toggleVehicleForm}
-            >
-              <BiPlus />
-              <span>New Vehicle</span>
+            <div className="xl:mr-[18rem] ml-auto flex items-center gap-8 cursor-pointer relative">
+              <div
+                className="flex items-center gap-2 bg-blue-500 py-1.5 px-5 rounded-sm text-xs text-white cursor-pointer font-bold"
+                onClick={() => setOpen(true)}
+              >
+                <BiPlus />
+                <span>New Vehicle</span>
+              </div>
+              <div
+                className="flex items-center gap-2"
+                onClick={() => setShowProfile(!showProfile)}
+              >
+                <BiUser className="p-2 text-3xl bg-blue-500 rounded-full text-white" />
+                <div className="grid font-bold">
+                  <p className="text-green-400 text-xs">Owner</p>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-sm text-[#6e82a5]">Emmanuel Johnson</h3>
+                    <BiChevronDown />
+                  </div>
+                </div>
+              </div>
+              {showProfile && (
+                <div className="bg-white absolute top-12 w-[19em] h-[17em] rounded-md shadow-lg right-0 grid ">
+                  <div className="flex items-center gap-4 bg-gray-100 px-6">
+                    <p className="p-2.5 bg-blue-500 rounded-full text-white">
+                      MJ
+                    </p>
+                    <div>
+                      <h2 className="text-sm text-[#6e82a5]">
+                        Mr. Emmanuel Johnson
+                      </h2>
+                      <p className="text-xs">+2348167821219</p>
+                    </div>
+                  </div>
+                  <div className="px-6 grid border border-transparent border-y-gray-200">
+                    <div className="mt-2 text-sm flex items-center text-[#526484] gap-2">
+                      <CiSettings className="text-lg"/>
+                      <p>Account Setting</p>
+                    </div>
+                    <div className="mt-2 text-sm flex items-center text-[#526484] gap-2">
+                      <TbMessageDots className="text-lg"/>
+                      <p>Feedback</p>
+                    </div>
+                    <div className="mt-2 text-sm flex items-center text-[#526484] gap-2">
+                      <BiDoughnutChart className="text-lg"/>
+                      <p>Help Center</p>
+                    </div>
+                  </div>
+                  <div className="px-6 my-auto text-sm flex items-center text-[#526484] gap-2">
+                    <HiOutlineLogout className="text-lg"/>
+                    <p>Sign Out</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
-        <div className="px-8 pt-8 min-h-screen bg-gray-100 mt-16 relative">
+        <div className="px-8 py-8 min-h-screen bg-gray-100 mt-16 relative">
           {children}
+        </div>
+        <div className="px-8 text-gray-400 h-16 text-sm">
+          © 2023 One-Mech • All Rights Reserved.
         </div>
       </div>
     </main>
