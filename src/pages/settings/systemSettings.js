@@ -1,17 +1,26 @@
-import React from "react";
+import React,{useState} from "react";
 import Settings from ".";
+import { CgMenuRight } from "react-icons/cg";
 
 const SystemSettings = () => {
+    const [activeSubmenu, setActiveSubmenu] = useState(false);
   return (
-    <Settings>
-      <div className="pl-10">
-        <section className="py-5">
-          <h3 className="text-[1.7rem] font-bold mb-5">System Settings</h3>
-          <p className="text-md">Manage system settings and API keys.</p>
+    <Settings activeSubmenu={activeSubmenu} setActiveSubmenu={setActiveSubmenu}>
+      <div className="px-10">
+        <section className="pt-16 flex justify-between items-center">
+          <div>
+            <h3 className="text-xl lg:text-[1.6rem] font-bold mb-2 lg:mb-5">
+              System Settings
+            </h3>
+            <p className="text-sm">Manage system settings and API keys.</p>
+          </div>
+          <div className="lg:hidden text-2xl cursor-pointer">
+            <CgMenuRight onClick={() => setActiveSubmenu(true)} />
+          </div>
         </section>
-        <form className="w-[65%] grid gap-4 mt-8">
+        <form className="w-[95%] lg:w-[65%] grid gap-4 mt-5 lg:mt-8 text-sm">
           <div className="grid gap-2">
-            <label className="font-semibold">System Name</label>
+            <label className="font-medium">System Name</label>
             <input
               type="text"
               className="w-full border outline-none py-2 pl-2 rounded-md"
@@ -20,21 +29,21 @@ const SystemSettings = () => {
           <hr />
           <p className="text-sm">Africa`s Talking API Keys</p>
           <div className="grid gap-2">
-            <label className="font-semibold">Username</label>
+            <label className="font-medium">Username</label>
             <input
               type="text"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">API Key</label>
+            <label className="font-medium">API Key</label>
             <input
               type="text"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Sernder ID</label>
+            <label className="font-medium">Sender ID</label>
             <input
               type="text"
               className="w-full border outline-none py-2 pl-2 rounded-md"
@@ -43,42 +52,42 @@ const SystemSettings = () => {
           <hr />
           <p className="text-sm">SMTP Settings</p>
           <div className="grid gap-2">
-            <label className="font-semibold">Username</label>
+            <label className="font-medium">Username</label>
             <input
               type="text"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Send Email as</label>
+            <label className="font-medium">Send Email as</label>
             <input
               type="email"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Host</label>
+            <label className="font-medium">Host</label>
             <input
               type="email"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Password</label>
+            <label className="font-medium">Password</label>
             <input
               type="password"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Port</label>
+            <label className="font-medium">Port</label>
             <input
               type="text"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Encryption</label>
+            <label className="font-medium">Encryption</label>
             <input
               type="text"
               className="w-full border outline-none py-2 pl-2 rounded-md"

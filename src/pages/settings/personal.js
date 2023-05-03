@@ -1,47 +1,56 @@
-import React from "react";
+import React,{useState} from "react";
 import Settings from ".";
+import { CgMenuRight } from "react-icons/cg";
 
 const Personal = () => {
+  const [activeSubmenu, setActiveSubmenu] = useState(false);
   return (
-    <Settings>
-      <div className="pl-10">
-        <section className="py-5">
-          <h3 className="text-[1.7rem] font-bold mb-5">Personal Information</h3>
-          <p className="text-md">
-            Basic info, like your name and email, that you use on 1Mech.
-          </p>
+    <Settings activeSubmenu={activeSubmenu} setActiveSubmenu={setActiveSubmenu}>
+      <div className="px-10">
+        <section className="pt-20 flex justify-between items-center">
+          <div>
+            <h3 className="text-lg lg:text-[1.6rem] font-bold mb-2">
+              Personal Information
+            </h3>
+            <p className="text-sm lg:text-md w-[90%] sm:w-full">
+              Basic info, like your name and email, that you use on 1Mech.
+            </p>
+          </div>
+          <div className="lg:hidden text-2xl cursor-pointer">
+            <CgMenuRight onClick={() => setActiveSubmenu(true)} />
+          </div>
         </section>
-        <form className="grid gap-4 w-[65%]">
+        <form className="w-[95%] lg:w-[65%] grid gap-4 mt-8 text-sm">
           <div className="grid gap-2">
-            <label className="font-semibold">First Name</label>
+            <label className="font-medium">First Name</label>
             <input
               type="text"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Last Name</label>
+            <label className="font-medium">Last Name</label>
             <input
               type="text"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Email Address</label>
+            <label className="font-medium">Email Address</label>
             <input
               type="email"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Phone Number</label>
+            <label className="font-medium">Phone Number</label>
             <input
               type="tel"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Address</label>
+            <label className="font-medium">Address</label>
             <input
               type="text"
               className="w-full border outline-none py-2 pl-2 rounded-md"

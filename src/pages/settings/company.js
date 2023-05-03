@@ -1,28 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { HiPhoto } from "react-icons/hi2";
 import ToggleInputForm from "@/components/ToggleInputForm";
 import Settings from ".";
+import { CgMenuRight } from "react-icons/cg";
 
 const Company = () => {
+  const [activeSubmenu, setActiveSubmenu] = useState(false);
   return (
-    <Settings>
-      <div className="pl-10">
-        <section className="py-5">
-          <h3 className="text-[1.7rem] font-bold mb-5">Company Information</h3>
-          <p className="text-md">
-            Basic company information and system preferences.
-          </p>
+    <Settings activeSubmenu={activeSubmenu} setActiveSubmenu={setActiveSubmenu}>
+      <div className="px-10">
+        <section className="pt-16 flex justify-between items-center">
+          <div>
+            <h3 className="text-[1.6rem] font-bold mb-2">
+              Company Information
+            </h3>
+            <p className="text-sm lg:text-md w-[90%] sm:w-full">
+              Basic company information and system preferences.
+            </p>
+          </div>
+          <div className="lg:hidden text-2xl cursor-pointer">
+            <CgMenuRight onClick={() => setActiveSubmenu(true)} />
+          </div>
         </section>
-        <form className="w-[65%] grid gap-4 mt-8">
+        <form className="w-[95%] lg:w-[65%] grid gap-4 mt-8 text-sm">
           <div className="grid gap-2">
-            <label className="font-semibold">Company Name</label>
+            <label className="font-medium">Company Name</label>
             <input
               type="text"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="col-span-full">
-            <label for="cover-photo" className="block font-semibold leading-6">
+            <label for="cover-photo" className="block font-medium leading-6">
               Company Logo
             </label>
             <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
@@ -31,7 +40,7 @@ const Company = () => {
                 <div className="mt-4 flex text-sm leading-6 text-gray-600">
                   <label
                     for="file-upload"
-                    className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                    className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                   >
                     <span>Upload a file</span>
                     <input
@@ -54,53 +63,53 @@ const Company = () => {
           </div>
 
           <div className="grid gap-2">
-            <label className="font-semibold">Email Address</label>
+            <label className="font-medium">Email Address</label>
             <input
               type="email"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Phone Number</label>
+            <label className="font-medium">Phone Number</label>
             <input
               type="tel"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Address</label>
+            <label className="font-medium">Address</label>
             <input
               type="text"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Town/City</label>
+            <label className="font-medium">Town/City</label>
             <input
               type="text"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Country</label>
+            <label className="font-medium">Country</label>
             <select className="w-full border outline-none py-2 pl-2 rounded-md">
               <option>Nigerian</option>
             </select>
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">TimeZone</label>
+            <label className="font-medium">TimeZone</label>
             <select className="w-full border outline-none py-2 pl-2 rounded-md">
               <option>Nigerian</option>
             </select>
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Currency</label>
+            <label className="font-medium">Currency</label>
             <select className="w-full border outline-none py-2 pl-2 rounded-md">
               <option>Nigerian Naira (NGN)</option>
             </select>
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">KRA PIN</label>
+            <label className="font-medium">KRA PIN</label>
             <input
               type="text"
               className="w-full border outline-none py-2 pl-2 rounded-md"
@@ -110,14 +119,14 @@ const Company = () => {
             </p>
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">VAT Tax (%)</label>
+            <label className="font-medium">VAT Tax (%)</label>
             <input
               type="number"
               className="w-full border outline-none py-2 pl-2 rounded-md"
             />
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Payment Details</label>
+            <label className="font-medium">Payment Details</label>
             <textarea
               type="number"
               className="w-full border outline-none py-2 pl-2 rounded-md "
@@ -127,7 +136,7 @@ const Company = () => {
             </p>
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Invoice Disclaimer</label>
+            <label className="font-medium">Invoice Disclaimer</label>
             <textarea
               type="number"
               className="w-full border outline-none py-2 pl-2 rounded-md "
@@ -137,7 +146,7 @@ const Company = () => {
             </p>
           </div>
           <div className="grid gap-2">
-            <label className="font-semibold">Quotes Disclaimer</label>
+            <label className="font-medium">Quotes Disclaimer</label>
             <textarea
               type="number"
               className="w-full border outline-none py-2 pl-2 rounded-md "

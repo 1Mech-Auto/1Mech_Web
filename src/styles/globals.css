@@ -19,7 +19,7 @@ input::-webkit-datetime-edit {
   position: relative;
   left: 5%;
 }
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-thumb {
@@ -44,4 +44,4 @@ input::-webkit-datetime-edit {
   -ms-transform: rotateY(180deg);
   -o-transform: rotateY(180deg);
   transform: rotateY(180deg);
-}
+} */

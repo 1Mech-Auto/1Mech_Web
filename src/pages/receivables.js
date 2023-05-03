@@ -5,9 +5,11 @@ import { BsCheckLg } from "react-icons/bs";
 const Receivables = () => {
   return (
     <Layout>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Receiveables</h1>
-        <p className="text-sm text-gray-400 ">
+      <div className="mb-6 pl-6 sm:pl-0">
+        <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
+          Receiveables
+        </h1>
+        <p className="text-sm text-[#8094ae] ">
           Confirm receipt of parts into inventory.
         </p>
       </div>
@@ -28,36 +30,36 @@ const Receivables = () => {
           </div>
         </div>
         <div className="border rounded-md min-h-[30vh] overflow-x-auto ">
-          <main className="font-semibold text-gray-400 text-sm grid grid-cols-[3%,20%,15%,12%,10%,15%,20%] p-2.5 border border-transparent border-b-gray-200 gap-2">
+          <main className="font-semibold text-[#8094ae] text-sm grid grid-cols-[3em,8em,7em,5em,8em,12em] md:grid-cols-[3em,8em,10em,7em,5em,8em,12em] lg:grid-cols-[3%,20%,15%,12%,10%,15%,20%] p-2.5 border border-transparent border-b-gray-200">
             <div>#</div>
-            <div>Supplier</div>
+            <div className="hidden md:block">Supplier</div>
             <div>Vehicle</div>
             <div>Item</div>
-            <div>Quantity</div>
-            <div>Unit Cost</div>
+            <div className="opacity-0 sm:opacity-100">Quantity</div>
+            <div className="opacity-0 sm:opacity-100">Unit Cost</div>
             <div>Confirm</div>
           </main>
-          <div className="font-medium text-gray-400 text-sm grid grid-cols-[3%,20%,15%,12%,10%,15%,20%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
+          <div className="font-medium text-[#364a63] text-sm grid grid-cols-[3em,8em,7em,5em,8em,12em] md:grid-cols-[3em,8em,10em,7em,5em,8em,12em] lg:grid-cols-[3%,20%,15%,12%,10%,15%,20%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 hover:shadow-hoverPurple">
             <div>1</div>
-            <div className="grid">
+            <div className="md:grid hidden">
               <p className="text-xs">--|--</p>
             </div>
             <div>
-              <h3 className="font-medium text-black">RENAULT • 6688</h3>
+              <h3 className="font-medium">RENAULT • 6688</h3>
             </div>
             <div>
-              <p className="font-medium text-black">Brake pad</p>
+              <p className="font-medium">Brake pad</p>
             </div>
             <div>
               <p>1.00</p>
             </div>
             <div>
-              <p className="font-medium text-black">N25,000.00</p>
+              <p className="font-medium">N25,000.00</p>
             </div>
 
             <div>
-              <button className="flex items-center gap-2 bg-blue-500 p-1.5 rounded-md text-sm text-white cursor-pointer font-bold">
-                <BsCheckLg />
+              <button className="flex items-center gap-2 bg-blue-500 p-1.5 rounded-md text-xs text-white cursor-pointer font-bold">
+                <BsCheckLg className="text-xl" />
                 <span>Confirm Receipt</span>
               </button>
             </div>
