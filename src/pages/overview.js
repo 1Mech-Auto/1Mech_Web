@@ -13,8 +13,10 @@ const Overview = () => {
   const [moreInfo, setMoreInfo] = useState(false);
   return (
     <Layout>
-      <div className="mb-6 flex justify-between items-center">
-        <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">Overview</h1>
+      <div className="mb-6 flex px-8 sm:px-0 justify-between items-center">
+        <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
+          Overview
+        </h1>
         <div className="sm:flex items-center gap-3 hidden ">
           <Link
             href={"/clients"}
@@ -38,7 +40,7 @@ const Overview = () => {
           <BsThreeDotsVertical />
         </div>
       </div>
-      <div className="grid gap-6 text-[#364a63] pb-6 relative">
+      <div className="grid gap-6 text-[#364a63] pb-6 px-8 sm:px-0 relative">
         <div
           className={`px-6 flex sm:hidden items-center justify-between transition-all duration-300 linear bg-white absolute w-full shadow-md ${
             moreInfo ? " h-20 opacity-100" : " h-0 opacity-0"

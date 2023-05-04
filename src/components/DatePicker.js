@@ -10,7 +10,7 @@ const DatePicker = ({ label }) => {
         type="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        className="flex items-center outline-none border-2 relative text-gray-400 py-2 px-2 rounded-md font-medium capitalize"
+        className="flex items-center outline-none border relative text-[#8094ae] py-2 px-2 rounded-md font-medium capitalize"
       />
     </div>
   );

@@ -20,7 +20,7 @@ const Form1 = () => {
       <div className="text-sm grid gap-2">
         <label>Client</label>
         <select
-          className="outline-none border-2 text-gray-400 rounded-md py-2 px-2 font-medium capitalize"
+          className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
           // value={user}
         >
           <option>Select Client</option>
@@ -42,7 +42,7 @@ const Form1 = () => {
         ""
       ) : (
         <div className="block">
-          <p className="text-xs text-gray-400 font-normal mb-2">
+          <p className="text-xs text-[#8094ae] font-normal mb-2">
             Enter the details of the person who brought the car on behalf of the
             client.
           </p>
@@ -51,7 +51,7 @@ const Form1 = () => {
               <label>Full Name</label>
               <input
                 type="text"
-                className="outline-none border-2 text-gray-400 rounded-md py-2 px-2 font-medium capitalize"
+                className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
                 placeholder="Full Name"
               />
             </div>
@@ -59,7 +59,7 @@ const Form1 = () => {
               <label>Phone Number</label>
               <input
                 type="tel"
-                className="outline-none border-2 text-gray-400 rounded-md py-2 px-2 font-medium capitalize"
+                className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
                 placeholder="Phone Number"
               />
             </div>
@@ -67,7 +67,7 @@ const Form1 = () => {
               <label>Email Address</label>
               <input
                 type="email"
-                className="outline-none border-2 text-gray-400 rounded-md py-2 px-2 font-medium capitalize"
+                className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
                 placeholder="Email Address"
               />
             </div>
@@ -75,7 +75,7 @@ const Form1 = () => {
               <label>ID Number</label>
               <input
                 type="text"
-                className="outline-none border-2 text-gray-400 rounded-md py-2 px-2 font-medium capitalize"
+                className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
                 placeholder="ID Number"
               />
             </div>
@@ -100,7 +100,14 @@ const Form1 = () => {
           <VehicleInput label={"Engine No"} />
           <VehicleInput label={"Milleage In"} />
           <DropDownSelect label={"Milleage Unit"} option={"Kilometers"} />
-          <VehicleInput label={"Color"} />
+          <div className="text-sm grid gap-2">
+            <label>Color</label>
+            <input
+              type="color"
+              placeholder="Color"
+              className="outline-none border w-full rounded-md h-10 py-1.5 px-2 font-medium capitalize"
+            />
+          </div>
           <DropDownSelect label={"Car Year"} option={"1973"} />
           <VehicleInput label={"Insurance Company"} />
           <DatePicker label={"Date IN"} />
@@ -108,7 +115,7 @@ const Form1 = () => {
             <label>Time IN</label>
             <input
               type="time"
-              className="outline-none border-2 text-gray-400 rounded-md py-2 px-2 font-medium capitalize"
+              className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
             />
           </div>
           <DropDownSelect label={"Status"} option={"In Progress"} />
@@ -122,7 +129,7 @@ const Form1 = () => {
           type="text"
           // value={title}
           //   onChange={updateCampaignDetails}
-          className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-400"
+          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
           placeholder="Towing Details / Notes"
         />
       </div>
@@ -137,7 +144,7 @@ const Form1 = () => {
         <div className="text-sm grid gap-2">
           <label>Insurance Company</label>
           <select
-            className="outline-none border-2 text-gray-400 rounded-md py-2 px-2 font-medium capitalize"
+            className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
             // value={user}
           >
             <option>Select Insurance Company</option>
@@ -189,8 +196,8 @@ const Form2 = () => {
       <hr />
       <div className="grid gap-2 mt-5">
         <label>Bookings In Notes</label>
-        <textarea className="outline-none border-2 relative text-gray-400  min-h-[8em] px-2 rounded-md font-medium" />
-        <small className="text-gray-400 italic">
+        <textarea className="outline-none border relative text-[#8094ae]  min-h-[8em] px-2 rounded-md font-medium" />
+        <small className="text-[#8094ae] italic">
           Serial numbers, part description/condition, additional parts etc
         </small>
       </div>
@@ -203,16 +210,16 @@ const Form3 = () => {
       <div>
         <div className="grid gap-2">
           <label>Pre Accident / Other Defects</label>
-          <textarea className="outline-none border-2 relative text-gray-400  min-h-[8em] px-2 rounded-md font-medium" />
+          <textarea className="outline-none border relative text-[#8094ae]  min-h-[8em] px-2 rounded-md font-medium" />
         </div>
         <div className="flex flex-col gap-3 my-4">
           <label>Work Requested / Owners Instructions</label>
           <input
-            className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-400"
+            className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
             placeholder="Work Requested / Owners Instructions"
           />
           <input
-            className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-400"
+            className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
             placeholder="Work Requested / Owners Instructions"
           />
           <div className="flex p-2 bg-blue-100 rounded-md text-blue-500 items-center gap-3 mr-auto">

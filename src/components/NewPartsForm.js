@@ -40,8 +40,8 @@ const NewPartsForm = ({parts,setParts}) => {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div className="border bg-white rounded-lg capitalize font-medium text-[#364a63] pt-4 flex flex-col">
-                  <div className="pb-4 px-4 border border-transparent border-b-gray-300 flex justify-between items-center text-xl">
+                <div className="border bg-white rounded-lg capitalize text-[#364a63] pt-4 flex flex-col">
+                  <div className="pb-4 px-4 border border-transparent border-b-[#8094ae] flex justify-between items-center text-xl">
                     <h3>Add Part</h3>
                     <AiOutlineClose
                       className="text-2xl cursor-pointer text-[#364a63]"
@@ -59,7 +59,7 @@ const NewPartsForm = ({parts,setParts}) => {
                         type="text"
                         //   value={title}
                         //   onChange={updateCampaignDetails}
-                        className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-300"
+                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Part Name"
                       />
                     </div>
@@ -71,7 +71,7 @@ const NewPartsForm = ({parts,setParts}) => {
                         type="text"
                         //   value={title}
                         //   onChange={updateCampaignDetails}
-                        className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-300"
+                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Input Name"
                       />
                     </div>

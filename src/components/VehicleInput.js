@@ -6,7 +6,7 @@ const VehicleInput = ({ label }) => {
       <label>{label}</label>
       <input
         placeholder={label}
-        className="outline-none border-2 text-gray-400 rounded-md py-2 px-2 font-medium capitalize"
+        className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
       />
     </div>
   );

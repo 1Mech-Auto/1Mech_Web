@@ -40,11 +40,11 @@ const NewQuotesForm = ({ open, setOpen }) => {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 md:w-full lg:w-4/6 ">
-                <div className="border bg-white rounded-lg capitalize font-bold text-gray-700 pt-4 flex flex-col">
-                  <div className="pb-4 px-4 border border-transparent border-b-gray-300 flex justify-between items-center text-xl">
+                <div className="border bg-white rounded-lg capitalize text-gray-700 pt-4 flex flex-col">
+                  <div className="pb-4 px-4 border border-transparent border-b-[#8094ae] flex justify-between items-center text-xl">
                     <h3>Create Quote</h3>
                     <AiOutlineClose
-                      className="text-2xl cursor-pointer text-gray-500"
+                      className="text-2xl cursor-pointer text-[#8094ae]"
                       onClick={() => setOpen(false)}
                     />
                   </div>
@@ -55,7 +55,7 @@ const NewQuotesForm = ({ open, setOpen }) => {
                     <div className="text-sm grid gap-2">
                       <label>Select Job</label>
                       <select
-                        className="outline-none border-2 text-gray-400 rounded-md py-2 px-2 font-medium capitalize"
+                        className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
                         // value={user}
                       >
                         <option>Select Job</option>
@@ -63,7 +63,7 @@ const NewQuotesForm = ({ open, setOpen }) => {
                       </select>
                     </div>
                     <hr />
-                    <section className="grid grid-cols-[40%,5%,15%,15%,20%] gap-4">
+                    <section className="grid grid-cols-[40%,5%,15%,15%,15%] gap-4">
                       <div className="text-sm grid gap-2">
                         <label>Item Description</label>
                         <input
@@ -71,7 +71,7 @@ const NewQuotesForm = ({ open, setOpen }) => {
                           type="text"
                           //   value={title}
                           //   onChange={updateCampaignDetails}
-                          className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-300"
+                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Item Description"
                         />
                       </div>
@@ -82,7 +82,7 @@ const NewQuotesForm = ({ open, setOpen }) => {
                           type="text"
                           //   value={title}
                           //   onChange={updateCampaignDetails}
-                          className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-300"
+                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="1"
                         />
                       </div>
@@ -93,7 +93,7 @@ const NewQuotesForm = ({ open, setOpen }) => {
                           type="text"
                           //   value={title}
                           //   onChange={updateCampaignDetails}
-                          className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-300"
+                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="0.00"
                         />
                       </div>
@@ -104,7 +104,7 @@ const NewQuotesForm = ({ open, setOpen }) => {
                           type="text"
                           //   value={title}
                           //   onChange={updateCampaignDetails}
-                          className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-300"
+                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Tax (%)"
                         />
                       </div>
@@ -115,7 +115,7 @@ const NewQuotesForm = ({ open, setOpen }) => {
                           type="text"
                           //   value={title}
                           //   onChange={updateCampaignDetails}
-                          className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-300"
+                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="0.00"
                         />
                       </div>
@@ -146,9 +146,9 @@ const NewQuotesForm = ({ open, setOpen }) => {
                       <label>Notes</label>
                       <textarea
                         placeholder="Notes"
-                        className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-300"
+                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                       />
-                      <p className="text-xs italic text-gray-400">
+                      <p className="text-xs italic text-[#8094ae]">
                         Notes will be printed on the quote.
                       </p>
                     </div>

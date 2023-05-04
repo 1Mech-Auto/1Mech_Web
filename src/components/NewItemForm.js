@@ -39,11 +39,11 @@ const NewItemForm = ({ open, setOpen }) => {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg ">
-                <div className="border bg-white rounded-lg capitalize font-bold text-gray-700 pt-4 flex flex-col">
+                <div className="border bg-white rounded-lg capitalize text-gray-700 pt-4 flex flex-col">
                   <div className="pb-4 px-4 border border-transparent border-b-gray-300 flex justify-between items-center text-xl">
                     <h3>Create Item</h3>
                     <AiOutlineClose
-                      className="text-2xl cursor-pointer text-gray-500"
+                      className="text-2xl cursor-pointer text-[#8094ae]"
                       onClick={() => setOpen(false)}
                     />
                   </div>
@@ -58,7 +58,7 @@ const NewItemForm = ({ open, setOpen }) => {
                         type="text"
                         //   value={title}
                         //   onChange={updateCampaignDetails}
-                        className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-300"
+                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Item Name"
                       />
                     </div>
@@ -70,14 +70,14 @@ const NewItemForm = ({ open, setOpen }) => {
                           type="number"
                           //   value={title}
                           //   onChange={updateCampaignDetails}
-                          className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-300"
+                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Quantity"
                         />
                       </div>
                       <div className="text-sm grid gap-2">
                         <label>Quantity Unit</label>
                         <select
-                          className="outline-none border-2 rounded-md py-2 px-2 font-medium capitalize"
+                          className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
                           //   value={user}
                         >
                           <option>Units</option>
@@ -96,10 +96,10 @@ const NewItemForm = ({ open, setOpen }) => {
                         type="number"
                         //   value={title}
                         //   onChange={updateCampaignDetails}
-                        className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-300"
+                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Restock Quantity"
                       />
-                      <p className="text-xs text-gray-400 normal-case italic">
+                      <p className="text-xs text-[#8094ae] normal-case italic">
                         Item will show restock if item quantity is below this
                         level.
                       </p>
@@ -112,14 +112,14 @@ const NewItemForm = ({ open, setOpen }) => {
                           type="number"
                           //   value={title}
                           //   onChange={updateCampaignDetails}
-                          className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-300"
+                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="0.00"
                         />
                       </div>
                       <div className="text-sm grid gap-2">
                         <label>Select Supplier</label>
                         <select
-                          className="outline-none border-2 rounded-md py-2 px-2 font-medium capitalize"
+                          className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
                           //   value={user}
                         >
                           <option>Select Supplier</option>
@@ -135,7 +135,7 @@ const NewItemForm = ({ open, setOpen }) => {
                           type="text"
                           //   value={title}
                           //   onChange={updateCampaignDetails}
-                          className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-300"
+                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Item Code"
                         />
                       </div>
@@ -146,7 +146,7 @@ const NewItemForm = ({ open, setOpen }) => {
                           type="text"
                           //   value={title}
                           //   onChange={updateCampaignDetails}
-                          className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-300"
+                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Shelf Number"
                         />
                       </div>

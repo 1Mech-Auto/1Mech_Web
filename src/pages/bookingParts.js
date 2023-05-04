@@ -7,14 +7,19 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { CgMenuRight } from "react-icons/cg";
 import Link from "next/link";
 import NewPartsForm from "@/components/NewPartsForm";
+import OrderParts from "@/components/OrderParts";
 
 const BookingParts = () => {
   const [parts, setParts] = useState(false);
+  const [orderPart, setOrderPart] = useState(false);
   const [show, setShow] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
   return (
     <Layout>
       {parts && <NewPartsForm parts={parts} setParts={setParts} />}
+      {orderPart && (
+        <OrderParts orderPart={orderPart} setOrderPart={setOrderPart} />
+      )}
       <section className="flex justify-between items-center mb-6 px-6 sm:px-0">
         <div className="mb-6">
           <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
@@ -48,7 +53,10 @@ const BookingParts = () => {
                 <BiPlus />
                 <p className="text-[0.84rem]">Add Part</p>
               </div>
-              <div className="flex items-center gap-2 cursor-pointer text-[#8094ae]">
+              <div
+                className="flex items-center gap-2 cursor-pointer text-[#8094ae]"
+                onClick={() => setOrderPart(true)}
+              >
                 <TiArrowUnsorted />
                 <p className="text-[0.84rem]">Order List</p>
               </div>
@@ -96,7 +104,10 @@ const BookingParts = () => {
                     <BiPlus />
                     <p className="text-[0.84rem]">Add Part</p>
                   </div>
-                  <div className="flex items-center gap-2 cursor-pointer text-[#8094ae]">
+                  <div
+                    className="flex items-center gap-2 cursor-pointer text-[#8094ae]"
+                    onClick={() => setOrderPart(true)}
+                  >
                     <TiArrowUnsorted />
                     <p className="text-[0.84rem]">Order List</p>
                   </div>

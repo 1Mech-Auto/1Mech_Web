@@ -40,11 +40,11 @@ const NewPaymentForm = ({ open, setOpen }) => {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg ">
-                <div className="border bg-white rounded-lg capitalize font-bold text-gray-700 pt-4 flex flex-col">
+                <div className="border bg-white rounded-lg capitalize text-gray-700 pt-4 flex flex-col">
                   <div className="pb-4 px-4 border border-transparent border-b-gray-300 flex justify-between items-center text-xl">
                     <h3>Add Payment</h3>
                     <AiOutlineClose
-                      className="text-2xl cursor-pointer text-gray-500"
+                      className="text-2xl cursor-pointer text-[#8094ae]"
                       onClick={() => setOpen(false)}
                     />
                   </div>
@@ -55,13 +55,13 @@ const NewPaymentForm = ({ open, setOpen }) => {
                     <div className="text-sm grid gap-2">
                       <label>Select Invoice</label>
                       <select
-                        className="outline-none border-2 rounded-md py-2 px-2 font-medium capitalize"
+                        className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
                         //   value={user}
                       >
                         <option>Select Invoice</option>
                         <option>All clients</option>
                       </select>
-                      <p className="text-xs text-gray-400 normal-case italic">
+                      <p className="text-xs text-[#8094ae] normal-case italic">
                         The amout in brackets is the balance due.
                       </p>
                     </div>
@@ -72,7 +72,7 @@ const NewPaymentForm = ({ open, setOpen }) => {
                         type="text"
                         //   value={title}
                         //   onChange={updateCampaignDetails}
-                        className="w-full outline-none border-2 rounded-md py-2 pl-3 placeholder:text-gray-300"
+                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="0.00"
                       />
                     </div>
@@ -81,7 +81,7 @@ const NewPaymentForm = ({ open, setOpen }) => {
                       <div className="text-sm grid gap-2">
                         <label>Payment Method</label>
                         <select
-                          className="outline-none border-2 rounded-md py-2 px-2 font-medium capitalize"
+                          className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
                           //   value={user}
                         >
                           <option>Cash</option>
@@ -101,10 +101,10 @@ const NewPaymentForm = ({ open, setOpen }) => {
                         type="text"
                         //   value={message}
                         //   onChange={updateCampaignDetails}
-                        className="w-full outline-none border-2 rounded-md pl-3 py-1 min-h-[9em] placeholder:text-gray-300"
+                        className="w-full outline-none border rounded-md pl-3 py-1 min-h-[9em] placeholder:text-[#8094ae]"
                         placeholder="Note"
                       />
-                      <p className="text-xs text-gray-400 normal-case italic">
+                      <p className="text-xs text-[#8094ae] normal-case italic">
                         We`ll include your company name Lura Vpn Limited at the
                         end of every message.
                       </p>
