@@ -11,6 +11,7 @@ import NewInvoiceForm from "@/components/NewInvoiceForm";
 import NewQuotesForm from "@/components/NewQuotesForm";
 import NewInfoUpdate from "@/components/NewInfoUpdate";
 import NewSMSForm from "@/components/NewSMSForm";
+import { useFormContext } from "@/context/form_context";
 
 const Clients = () => {
   const [open, setOpen] = useState(false);
@@ -21,6 +22,7 @@ const Clients = () => {
   const [quote, setQuote] = useState(false);
   const [info, setInfo] = useState(false);
   const [sms, setSms] = useState(false);
+  const { clientList } = useFormContext();
   return (
     <Layout>
       {open && <NewClientForm open={open} setOpen={setOpen} />}
@@ -128,6 +130,7 @@ const Clients = () => {
               />
               {show && (
                 <MoreButton
+                  href={"/clientsDetails/details"}
                   setInvoice={setInvoice}
                   setJobCard={setJobCard}
                   setQuote={setQuote}
@@ -137,6 +140,58 @@ const Clients = () => {
               )}
             </div>
           </div>
+          {clientList &&
+            clientList.map((clients, index) => {
+              return (
+                <div
+                  key={index}
+                  className="font-medium min-w-full text-[#364a63] text-sm grid grid-cols-[4%,50%,35%,5%] md:grid-cols-[3em,15em,14em,9em,6em,9em,8em,3em] lg:grid-cols-[3%,25%,23%,12%,5%,12%,10%,4%] items-center p-2.5 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
+                >
+                  <div>{index + 1}</div>
+                  <div className="flex items-center gap-2">
+                    <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
+                      ME
+                    </p>
+                    <div>
+                      <h2 className="font-medium text-black">
+                        {clients.clientName}
+                      </h2>
+                      <p className="text-xs text-[#8094ae]">
+                        {clients.clientPhone}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="hidden md:block text-[#8094ae]">
+                    {clients.clientEmail}
+                  </div>
+                  <div>N390,000.00</div>
+                  <div className="hidden md:block text-[#8094ae] text-center">
+                    1/1
+                  </div>
+                  <div className="hidden md:block">{clients.clientDate}</div>
+                  <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl items-center gap-2 hidden md:flex">
+                    <RxDotFilled className="text-lg" />
+                    <p className="text-sm font-bold">Active</p>
+                  </div>
+                  <div>
+                    <BsThreeDots
+                      className="cursor-pointer text-xl"
+                      onClick={() => setShow(!show)}
+                    />
+                    {show && (
+                      <MoreButton
+                        href={"/clientsDetails/details"}
+                        setInvoice={setInvoice}
+                        setJobCard={setJobCard}
+                        setQuote={setQuote}
+                        setSms={setSms}
+                        setInfo={setInfo}
+                      />
+                    )}
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
     </Layout>

@@ -1,9 +1,17 @@
 import React, { useState, useContext, useReducer } from "react";
 import reducer from "../reducer/form_reducer";
-import { CHANGE_TOGGLE_STATE } from "@/action";
+import { ADD_NEW_CLIENT, CHANGE_TOGGLE_STATE, NEW_CLIENT_FORM } from "@/action";
 const initialState = {
   showModal1: true,
   showModal2: false,
+  clientForm: {
+    names: "",
+    phone: "",
+    email: "",
+    address: "",
+    gender: "gender",
+  },
+  clientList:[]
 };
 
 const FormContext = React.createContext();
@@ -11,18 +19,18 @@ const FormContext = React.createContext();
 export const FormProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const handleFormToggle = (e) => {
+  const newClientForm = (e) => {
+    const name = e.target.name;
     const value = e.target.value;
-    const checked = e.target.checked;
-    console.log(value, checked);
-    dispatch({
-      type: CHANGE_TOGGLE_STATE,
-      // payload: { checked }
-    });
+    console.log(value, name);
+    dispatch({ type: NEW_CLIENT_FORM, payload: { name, value } });
   };
+  const addNewClient = () => {
+      dispatch({type:ADD_NEW_CLIENT})
+  } 
 
   return (
-    <FormContext.Provider value={{ ...state, handleFormToggle }}>
+    <FormContext.Provider value={{ ...state, newClientForm,addNewClient }}>
       {children}
     </FormContext.Provider>
   );

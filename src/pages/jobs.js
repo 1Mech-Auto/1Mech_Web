@@ -5,9 +5,11 @@ import { BsThreeDots } from "react-icons/bs";
 import NewVehicleForm from "@/components/NewVehicleForm";
 import { BiPlus } from "react-icons/bi";
 import { CgMenuRight } from "react-icons/cg";
+import MoreButton from "@/components/MoreButton";
 
 const Jobs = () => {
   const [open, setOpen] = useState(false);
+  const [show, setShow] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
 
   return (
@@ -107,7 +109,20 @@ const Jobs = () => {
               <p className="text-xs font-bold">In Progress</p>
             </div>
             <div>
-              <BsThreeDots className="cursor-pointer text-xl" />
+              <BsThreeDots
+                className="cursor-pointer text-xl"
+                onClick={() => setShow(!show)}
+              />
+              {show && (
+                <MoreButton
+                  href={"/jobDetails/details"}
+                  // setInvoice={setInvoice}
+                  // setJobCard={setJobCard}
+                  // setQuote={setQuote}
+                  // setSms={setSms}
+                  // setInfo={setInfo}
+                />
+              )}
             </div>
           </div>
         </div>

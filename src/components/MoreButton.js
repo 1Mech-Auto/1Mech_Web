@@ -4,10 +4,20 @@ import { BsTrash, BsEye } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import Link from "next/link";
 
-function MoreButton({ setInvoice, setJobCard, setQuote, setInfo, setSms }) {
+function MoreButton({
+  setInvoice,
+  setJobCard,
+  setQuote,
+  setInfo,
+  setSms,
+  href,
+}) {
   return (
     <div className="absolute py-6 shadow-lg grid gap-4 bg-white rounded-md text-md font-medium top-0 right-16 z-10">
-      <Link href={'/detailsPage/details'} className="flex items-center gap-2 pl-6 pr-8 cursor-pointer text-[#364a63]">
+      <Link
+        href={href}
+        className="flex items-center gap-2 pl-6 pr-8 cursor-pointer text-[#364a63]"
+      >
         <BsEye />
         <p className="text-[0.84rem]">View Details</p>
       </Link>

@@ -3,9 +3,15 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsShieldCheck } from "react-icons/bs";
+import { useFormContext } from "@/context/form_context";
 
 export default function NewClientForm({ open, setOpen }) {
   const cancelButtonRef = useRef(null);
+  const {
+    clientForm: { names, phone, email, address, gender },
+    newClientForm,
+    addNewClient,
+  } = useFormContext();
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -52,14 +58,14 @@ export default function NewClientForm({ open, setOpen }) {
                   <p className="text-xs font-semibold mt-6 normal-case px-4">
                     Create a client account
                   </p>
-                  <form className="mt-3 grid gap-8 px-4 pb-4">
+                  <form className="mt-3 grid gap-8 px-4 pb-4 text-[#344357]">
                     <div className="text-sm grid gap-2">
                       <label>Full Name</label>
                       <input
-                        name="title"
+                        name="names"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={names}
+                        onChange={newClientForm}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Full Name"
                       />
@@ -68,10 +74,10 @@ export default function NewClientForm({ open, setOpen }) {
                       <div className="text-sm grid gap-2">
                         <label>Phone Number</label>
                         <input
-                          name="telephone"
+                          name="phone"
                           type="tel"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={phone}
+                          onChange={newClientForm}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Phone Number"
                         />
@@ -81,8 +87,8 @@ export default function NewClientForm({ open, setOpen }) {
                         <input
                           name="email"
                           type="email"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={email}
+                          onChange={newClientForm}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Email Address"
                         />
@@ -90,22 +96,26 @@ export default function NewClientForm({ open, setOpen }) {
                     </section>
                     <div className="text-sm grid gap-2">
                       <label>Address</label>
-                      <select
-                        className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                        // value={user}
-                      >
-                        <option>Select State</option>
-                        <option>All clients</option>
-                      </select>
+                      <input
+                        name="address"
+                        type="text"
+                        value={address}
+                        onChange={newClientForm}
+                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        placeholder="Address"
+                      />
                     </div>
                     <div className="text-sm grid gap-2">
                       <label>Gender</label>
                       <select
                         className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                        // value={user}
+                        name="gender"
+                        value={gender}
+                        onChange={newClientForm}
                       >
                         <option>Gender</option>
-                        <option>All clients</option>
+                        <option>Male</option>
+                        <option>Female</option>
                       </select>
                     </div>
                   </form>
@@ -119,16 +129,17 @@ export default function NewClientForm({ open, setOpen }) {
                       <MdOutlineCancel />
                       <p className="text-xs">cancel</p>
                     </article>
-                    <article
+                    <button
                       className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                      type="submit"
                       onClick={() => {
-                        addNewCampaign();
-                        toggleOfferPopup();
+                        addNewClient()
+                        setOpen(false)
                       }}
                     >
                       <BsShieldCheck />
                       <p className="text-xs">Create Client</p>
-                    </article>
+                    </button>
                   </div>
                 </div>
               </Dialog.Panel>
