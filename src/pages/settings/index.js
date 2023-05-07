@@ -18,7 +18,7 @@ const Settings = ({ children, activeSubmenu, setActiveSubmenu }) => {
     <Layout>
       {activeSubmenu && (
         <div
-          className="fixed z-20 inset-0 bg-[#10192466] lg:bg-transparent transition duration-200s"
+          className="fixed z-[18] inset-0 bg-[#10192466] lg:bg-transparent transition duration-200s"
           onClick={() => {
             setActiveSubmenu(false);
           }}
@@ -26,7 +26,7 @@ const Settings = ({ children, activeSubmenu, setActiveSubmenu }) => {
       )}
       <div className="grid grid-cols-1 lg:grid-cols-[18rem,1fr] bg-white min-h-[90vh] pb-8 text-[#364a63] relative">
         <div
-          className={`fixed lg:relative min-h-screen top-0 left-0 w-72 overflow-auto h-full lg:w-72 lg:translate-x-0 transition-{transform,width} duration-500 linear z-30 bg-white ${
+          className={`fixed lg:relative min-h-screen top-0 left-0 w-72 overflow-auto h-full lg:w-72 lg:translate-x-0 transition-{transform,width} duration-500 linear z-30 lg:z-[19] bg-white ${
             activeSubmenu ? "translate-x-0 w-72" : "-translate-x-full"
           } pt-8`}
         >

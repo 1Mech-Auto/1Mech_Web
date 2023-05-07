@@ -6,15 +6,29 @@ import { BiPlus } from "react-icons/bi";
 import NewClientForm from "@/components/NewClientForm";
 import MoreButton from "@/components/MoreButton";
 import { CgMenuRight } from "react-icons/cg";
+import NewJobCard from "@/components/NewJobCard";
+import NewInvoiceForm from "@/components/NewInvoiceForm";
+import NewQuotesForm from "@/components/NewQuotesForm";
+import NewInfoUpdate from "@/components/NewInfoUpdate";
+import NewSMSForm from "@/components/NewSMSForm";
 
 const Clients = () => {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
-
+  const [invoice, setInvoice] = useState(false);
+  const [jobCard, setJobCard] = useState(false);
+  const [quote, setQuote] = useState(false);
+  const [info, setInfo] = useState(false);
+  const [sms, setSms] = useState(false);
   return (
     <Layout>
       {open && <NewClientForm open={open} setOpen={setOpen} />}
+      {invoice && <NewInvoiceForm invoice={invoice} setInvoice={setInvoice} />}
+      {jobCard && <NewJobCard jobCard={jobCard} setJobCard={setJobCard} />}
+      {quote && <NewQuotesForm quote={quote} setQuote={setQuote} />}
+      {info && <NewInfoUpdate info={info} setInfo={setInfo} />}
+      {sms && <NewSMSForm sms={sms} setSms={setSms} />}
 
       <section className="flex justify-between items-center mb-6 px-6 sm:px-0">
         <div className="mb-6">
@@ -24,7 +38,7 @@ const Clients = () => {
           <p className="text-sm text-[#8094ae] ">A total of ~ clients</p>
         </div>
         <button
-          className="sm:flex hidden items-center gap-2 bg-blue-500 p-2.5 rounded-md text-sm text-white cursor-pointer font-bold ml-auto"
+          className="sm:flex hidden items-center gap-2 bg-[#0971fe] py-2 px-4 rounded-md text-sm text-white cursor-pointer font-bold ml-auto"
           onClick={() => {
             setOpen(true);
           }}
@@ -110,9 +124,17 @@ const Clients = () => {
             <div>
               <BsThreeDots
                 className="cursor-pointer text-xl"
-                // onClick={() => setShow(!show)}
+                onClick={() => setShow(!show)}
               />
-              {show && <MoreButton show={show} />}
+              {show && (
+                <MoreButton
+                  setInvoice={setInvoice}
+                  setJobCard={setJobCard}
+                  setQuote={setQuote}
+                  setSms={setSms}
+                  setInfo={setInfo}
+                />
+              )}
             </div>
           </div>
         </div>

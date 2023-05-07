@@ -5,15 +5,16 @@ import { MdOutlineCancel } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsShieldCheck } from "react-icons/bs";
 
-const NewFeedbackForm = ({ feedback, setFeedback }) => {
+const NewNotes = ({notes,setNotes}) => {
   const cancelButtonRef = useRef(null);
+
   return (
-    <Transition.Root show={feedback} as={Fragment}>
+    <Transition.Root show={notes} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-50"
         initialFocus={cancelButtonRef}
-        onClose={setFeedback}
+        onClose={setNotes}
       >
         <Transition.Child
           as={Fragment}
@@ -39,50 +40,41 @@ const NewFeedbackForm = ({ feedback, setFeedback }) => {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div className="border bg-white rounded-lg capitalize font-bold text-gray-700 pt-4 flex flex-col">
-                  <div className="pb-4 px-4 border border-transparent border-b-gray-300 flex justify-between items-center text-xl">
-                    <h3>Send Feedback</h3>
+                <div className="border bg-white rounded-lg capitalize text-gray-700 pt-4 flex flex-col">
+                  <div className="pb-4 px-4 font-semibold border border-transparent border-b-gray-300 flex justify-between items-center text-xl">
+                    <h3>Add a Note</h3>
                     <AiOutlineClose
                       className="text-2xl cursor-pointer text-[#8094ae]"
-                      onClick={() => setFeedback(false)}
+                      onClick={() => setNotes(false)}
                     />
                   </div>
                   <form className="mt-3 grid gap-8 px-4 pb-4">
+                    <p className="text-sm">
+                      Add a note on this client`s account
+                    </p>
                     <div className="text-sm grid gap-2">
-                      <label>How was your experience?</label>
-                      <select
-                        className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                        // value={user}
-                      >
-                        <option>Awesome</option>
-                        <option>Good</option>
-                        <option>Could have been better</option>
-                        <option>Not pleasurable</option>
-                      </select>
-                    </div>
-                    <div className="text-sm grid gap-2">
-                      <label>Comment</label>
+                      <label>Write your note</label>
                       <textarea
                         name="title"
                         type="text"
                         //   value={title}
                         //   onChange={updateCampaignDetails}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae] h-32"
-                        placeholder="Address"
+                        placeholder="Write your note"
                       />
                     </div>
                   </form>
                   <div className="flex mt-auto border py-4 bg-gray-200 justify-end gap-2 px-4">
                     <article
                       className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setFeedback(false)}
+                      onClick={() => setNotes(false)}
                     >
                       <MdOutlineCancel />
                       <p className="text-xs">cancel</p>
                     </article>
                     <article className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer">
                       <BsShieldCheck />
-                      <p className="text-xs">Send Feedback</p>
+                      <p className="text-xs">Save Note</p>
                     </article>
                   </div>
                 </div>
@@ -95,4 +87,4 @@ const NewFeedbackForm = ({ feedback, setFeedback }) => {
   );
 };
 
-export default NewFeedbackForm;
+export default NewNotes;

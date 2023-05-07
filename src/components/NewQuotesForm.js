@@ -1,20 +1,20 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsShieldCheck } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
 
-const NewQuotesForm = ({ open, setOpen }) => {
+const NewQuotesForm = ({ quote, setQuote }) => {
   const cancelButtonRef = useRef(null);
 
   return (
-    <Transition.Root show={open} as={Fragment}>
+    <Transition.Root show={quote} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-50"
         initialFocus={cancelButtonRef}
-        onClose={setOpen}
+        onClose={setQuote}
       >
         <Transition.Child
           as={Fragment}
@@ -45,13 +45,13 @@ const NewQuotesForm = ({ open, setOpen }) => {
                     <h3>Create Quote</h3>
                     <AiOutlineClose
                       className="text-2xl cursor-pointer text-[#8094ae]"
-                      onClick={() => setOpen(false)}
+                      onClick={() => setQuote(false)}
                     />
                   </div>
-                  <p className="text-xs font-semibold mt-6 normal-case px-8">
+                  <p className="text-xs font-semibold mt-6 normal-case px-6">
                     Create a quote for this job
                   </p>
-                  <form className="mt-3 grid gap-8 p-4 px-8 ">
+                  <form className="mt-3 grid gap-8 p-4 px-6 ">
                     <div className="text-sm grid gap-2">
                       <label>Select Job</label>
                       <select
@@ -156,7 +156,7 @@ const NewQuotesForm = ({ open, setOpen }) => {
                   <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
                     <article
                       className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setOpen(false)}
+                      onClick={() => setQuote(false)}
                     >
                       <MdOutlineCancel />
                       <p className="text-xs">cancel</p>

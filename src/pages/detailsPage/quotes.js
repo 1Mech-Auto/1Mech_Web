@@ -1,56 +1,30 @@
-import React, { useState } from "react";
-import Layout from "../../layout/Layout";
-import { BsThreeDots } from "react-icons/bs";
+import { useState } from "react";
+import DetailsPage from ".";
 import { BiPlus } from "react-icons/bi";
+import { BsThreeDots } from "react-icons/bs";
 import NewQuotesForm from "@/components/NewQuotesForm";
-import { CgMenuRight } from "react-icons/cg";
 
 const Quotes = () => {
   const [quote, setQuote] = useState(false);
-  const [moreInfo, setMoreInfo] = useState(false);
 
   return (
-    <Layout>
+    <DetailsPage>
       {quote && <NewQuotesForm quote={quote} setQuote={setQuote} />}
-
-      <section className="flex justify-between items-center mb-6 px-6 sm:px-0">
-        <div>
-          <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
-            Quotes
-          </h1>
-          <p className="text-sm text-[#8094ae] ">A total of 3 quotes.</p>
-        </div>
-        <button
-          className="sm:flex hidden items-center gap-2 bg-blue-500 p-2.5 rounded-md text-sm text-white cursor-pointer font-bold ml-auto"
-          onClick={() => setQuote(true)}
-        >
-          <BiPlus />
-          <span>Create a Quote</span>
-        </button>
-        <div
-          className="sm:hidden text-2xl cursor-pointer"
-          onClick={() => setMoreInfo(!moreInfo)}
-        >
-          <CgMenuRight />
-        </div>
-      </section>
-      <div className="bg-white min-h-[85vh] p-6 relative">
-        <div
-          className={`px-6 flex sm:hidden items-center justify-between transition-all duration-300 linear bg-white absolute left-0 top-0 w-full shadow-md ${
-            moreInfo ? " h-20 opacity-100" : " h-0 opacity-0"
-          }`}
-        >
-          {moreInfo && (
-            <button
-              className="flex sm:hidden items-center gap-2 bg-blue-500 p-2.5 rounded-md text-sm text-white cursor-pointer font-bold"
-              onClick={() => {
-                setQuote(true);
-              }}
-            >
-              <BiPlus />
-              <span>Create a Quote</span>
-            </button>
-          )}
+      <div className="px-6">
+        <div className="flex items-center justify-between">
+          <div className="py-6 md:col-span-2">
+            <h3 className="text-xl font-semibold">Client Quotes</h3>
+            <p className="text-sm text-[#526484]">
+              A list of quotes for Autogirl Nig Ltd.
+            </p>
+          </div>
+          <button
+            className="flex items-center gap-2 bg-[#0971fe] py-2 px-4 rounded-md text-sm text-white cursor-pointer font-bold"
+            onClick={() => setQuote(true)}
+          >
+            <BiPlus />
+            <span>Create Quote</span>
+          </button>
         </div>
         <div className="flex justify-between mb-4">
           <input
@@ -58,7 +32,7 @@ const Quotes = () => {
             placeholder="Type in to Search"
           />
           <div className="flex items-center gap-2">
-            <p className="text-sm hidden sm:block">Show</p>
+            <p className="text-sm">Show</p>
             <select className="outline-none border rounded-md text-xs px-1">
               <option>10</option>
               <option>20</option>
@@ -100,7 +74,7 @@ const Quotes = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </DetailsPage>
   );
 };
 

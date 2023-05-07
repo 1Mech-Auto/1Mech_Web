@@ -7,12 +7,12 @@ import NewInvoiceForm from "@/components/NewInvoiceForm";
 import { CgMenuRight } from "react-icons/cg";
 
 const Invoices = () => {
-  const [open, setOpen] = useState(false);
+  const [invoice, setInvoice] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
 
   return (
     <Layout>
-      {open && <NewInvoiceForm open={open} setOpen={setOpen} />}
+      {invoice && <NewInvoiceForm invoice={invoice} setInvoice={setInvoice} />}
 
       <section className="flex justify-between items-center mb-6 px-6 sm:px-0">
         <div>
@@ -23,7 +23,7 @@ const Invoices = () => {
         </div>
         <button
           className="sm:flex hidden items-center gap-2 bg-blue-500 p-2.5 rounded-md text-sm text-white cursor-pointer font-bold ml-auto"
-          onClick={() => setOpen(true)}
+          onClick={() => setInvoice(true)}
         >
           <BiPlus />
           <span>Create Invoice</span>
@@ -45,7 +45,7 @@ const Invoices = () => {
             <button
               className="flex sm:hidden items-center gap-2 bg-blue-500 p-2.5 rounded-md text-sm text-white cursor-pointer font-bold"
               onClick={() => {
-                setOpen(true);
+                setInvoice(true);
               }}
             >
               <BiPlus />

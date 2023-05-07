@@ -3,18 +3,17 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsShieldCheck } from "react-icons/bs";
-import DatePicker from "./DatePicker";
 
-const NewPaymentForm = ({ payment, setPayment }) => {
+const NewInfoUpdate = ({ info, setInfo }) => {
   const cancelButtonRef = useRef(null);
 
   return (
-    <Transition.Root show={payment} as={Fragment}>
+    <Transition.Root show={info} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-50"
         initialFocus={cancelButtonRef}
-        onClose={setPayment}
+        onClose={setInfo}
       >
         <Transition.Child
           as={Fragment}
@@ -39,88 +38,77 @@ const NewPaymentForm = ({ payment, setPayment }) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg ">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-5/6 sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="border bg-white rounded-lg capitalize text-gray-700 pt-4 flex flex-col">
                   <div className="pb-4 px-4 border border-transparent border-b-gray-300 flex justify-between items-center text-xl">
-                    <h3>Add Payment</h3>
+                    <h3>Update Info</h3>
                     <AiOutlineClose
                       className="text-2xl cursor-pointer text-[#8094ae]"
-                      onClick={() => setPayment(false)}
+                      onClick={() => setInfo(false)}
                     />
                   </div>
-                  <p className="text-xs font-semibold mt-6 normal-case px-4">
-                    Add Payment
+                  <p className="text-sm font-semibold mt-6 normal-case px-4">
+                    Update client account.
                   </p>
                   <form className="mt-3 grid gap-8 px-4 pb-4">
                     <div className="text-sm grid gap-2">
-                      <label>Select Invoice</label>
-                      <select
-                        className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
-                        //   value={user}
-                      >
-                        <option>Select Invoice</option>
-                        <option>All clients</option>
-                      </select>
-                      <p className="text-xs text-[#8094ae] normal-case italic">
-                        The amout in brackets is the balance due.
-                      </p>
-                    </div>
-                    <div className="text-sm grid gap-2">
-                      <label>Amount</label>
+                      <label>Full Name</label>
                       <input
                         name="title"
                         type="text"
                         //   value={title}
                         //   onChange={updateCampaignDetails}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
-                        placeholder="0.00"
+                        placeholder="Full Name"
                       />
                     </div>
-                    <section className="grid grid-cols-2 gap-4">
-                      <DatePicker label="Payment Date" />
+                    <section className="grid sm:grid-cols-2 gap-4">
                       <div className="text-sm grid gap-2">
-                        <label>Payment Method</label>
-                        <select
-                          className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
-                          //   value={user}
-                        >
-                          <option>Cash</option>
-                          <option>Card</option>
-                          <option>Mobile Money</option>
-                          <option>Bank</option>
-                          <option>Cheque</option>
-                          <option>Online Payment</option>
-                          <option>Other</option>
-                        </select>
+                        <label>Phone Number</label>
+                        <input
+                          name="telephone"
+                          type="tel"
+                          //   value={title}
+                          //   onChange={updateCampaignDetails}
+                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          placeholder="Phone Number"
+                        />
+                      </div>
+                      <div className="text-sm grid gap-2">
+                        <label>Email Address</label>
+                        <input
+                          name="email"
+                          type="email"
+                          //   value={title}
+                          //   onChange={updateCampaignDetails}
+                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          placeholder="Email Address"
+                        />
                       </div>
                     </section>
                     <div className="text-sm grid gap-2">
-                      <label>Note</label>
-                      <textarea
-                        name="message"
+                      <label>Address</label>
+                      <input
+                        name="title"
                         type="text"
-                        //   value={message}
+                        //   value={title}
                         //   onChange={updateCampaignDetails}
-                        className="w-full outline-none border rounded-md pl-3 py-1 min-h-[9em] placeholder:text-[#8094ae]"
-                        placeholder="Note"
+                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        placeholder="Address"
                       />
-                      <p className="text-xs text-[#8094ae] normal-case italic">
-                        We`ll include your company name Lura Vpn Limited at the
-                        end of every message.
-                      </p>
                     </div>
                   </form>
                   <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
                     <article
                       className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setPayment(false)}
+                      onClick={() => setInfo(false)}
                     >
                       <MdOutlineCancel />
                       <p className="text-xs">cancel</p>
                     </article>
                     <article className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer">
                       <BsShieldCheck />
-                      <p className="text-xs">Add Payment</p>
+                      <p className="text-xs">Save Changes</p>
                     </article>
                   </div>
                 </div>
@@ -133,4 +121,4 @@ const NewPaymentForm = ({ payment, setPayment }) => {
   );
 };
 
-export default NewPaymentForm;
+export default NewInfoUpdate;

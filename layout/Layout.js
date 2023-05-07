@@ -246,7 +246,7 @@ const Layout = ({ children }) => {
                   </div>
                   <div className="px-6 grid border border-transparent border-y-gray-200">
                     <Link
-                      href={"settings/personal"}
+                      href={"/settings/personal"}
                       className="mt-2 text-sm flex items-center text-[#526484] gap-2"
                     >
                       <CiSettings className="text-lg" />

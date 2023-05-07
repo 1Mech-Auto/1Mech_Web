@@ -7,12 +7,12 @@ import NewPaymentForm from "@/components/NewPaymentForm";
 import { CgMenuRight } from "react-icons/cg";
 
 const Payments = () => {
-  const [open, setOpen] = useState(false);
+  const [payment, setPayment] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
 
   return (
     <Layout>
-      {open && <NewPaymentForm open={open} setOpen={setOpen} />}
+      {payment && <NewPaymentForm payment={payment} setPayment={setPayment} />}
       <section className="flex justify-between items-center mb-6 px-6 sm:px-0">
         <div>
           <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
@@ -22,7 +22,7 @@ const Payments = () => {
         </div>
         <button
           className="sm:flex hidden items-center gap-2 bg-blue-500 p-2.5 rounded-md text-sm text-white cursor-pointer font-bold ml-auto"
-          onClick={() => setOpen(true)}
+          onClick={() => setPayment(true)}
         >
           <BiPlus />
           <span>Add Payment</span>
@@ -44,7 +44,7 @@ const Payments = () => {
             <button
               className="flex sm:hidden items-center gap-2 bg-blue-500 p-2.5 rounded-md text-sm text-white cursor-pointer font-bold"
               onClick={() => {
-                setOpen(true);
+                setPayment(true);
               }}
             >
               <BiPlus />
