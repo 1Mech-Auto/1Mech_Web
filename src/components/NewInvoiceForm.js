@@ -5,7 +5,6 @@ import { AiOutlineClose } from "react-icons/ai";
 import { BsShieldCheck } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
 import DatePicker from "./DatePicker";
-import Invoices from "@/pages/invoices";
 
 const NewInvoiceForm = ({ invoice, setInvoice }) => {
   const cancelButtonRef = useRef(null);

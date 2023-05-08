@@ -9,7 +9,6 @@ const Invoices = () => {
   return (
     <DetailsPage>
       {invoice && <NewInvoiceForm invoice={invoice} setInvoice={setInvoice} />}
-
       <div className="px-6">
         <div className="flex items-center justify-between">
           <div className="py-6 md:col-span-2">

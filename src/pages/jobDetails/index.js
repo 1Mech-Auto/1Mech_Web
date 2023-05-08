@@ -11,6 +11,7 @@ import {
 } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { HiOutlinePencil } from "react-icons/hi";
+import {FiShoppingCart} from 'react-icons/fi'
 import NewJobCard from "@/components/NewJobCard";
 import NewInvoiceForm from "@/components/NewInvoiceForm";
 import NewQuotesForm from "@/components/NewQuotesForm";
@@ -220,52 +221,52 @@ const JobDetails = ({ children }) => {
         </div>
 
         <div>
-          <div className="h-10 border border-transparent border-b-[#dee2e6] text-[#526484] flex items-center gap-8 text-sm font-bold px-6">
+          <div className="h-12 border border-transparent border-b-[#dee2e6] text-[#526484] flex items-center gap-8 text-sm font-bold px-6">
             <Link
               href={"details"}
-              className="flex items-center gap-1 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer"
             >
               <BsFillFileEarmarkPersonFill className="text-lg md:text-md" />
               <p className="hidden md:block">Details</p>
             </Link>
             <Link
               href={"jobCard"}
-              className="flex items-center gap-1 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer"
             >
               <HiOutlineMenuAlt2 className="text-lg md:text-md" />
               <p className="hidden md:block">Job Card</p>
             </Link>
             <Link
               href={"tasks"}
-              className="flex items-center gap-1 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer"
             >
               <BsFileMedical className="text-lg md:text-md" />
               <p className="hidden md:block">Tasks</p>
             </Link>
             <Link
-              href={"projects"}
-              className="flex items-center gap-1 cursor-pointer"
+              href={"partsAndExpenses"}
+              className="flex items-center gap-2 cursor-pointer"
             >
-              <BsFileMedical className="text-lg md:text-md" />
+              <FiShoppingCart className="text-lg md:text-md" />
               <p className="hidden md:block">Parts & Expenses</p>
             </Link>
             <Link
               href={"invoices"}
-              className="flex items-center gap-1 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer"
             >
               <HiOutlineMenuAlt2 className="text-lg md:text-md" />
               <p className="hidden md:block">Invoices</p>
             </Link>
             <Link
               href={"quotes"}
-              className="flex items-center gap-1 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer"
             >
               <HiOutlineMenuAlt2 className="text-lg md:text-md" />
               <p className="hidden md:block">Quotes</p>
             </Link>
             <Link
               href={"payments"}
-              className="flex items-center gap-1 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer"
             >
               <HiOutlineMenuAlt2 className="text-lg md:text-md" />
               <p className="hidden md:block">Payments</p>
