@@ -221,7 +221,7 @@ const JobDetails = ({ children }) => {
         </div>
 
         <div>
-          <div className="h-12 border border-transparent border-b-[#dee2e6] text-[#526484] flex items-center gap-8 text-sm font-bold px-6">
+          <div className="h-12 border border-transparent border-b-[#dee2e6] text-[#526484] flex items-center gap-3 sm:gap-8 text-sm font-bold px-6">
             <Link
               href={"details"}
               className="flex items-center gap-2 cursor-pointer"

@@ -104,10 +104,6 @@ const NewPaymentForm = ({ payment, setPayment }) => {
                         className="w-full outline-none border rounded-md pl-3 py-1 min-h-[9em] placeholder:text-[#8094ae]"
                         placeholder="Note"
                       />
-                      <p className="text-xs text-[#8094ae] normal-case italic">
-                        We`ll include your company name Lura Vpn Limited at the
-                        end of every message.
-                      </p>
                     </div>
                   </form>
                   <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">

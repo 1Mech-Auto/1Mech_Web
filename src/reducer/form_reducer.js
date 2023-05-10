@@ -1,4 +1,9 @@
-import { ADD_NEW_CLIENT, NEW_CLIENT_FORM } from "@/action";
+import {
+  ADD_NEW_CLIENT,
+  NEW_CLIENT_FORM,
+  NEW_VEHICLE_FORM,
+  NEW_VEHICLE_TOGGLE,
+} from "@/action";
 const form_reducer = (state, action) => {
   if (action.type === NEW_CLIENT_FORM) {
     const { name, value } = action.payload;
@@ -17,7 +22,7 @@ const form_reducer = (state, action) => {
         clientPhone: phone,
         clientAddress: address,
         clientGender: gender,
-        clientDate:formattedDate
+        clientDate: formattedDate,
       };
     } else {
       return { ...state };
@@ -34,6 +39,19 @@ const form_reducer = (state, action) => {
         address: "",
         gender: "",
       },
+    };
+  }
+  if (action.type === NEW_VEHICLE_FORM) {
+    const { name, value } = action.payload;
+    return {
+      ...state,
+      newVehicleForm: { ...state.newVehicleForm, [name]: value },
+    };
+  }
+  if (action.type === NEW_VEHICLE_TOGGLE) {
+    return {
+      ...state,
+      newVehicleForm: { ...state.newVehicleForm, toggle1: !state.toggle1 },
     };
   }
 

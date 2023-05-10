@@ -5,11 +5,14 @@ import { BsThreeDots, BsFileMedical } from "react-icons/bs";
 import NewQuotesForm from "@/components/NewQuotesForm";
 import { RiArrowLeftRightFill } from "react-icons/ri";
 import NewWorkRequestedForm from "@/components/NewWorkRequestedForm";
+import JobCardImport from "@/components/JobCardImport";
 
 const Quotes = () => {
   const [quote, setQuote] = useState(false);
   const [show, setShow] = useState(false);
   const [workRequested, setWorkRequested] = useState(false);
+    const [jobImport, setJobImport] = useState(false);
+
 
   return (
     <JobDetails>
@@ -19,6 +22,9 @@ const Quotes = () => {
           workRequested={workRequested}
           setWorkRequested={setWorkRequested}
         />
+      )}
+      {jobImport && (
+        <JobCardImport jobImport={jobImport} setJobImport={setJobImport} />
       )}
 
       <div className="px-6">
@@ -47,7 +53,7 @@ const Quotes = () => {
                   </div>
                   <div
                     className="flex items-center px-4 gap-2 cursor-pointer text-[#364a63]"
-                    // onClick={() => setJobCard(true)}
+                    onClick={() => setJobImport(true)}
                   >
                     <BsFileMedical />
                     <p className="text-[0.76rem]">Approved Jobcard</p>

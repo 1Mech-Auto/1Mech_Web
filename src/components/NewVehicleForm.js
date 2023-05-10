@@ -9,19 +9,25 @@ import DropDownSelect from "./DropDownSelect";
 import VehicleInput from "./VehicleInput";
 import ToggleInputForm from "./ToggleInputForm";
 import DatePicker from "./DatePicker";
-
 import { useFormContext } from "@/context/form_context";
 
 const Form1 = () => {
-  const [enable, setEnable] = useState(true);
+  // const [enable, setEnable] = useState(true);
   const [enable2, setEnable2] = useState(false);
+  const {
+    newVehicleForm: { client,toggle1 },
+    newVehicleData,
+  } = useFormContext();
+  console.log(client);
   return (
     <form className="grid gap-4 px-4 pb-4">
       <div className="text-sm grid gap-2">
         <label>Client</label>
         <select
+          name="client"
           className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-          // value={user}
+          value={client}
+          onChange={newVehicleData}
         >
           <option>Select Client</option>
           <option>All clients</option>
@@ -34,11 +40,10 @@ const Form1 = () => {
       </div>
       <ToggleInputForm
         label={"The vehicle was brought in by the client himself/herself"}
-        enabled={enable}
-        setEnabled={setEnable}
-        name="one"
+        enabled={toggle1}
+        setEnabled={newVehicleData}
       />
-      {enable ? (
+      {toggle1 ? (
         ""
       ) : (
         <div className="block">

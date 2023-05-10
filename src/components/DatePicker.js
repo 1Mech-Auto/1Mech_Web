@@ -1,7 +1,10 @@
-import React,{useState} from 'react'
+import React, { useState } from "react";
+const date = new Date();
+const options = { month: "long", day: "numeric", year: "numeric" };
+let formattedDate = date.toLocaleDateString("en-US", options);
 
 const DatePicker = ({ label }) => {
-  const [date, setDate] = useState("2022-03-30");
+  const [date, setDate] = useState(formattedDate);
 
   return (
     <div className="text-sm grid gap-2">
@@ -16,4 +19,4 @@ const DatePicker = ({ label }) => {
   );
 };
 
-export default DatePicker
+export default DatePicker;

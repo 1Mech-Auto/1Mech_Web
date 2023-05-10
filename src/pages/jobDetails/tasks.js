@@ -5,15 +5,19 @@ import { BsFileMedical } from "react-icons/bs";
 import { RiArrowLeftRightFill } from "react-icons/ri";
 import NewTask from "@/components/NewTask";
 import NewWorkRequestedForm from "@/components/NewWorkRequestedForm";
+import JobCardImport from "@/components/JobCardImport";
 
 const Tasks = () => {
   const [task, setTask] = useState(false);
   const [show, setShow] = useState(false);
   const [workRequested, setWorkRequested] = useState(false);
+  const [jobImport,setJobImport] = useState(false)
   return (
     <JobDetails>
       {task && <NewTask task={task} setTask={setTask} />}
+      {jobImport && <JobCardImport jobImport={jobImport} setJobImport={setJobImport} />}
       {workRequested && <NewWorkRequestedForm workRequested={workRequested} setWorkRequested={setWorkRequested} />}
+
       <div className="px-6">
         <div className="flex items-center justify-between">
           <div className="py-6 md:col-span-2">
@@ -41,7 +45,7 @@ const Tasks = () => {
                   </div>
                   <div
                     className="flex items-center px-4 gap-2 cursor-pointer text-[#364a63]"
-                    // onClick={() => setJobCard(true)}
+                    onClick={() => setJobImport(true)}
                   >
                     <BsFileMedical />
                     <p className="text-[0.76rem]">Approved Jobcard</p>
