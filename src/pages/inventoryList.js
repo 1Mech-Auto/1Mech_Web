@@ -5,10 +5,12 @@ import { BiPlus } from "react-icons/bi";
 import { RxDotFilled } from "react-icons/rx";
 import NewItemForm from "@/components/NewItemForm";
 import { CgMenuRight } from "react-icons/cg";
+import { useFormContext } from "@/context/form_context";
 
 const InventoryList = () => {
   const [open, setOpen] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
+  const { inventoryList } = useFormContext();
 
   return (
     <Layout>
@@ -99,12 +101,46 @@ const InventoryList = () => {
             </div>
             <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl flex items-center gap-2 mr-auto">
               <RxDotFilled className="text-lg" />
-              <p className="text-sm font-bold">In Stock</p>
+              <p className="text-xs font-bold">In Stock</p>
             </div>
             <div>
               <BsThreeDots className="cursor-pointer text-xl" />
             </div>
           </div>
+          {inventoryList &&
+            inventoryList.map((inventory, index) => {
+              return (
+                <div
+                  key={index}
+                  className="font-medium text-[#364a63] text-sm grid grid-cols-[3em,8em,10em,7em,8em,8em,3em] md:grid-cols-[3em,8em,10em,7em,5em,8em,3em] lg:grid-cols-[3%,20%,20%,17%,12%,15%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
+                >
+                  <div>{index + 1}</div>
+                  <div className="grid">
+                    <h2 className="font-medium">{inventory.itemName}</h2>
+                    <p className="text-xs text-[#8094ae]">{ inventory.shelfNumber}</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium">{inventory.quantity}</h3>
+                    <p className="text-xs text-[#8094ae]">
+                      {inventory.itemCode}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-medium">{inventory.unitCost}</p>
+                  </div>
+                  <div className="hidden sm:block">
+                    <p>{inventory.supplier || "--|--"}</p>
+                  </div>
+                  <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl flex items-center gap-2 mr-auto">
+                    <RxDotFilled className="text-lg" />
+                    <p className="text-xs font-bold">In Stock</p>
+                  </div>
+                  <div>
+                    <BsThreeDots className="cursor-pointer text-xl" />
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
     </Layout>

@@ -1,13 +1,17 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsShieldCheck } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
-import DatePicker from "./DatePicker";
+import { useFormContext } from "@/context/form_context";
 
 const NewJobCard = ({ jobCard, setJobCard }) => {
   const cancelButtonRef = useRef(null);
+  const {
+    jobCardForm: { project, body, mechanical, electrical, approval },
+    newJobCardData,
+    addNewJobCard,
+  } = useFormContext();
 
   return (
     <Transition.Root show={jobCard} as={Fragment}>
@@ -59,7 +63,9 @@ const NewJobCard = ({ jobCard, setJobCard }) => {
                       </label>
                       <select
                         className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                        // value={user}
+                        name="project"
+                        value={project}
+                        onChange={newJobCardData}
                       >
                         <option>Select Project</option>
                         <option>All clients</option>
@@ -70,18 +76,18 @@ const NewJobCard = ({ jobCard, setJobCard }) => {
                         Body Report
                       </label>
                       <input
-                        name="quantity"
+                        name="body"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={body}
+                        onChange={newJobCardData}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Body Report"
                       />
                       <input
-                        name="quantity"
+                        name="body"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={body}
+                        onChange={newJobCardData}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Body Report"
                       />
@@ -95,18 +101,18 @@ const NewJobCard = ({ jobCard, setJobCard }) => {
                         Mechanical Report
                       </label>
                       <input
-                        name="quantity"
+                        name="mechanical"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={mechanical}
+                        onChange={newJobCardData}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Mechanical Report"
                       />
                       <input
-                        name="quantity"
+                        name="mechanical"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={mechanical}
+                        onChange={newJobCardData}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Mechanical Report"
                       />
@@ -120,18 +126,18 @@ const NewJobCard = ({ jobCard, setJobCard }) => {
                         Electrical Report
                       </label>
                       <input
-                        name="quantity"
+                        name="electrical"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={electrical}
+                        onChange={newJobCardData}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Electrical Report"
                       />
                       <input
-                        name="quantity"
+                        name="electrical"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={electrical}
+                        onChange={newJobCardData}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Electrical Report"
                       />
@@ -146,7 +152,9 @@ const NewJobCard = ({ jobCard, setJobCard }) => {
                       </label>
                       <select
                         className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                        // value={user}
+                        name="approval"
+                        value={approval}
+                        onChange={newJobCardData}
                       >
                         <option>Not Yet</option>
                         <option>Yes</option>
@@ -161,8 +169,14 @@ const NewJobCard = ({ jobCard, setJobCard }) => {
                       <MdOutlineCancel />
                       <p className="text-xs">cancel</p>
                     </article>
-                    <article className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer">
-                      <BsShieldCheck />
+                    <article
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                      onClick={() => {
+                        addNewJobCard();
+                        setJobCard(false);
+                      }}
+                    >
+                      <MdTaskAlt />
                       <p className="text-xs">Create Job Card</p>
                     </article>
                   </div>

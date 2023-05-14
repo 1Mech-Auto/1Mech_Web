@@ -1,8 +1,7 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsShieldCheck } from "react-icons/bs";
 import { useFormContext } from "@/context/form_context";
 
 export default function NewClientForm({ open, setOpen }) {
@@ -133,11 +132,11 @@ export default function NewClientForm({ open, setOpen }) {
                       className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
                       type="submit"
                       onClick={() => {
-                        addNewClient()
-                        setOpen(false)
+                        addNewClient();
+                        setOpen(false);
                       }}
                     >
-                      <BsShieldCheck />
+                      <MdTaskAlt />
                       <p className="text-xs">Create Client</p>
                     </button>
                   </div>

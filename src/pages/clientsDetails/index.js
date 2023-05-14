@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../../../layout/Layout";
-import { BsThreeDots, BsArrowLeft} from "react-icons/bs";
+import { BsThreeDots, BsArrowLeft } from "react-icons/bs";
 import { TbMessageCircle } from "react-icons/tb";
 import { CgMenuRight } from "react-icons/cg";
 import Link from "next/link";
@@ -16,6 +16,7 @@ import NewInvoiceForm from "@/components/NewInvoiceForm";
 import NewQuotesForm from "@/components/NewQuotesForm";
 import NewInfoUpdate from "@/components/NewInfoUpdate";
 import NewSMSForm from "@/components/NewSMSForm";
+import { useRouter } from "next/router";
 
 const DetailsPage = ({ children }) => {
   const [invoice, setInvoice] = useState(false);
@@ -25,6 +26,8 @@ const DetailsPage = ({ children }) => {
   const [quote, setQuote] = useState(false);
   const [info, setInfo] = useState(false);
   const [sms, setSms] = useState(false);
+  const router = useRouter();
+
   return (
     <Layout>
       {invoice && <NewInvoiceForm invoice={invoice} setInvoice={setInvoice} />}
@@ -194,48 +197,108 @@ const DetailsPage = ({ children }) => {
         </div>
 
         <div>
-          <div className="h-10 border border-transparent border-b-[#dee2e6] text-[#526484] flex items-center gap-8 text-sm font-bold px-6">
+          <div className="h-12 border border-transparent border-b-[#dee2e6] text-[#526484] flex items-center gap-8 md:gap-4 lg:gap-8 text-sm font-bold px-6 relative">
             <Link
               href={"details"}
-              className="flex items-center gap-1 cursor-pointer"
+              className={`${
+                router.pathname === `${"/clientsDetails/details"}` &&
+                "text-[#0971fe] relative"
+              } flex items-center gap-1 cursor-pointer`}
             >
               <BsFillFileEarmarkPersonFill className="text-lg md:text-md" />
               <p className="hidden md:block">Details</p>
+              <div
+                className={`${
+                  router.pathname === `${"/clientsDetails/details"}`
+                    ? "opacity-100"
+                    : "opacity-0"
+                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
+              ></div>
             </Link>
             <Link
               href={"projects"}
-              className="flex items-center gap-1 cursor-pointer"
+              className={`${
+                router.pathname === `${"/clientsDetails/projects"}` &&
+                "text-[#0971fe]"
+              } flex items-center gap-1 cursor-pointer relative`}
             >
               <BsFileMedical className="text-lg md:text-md" />
               <p className="hidden md:block">Projects</p>
+              <div
+                className={`${
+                  router.pathname === `${"/clientsDetails/projects"}`
+                    ? "opacity-100"
+                    : "opacity-0"
+                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
+              ></div>
             </Link>
             <Link
               href={"jobCard"}
-              className="flex items-center gap-1 cursor-pointer"
+              className={`${
+                router.pathname === `${"/clientsDetails/jobCard"}` &&
+                "text-[#0971fe]"
+              } flex items-center gap-1 cursor-pointer relative`}
             >
               <HiOutlineMenuAlt2 className="text-lg md:text-md" />
               <p className="hidden md:block">Job Card</p>
+              <div
+                className={`${
+                  router.pathname === `${"/clientsDetails/jobCard"}`
+                    ? "opacity-100"
+                    : "opacity-0"
+                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
+              ></div>
             </Link>
             <Link
               href={"invoices"}
-              className="flex items-center gap-1 cursor-pointer"
+              className={`${
+                router.pathname === `${"/clientsDetails/invoices"}` &&
+                "text-[#0971fe]"
+              } flex items-center gap-1 cursor-pointer relative`}
             >
               <HiOutlineMenuAlt2 className="text-lg md:text-md" />
               <p className="hidden md:block">Invoices</p>
+              <div
+                className={`${
+                  router.pathname === `${"/clientsDetails/invoices"}`
+                    ? "opacity-100"
+                    : "opacity-0"
+                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
+              ></div>
             </Link>
             <Link
               href={"quotes"}
-              className="flex items-center gap-1 cursor-pointer"
+              className={`${
+                router.pathname === `${"/clientsDetails/quotes"}` &&
+                "text-[#0971fe]"
+              } flex items-center gap-1 cursor-pointer relative`}
             >
               <HiOutlineMenuAlt2 className="text-lg md:text-md" />
               <p className="hidden md:block">Quotes</p>
+              <div
+                className={`${
+                  router.pathname === `${"/clientsDetails/quotes"}`
+                    ? "opacity-100"
+                    : "opacity-0"
+                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
+              ></div>
             </Link>
             <Link
               href={"payments"}
-              className="flex items-center gap-1 cursor-pointer"
+              className={`${
+                router.pathname === `${"/clientsDetails/payments"}` &&
+                "text-[#0971fe]"
+              } flex items-center gap-1 cursor-pointer relative`}
             >
               <HiOutlineMenuAlt2 className="text-lg md:text-md" />
               <p className="hidden md:block">Payments</p>
+              <div
+                className={`${
+                  router.pathname === `${"/clientsDetails/payments"}`
+                    ? "opacity-100"
+                    : "opacity-0"
+                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
+              ></div>
             </Link>
           </div>
           <div>{children}</div>

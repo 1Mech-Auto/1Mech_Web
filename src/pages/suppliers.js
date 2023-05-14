@@ -4,10 +4,12 @@ import { BsThreeDots } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
 import NewSuppliersForm from "@/components/NewSuppliersForm";
 import { CgMenuRight } from "react-icons/cg";
+import { useFormContext } from "@/context/form_context";
 
 const Suppliers = () => {
   const [open, setOpen] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
+  const { supplierList } = useFormContext();
 
   return (
     <Layout>
@@ -93,13 +95,42 @@ const Suppliers = () => {
             <div className="hidden sm:block text-[#8094ae]">
               emmanuel@email.com
             </div>
-            <div className="text-[#8094ae]">N390,000.00</div>
-            <div className="hidden sm:block text-[#8094ae]">1/1</div>
-            <div className="hidden sm:block">April 20,2023</div>
+            <div className="text-[#8094ae]">0</div>
+            <div className="hidden sm:block text-[#8094ae]">0</div>
+            <div className="hidden sm:block">N0.00</div>
             <div>
               <BsThreeDots className="cursor-pointer text-xl" />
             </div>
           </div>
+          {supplierList &&
+            supplierList.map((supplier, index) => {
+              return (
+                <div
+                  key={index}
+                  className="font-normal text-[#364a63] text-sm grid grid-cols-[6%,50%,30%,6%] lg:grid-cols-[3%,25%,25%,15%,9%,12%,4%] items-center p-2.5 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
+                >
+                  <div>{index + 1}</div>
+                  <div className="flex items-center gap-2">
+                    <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
+                      ME
+                    </p>
+                    <div>
+                      <h2 className="font-medium">{supplier.supplierName}</h2>
+                      <p className="text-xs text-[#8094ae]">{supplier.phone}</p>
+                    </div>
+                  </div>
+                  <div className="hidden sm:block text-[#8094ae]">
+                    {supplier.email}
+                  </div>
+                  <div className="text-[#8094ae]">0</div>
+                  <div className="hidden sm:block text-[#8094ae]">0</div>
+                  <div className="hidden sm:block">N0.00</div>
+                  <div>
+                    <BsThreeDots className="cursor-pointer text-xl" />
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
     </Layout>

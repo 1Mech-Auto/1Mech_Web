@@ -5,10 +5,12 @@ import { BiPlus } from "react-icons/bi";
 import { RxDotFilled } from "react-icons/rx";
 import NewTeamMemberForm from "@/components/NewTeamMemberForm";
 import { CgMenuRight } from "react-icons/cg";
+import { useFormContext } from "@/context/form_context";
 
 const TeamMembers = () => {
   const [open, setOpen] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
+  const { teamList } = useFormContext();
 
   return (
     <Layout>
@@ -93,7 +95,7 @@ const TeamMembers = () => {
             </div>
             <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl flex items-center gap-2 mr-auto">
               <RxDotFilled className="text-lg" />
-              <p className="text-sm font-bold">Owner</p>
+              <p className="text-xs font-bold">Owner</p>
             </div>
             <div>N0.00</div>
             <div className="hidden md:block text-[#8094ae]">0/0</div>
@@ -103,6 +105,43 @@ const TeamMembers = () => {
               <BsThreeDots className="cursor-pointer" />
             </div>
           </div>
+          {teamList &&
+            teamList.map((team, index) => {
+              return (
+                <div
+                  key={index}
+                  className="font-normal text-[#364a63] text-sm grid grid-cols-[6%,40%,22%,22%,5%] gap-2 md:grid-cols-[3em,15em,8em,8em,7em,9em,7em,3em] lg:grid-cols-[3%,25%,12%,12%,10%,15%,10%,4%] items-center p-2.5 border border-transparent border-b-gray-200 hover:shadow-hoverPurple"
+                >
+                  <div>{index + 1}</div>
+                  <div className="flex items-center gap-2">
+                    <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
+                      ME
+                    </p>
+                    <div>
+                      <h2 className="font-medium">
+                        {team.firstName} {team.lastName}
+                      </h2>
+                      <p className="text-xs text-[#8094ae]">{team.phone}</p>
+                    </div>
+                  </div>
+                  <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl flex items-center gap-2 mr-auto">
+                    <RxDotFilled className="text-lg" />
+                    <p className="text-xs font-bold">{team.role}</p>
+                  </div>
+                  <div>N0.00</div>
+                  <div className="hidden md:block text-[#8094ae]">0/0</div>
+                  <div className="hidden md:block text-[#8094ae]">
+                    {team.date}
+                  </div>
+                  <div className="text-green-500 hidden md:block">
+                    {team.type}
+                  </div>
+                  <div>
+                    <BsThreeDots className="cursor-pointer" />
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
     </Layout>

@@ -1,13 +1,27 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsShieldCheck } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
 import DatePicker from "./DatePicker";
+import { useFormContext } from "@/context/form_context";
 
 const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
   const cancelButtonRef = useRef(null);
+  const {
+    workForm: {
+      taskTitle,
+      assignTo,
+      status,
+      taskCost,
+      taskDesc,
+      dueDate,
+      dueTime,
+      requiredParts,
+    },
+    newWorkData,
+    addNewWork,
+  } = useFormContext();
 
   return (
     <Transition.Root show={workRequested} as={Fragment}>
@@ -66,14 +80,18 @@ const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
                               type="text"
                               placeholder="Check Vehicle Overheating"
                               className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
-                              // value={user}
+                              name="taskTitle"
+                              value={taskTitle}
+                              onChange={newWorkData}
                             />
                           </div>
                           <div className="text-sm grid gap-2">
                             <label>Assign to</label>
                             <select
                               className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                              // value={user}
+                              name="assignTo"
+                              value={assignTo}
+                              onChange={newWorkData}
                             >
                               <option>Select Staff</option>
                               <option>All clients</option>
@@ -83,7 +101,9 @@ const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
                             <label>Status</label>
                             <select
                               className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                              // value={user}
+                              name="status"
+                              value={status}
+                              onChange={newWorkData}
                             >
                               <option>In Progress</option>
                               <option>All clients</option>
@@ -92,10 +112,10 @@ const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
                           <div className="text-sm grid gap-2">
                             <label>Task Cost</label>
                             <input
-                              name="description"
+                              name="taskCost"
                               type="text"
-                              //   value={title}
-                              //   onChange={updateCampaignDetails}
+                              value={taskCost}
+                              onChange={newWorkData}
                               className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                               placeholder="N0.00"
                             />
@@ -106,22 +126,35 @@ const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
                           <textarea
                             placeholder="Task Description"
                             className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae] h-20"
+                            name="taskDesc"
+                            value={taskDesc}
+                            onChange={newWorkData}
                           />
                         </div>
                         <div className="grid sm:grid-cols-4 items-center gap-4">
-                          <DatePicker label="Due Date" />
+                          <DatePicker
+                            label="Due Date"
+                            name={"dueDate"}
+                            date={dueDate}
+                            setDate={newWorkData}
+                          />
                           <div className="text-sm grid gap-2">
                             <label>Due Time</label>
                             <input
                               type="time"
                               className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              name="dueTime"
+                              value={dueTime}
+                              onChange={newWorkData}
                             />
                           </div>
                           <div className="text-sm grid gap-2 sm:col-span-2">
                             <label>Select required parts</label>
                             <select
                               className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                              // value={user}
+                              name="requiredParts"
+                              value={requiredParts}
+                              onChange={newWorkData}
                             >
                               <option>Select required parts</option>
                               <option>All clients</option>
@@ -216,8 +249,14 @@ const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
                       <MdOutlineCancel />
                       <p className="text-xs">cancel</p>
                     </article>
-                    <article className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer">
-                      <BsShieldCheck />
+                    <article
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                      onClick={() => {
+                        addNewWork();
+                        setWorkRequested(false);
+                      }}
+                    >
+                      <MdTaskAlt />
                       <p className="text-xs">Create Tasks</p>
                     </article>
                   </div>

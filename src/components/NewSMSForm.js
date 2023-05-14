@@ -1,12 +1,17 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsShieldCheck } from "react-icons/bs";
 import { FaSms } from "react-icons/fa";
+import { useFormContext } from "@/context/form_context";
 
 const NewSMSForm = ({ sms, setSms }) => {
   const cancelButtonRef = useRef(null);
+  const {
+    smsForm: { sendTo, phone, message },
+    newSms,
+    sendSms,
+  } = useFormContext();
   return (
     <Transition.Root show={sms} as={Fragment}>
       <Dialog
@@ -54,10 +59,10 @@ const NewSMSForm = ({ sms, setSms }) => {
                     <div className="text-sm grid gap-2">
                       <label>Send To</label>
                       <input
-                        name="title"
+                        name="sendTo"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={sendTo}
+                        onChange={newSms}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Send To"
                       />
@@ -65,10 +70,10 @@ const NewSMSForm = ({ sms, setSms }) => {
                     <div className="text-sm grid gap-2">
                       <label>Phone Number</label>
                       <input
-                        name="telephone"
+                        name="phone"
                         type="tel"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={phone}
+                        onChange={newSms}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Phone Number"
                       />
@@ -76,10 +81,10 @@ const NewSMSForm = ({ sms, setSms }) => {
                     <div className="text-sm grid gap-2">
                       <label>Message</label>
                       <textarea
-                        name="title"
+                        name="message"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={message}
+                        onChange={newSms}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae] h-20"
                         placeholder="Message"
                       />
@@ -97,8 +102,14 @@ const NewSMSForm = ({ sms, setSms }) => {
                       <MdOutlineCancel />
                       <p className="text-xs">cancel</p>
                     </article>
-                    <article className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer">
-                      <BsShieldCheck />
+                    <article
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                      onClick={() => {
+                        sendSms();
+                        setSms(false);
+                      }}
+                    >
+                      <MdTaskAlt />
                       <p className="text-xs">Send Messages</p>
                     </article>
                   </div>

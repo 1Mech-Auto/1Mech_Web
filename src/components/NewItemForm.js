@@ -1,12 +1,26 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsShieldCheck } from "react-icons/bs";
+import { useFormContext } from "@/context/form_context";
 
 const NewItemForm = ({ open, setOpen }) => {
   const cancelButtonRef = useRef(null);
-  
+  const {
+    inventoryForm: {
+      itemName,
+      quantity,
+      quantityUnit,
+      restock,
+      unitCost,
+      supplier,
+      itemCode,
+      shelfNumber,
+    },
+    newInventoryData,
+    addNewInventory,
+  } = useFormContext();
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -54,10 +68,10 @@ const NewItemForm = ({ open, setOpen }) => {
                     <div className="text-sm grid gap-2">
                       <label>Item Name</label>
                       <input
-                        name="title"
+                        name="itemName"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={itemName}
+                        onChange={newInventoryData}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Item Name"
                       />
@@ -68,8 +82,8 @@ const NewItemForm = ({ open, setOpen }) => {
                         <input
                           name="quantity"
                           type="number"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={quantity}
+                          onChange={newInventoryData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Quantity"
                         />
@@ -78,7 +92,9 @@ const NewItemForm = ({ open, setOpen }) => {
                         <label>Quantity Unit</label>
                         <select
                           className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
-                          //   value={user}
+                          name="quantityUnit"
+                          value={quantityUnit}
+                          onChange={newInventoryData}
                         >
                           <option>Units</option>
                           <option>Litres</option>
@@ -92,10 +108,10 @@ const NewItemForm = ({ open, setOpen }) => {
                     <div className="text-sm grid gap-2">
                       <label>Restock Quantity</label>
                       <input
-                        name="title"
+                        name="restock"
                         type="number"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={restock}
+                        onChange={newInventoryData}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Restock Quantity"
                       />
@@ -108,10 +124,10 @@ const NewItemForm = ({ open, setOpen }) => {
                       <div className="text-sm grid gap-2">
                         <label>Unit Cost</label>
                         <input
-                          name="quantity"
+                          name="unitCost"
                           type="number"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={unitCost}
+                          onChange={newInventoryData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="0.00"
                         />
@@ -120,7 +136,9 @@ const NewItemForm = ({ open, setOpen }) => {
                         <label>Select Supplier</label>
                         <select
                           className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
-                          //   value={user}
+                          name="supplier"
+                          value={supplier}
+                          onChange={newInventoryData}
                         >
                           <option>Select Supplier</option>
                           <option>Litres</option>
@@ -131,10 +149,10 @@ const NewItemForm = ({ open, setOpen }) => {
                       <div className="text-sm grid gap-2">
                         <label>Item Code</label>
                         <input
-                          name="title"
+                          name="itemCode"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={itemCode}
+                          onChange={newInventoryData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Item Code"
                         />
@@ -142,10 +160,10 @@ const NewItemForm = ({ open, setOpen }) => {
                       <div className="text-sm grid gap-2">
                         <label>Shelf Number</label>
                         <input
-                          name="title"
+                          name="shelfNumber"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={shelfNumber}
+                          onChange={newInventoryData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Shelf Number"
                         />
@@ -153,8 +171,9 @@ const NewItemForm = ({ open, setOpen }) => {
                     </section>
                   </form>
                   <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
-                    <article className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                    onClick={() => setOpen(false)}
+                    <article
+                      className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
+                      onClick={() => setOpen(false)}
                     >
                       <MdOutlineCancel />
                       <p className="text-xs">cancel</p>
@@ -162,11 +181,11 @@ const NewItemForm = ({ open, setOpen }) => {
                     <article
                       className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
                       onClick={() => {
-                        addNewCampaign();
-                        toggleOfferPopup();
+                        addNewInventory();
+                        setOpen(false);
                       }}
                     >
-                      <BsShieldCheck />
+                      <MdTaskAlt />
                       <p className="text-xs">Add Item</p>
                     </article>
                   </div>

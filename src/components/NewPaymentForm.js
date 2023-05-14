@@ -1,12 +1,17 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsShieldCheck } from "react-icons/bs";
 import DatePicker from "./DatePicker";
+import { useFormContext } from "@/context/form_context";
 
 const NewPaymentForm = ({ payment, setPayment }) => {
   const cancelButtonRef = useRef(null);
+  const {
+    paymentsForm: { job, amount, paymentDate, paymentMethod, notes },
+    newPaymentData,
+    addNewPayment,
+  } = useFormContext();
 
   return (
     <Transition.Root show={payment} as={Fragment}>
@@ -56,7 +61,9 @@ const NewPaymentForm = ({ payment, setPayment }) => {
                       <label>Select Invoice</label>
                       <select
                         className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
-                        //   value={user}
+                        name="job"
+                        value={job}
+                        onChange={newPaymentData}
                       >
                         <option>Select Invoice</option>
                         <option>All clients</option>
@@ -68,21 +75,28 @@ const NewPaymentForm = ({ payment, setPayment }) => {
                     <div className="text-sm grid gap-2">
                       <label>Amount</label>
                       <input
-                        name="title"
+                        name="amount"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={amount}
+                        onChange={newPaymentData}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="0.00"
                       />
                     </div>
                     <section className="grid grid-cols-2 gap-4">
-                      <DatePicker label="Payment Date" />
+                      <DatePicker
+                        label="Payment Date"
+                        name={"paymentDate"}
+                        date={paymentDate}
+                        setDate={newPaymentData}
+                      />
                       <div className="text-sm grid gap-2">
                         <label>Payment Method</label>
                         <select
                           className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
-                          //   value={user}
+                          name="paymentMethod"
+                          value={paymentMethod}
+                          onChange={newPaymentData}
                         >
                           <option>Cash</option>
                           <option>Card</option>
@@ -97,10 +111,10 @@ const NewPaymentForm = ({ payment, setPayment }) => {
                     <div className="text-sm grid gap-2">
                       <label>Note</label>
                       <textarea
-                        name="message"
+                        name="notes"
                         type="text"
-                        //   value={message}
-                        //   onChange={updateCampaignDetails}
+                        value={notes}
+                        onChange={newPaymentData}
                         className="w-full outline-none border rounded-md pl-3 py-1 min-h-[9em] placeholder:text-[#8094ae]"
                         placeholder="Note"
                       />
@@ -114,8 +128,14 @@ const NewPaymentForm = ({ payment, setPayment }) => {
                       <MdOutlineCancel />
                       <p className="text-xs">cancel</p>
                     </article>
-                    <article className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer">
-                      <BsShieldCheck />
+                    <article
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                      onClick={() => {
+                        addNewPayment();
+                        setPayment(false);
+                      }}
+                    >
+                      <MdTaskAlt />
                       <p className="text-xs">Add Payment</p>
                     </article>
                   </div>

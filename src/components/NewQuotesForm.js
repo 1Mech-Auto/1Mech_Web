@@ -1,12 +1,17 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsShieldCheck } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
+import { useFormContext } from "@/context/form_context";
 
 const NewQuotesForm = ({ quote, setQuote }) => {
   const cancelButtonRef = useRef(null);
+  const {
+    quoteForm: { job, itemDesc, quantity, unitCost, tax, total, notes },
+    newQuoteData,
+    addNewQuote,
+  } = useFormContext();
 
   return (
     <Transition.Root show={quote} as={Fragment}>
@@ -55,8 +60,10 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                     <div className="text-sm grid gap-2">
                       <label>Select Job</label>
                       <select
+                        name="job"
+                        value={job}
+                        onChange={newQuoteData}
                         className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                        // value={user}
                       >
                         <option>Select Job</option>
                         <option>All clients</option>
@@ -67,10 +74,10 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                       <div className="text-sm grid gap-2">
                         <label>Item Description</label>
                         <input
-                          name="description"
+                          name="itemDesc"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={itemDesc}
+                          onChange={newQuoteData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Item Description"
                         />
@@ -80,8 +87,8 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                         <input
                           name="quantity"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={quantity}
+                          onChange={newQuoteData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="1"
                         />
@@ -89,10 +96,10 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                       <div className="text-sm grid gap-2">
                         <label>Unit Cost ( N )</label>
                         <input
-                          name="unit"
+                          name="unitCost"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={unitCost}
+                          onChange={newQuoteData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="0.00"
                         />
@@ -102,8 +109,8 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                         <input
                           name="tax"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={tax}
+                          onChange={newQuoteData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Tax (%)"
                         />
@@ -111,10 +118,10 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                       <div className="text-sm grid gap-2">
                         <label>Total ( N )</label>
                         <input
-                          name="tax"
+                          name="total"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={total}
+                          onChange={newQuoteData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="0.00"
                         />
@@ -128,11 +135,11 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                       <div className="w-80 grid gap-2">
                         <div className="flex justify-between">
                           <p>Sub Total:</p>
-                          <p className="font-semibold">N0.00</p>
+                          <p className="font-semibold">{total}</p>
                         </div>
                         <div className="flex justify-between">
                           <p>Tax:</p>
-                          <p className="font-semibold">N0.00</p>
+                          <p className="font-semibold">{tax}</p>
                         </div>
                         <hr />
                         <div className="flex justify-between text-md font-semibold">
@@ -145,6 +152,9 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                     <div className="text-sm grid gap-2">
                       <label>Notes</label>
                       <textarea
+                        type="text"
+                        value={notes}
+                        onChange={newQuoteData}
                         placeholder="Notes"
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                       />
@@ -161,8 +171,14 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                       <MdOutlineCancel />
                       <p className="text-xs">cancel</p>
                     </article>
-                    <article className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer">
-                      <BsShieldCheck />
+                    <article
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                      onClick={() => {
+                        addNewQuote();
+                        setQuote(false);
+                      }}
+                    >
+                      <MdTaskAlt />
                       <p className="text-xs">Create Quote</p>
                     </article>
                   </div>

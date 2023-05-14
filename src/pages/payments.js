@@ -5,10 +5,12 @@ import { BiPlus } from "react-icons/bi";
 import { RxDotFilled } from "react-icons/rx";
 import NewPaymentForm from "@/components/NewPaymentForm";
 import { CgMenuRight } from "react-icons/cg";
+import { useFormContext } from "@/context/form_context";
 
 const Payments = () => {
   const [payment, setPayment] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
+  const { paymentsList } = useFormContext();
 
   return (
     <Layout>
@@ -68,7 +70,7 @@ const Payments = () => {
           </div>
         </div>
         <div className="border rounded-md min-h-[30vh] overflow-x-auto ">
-          <main className="font-semibold text-[#8094ae] text-sm grid grid-cols-[6%,80%,5%] md:grid-cols-[3em,15em,7em,4em,7em,9em,7em,3em] lg:grid-cols-[3%,25%,15%,12%,12%,14%,10%,5%] p-2.5 border border-transparent border-b-gray-200 gap-2">
+          <main className="font-semibold text-[#8094ae] text-sm grid grid-cols-[6%,80%,5%] md:grid-cols-[3em,15em,7em,4em,7em,9em,7em,3em] lg:grid-cols-[3%,25%,15%,10%,12%,14%,10%,5%] p-2.5 border border-transparent border-b-gray-200 gap-2">
             <div>#</div>
             <div>Client</div>
             <div className="hidden md:block">Project</div>
@@ -78,7 +80,7 @@ const Payments = () => {
             <div className="hidden md:block">Status</div>
             <div></div>
           </main>
-          <div className="font-medium text-[#364a63] text-sm grid grid-cols-[6%,80%,5%] md:grid-cols-[3em,15em,7em,4em,7em,9em,7em,3em] lg:grid-cols-[3%,25%,15%,12%,12%,14%,10%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
+          <div className="font-medium text-[#364a63] text-sm grid grid-cols-[6%,80%,5%] md:grid-cols-[3em,15em,7em,4em,7em,9em,7em,3em] lg:grid-cols-[3%,25%,15%,10%,12%,14%,10%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
             <div>1</div>
             <div className="flex items-center gap-2">
               <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
@@ -105,12 +107,55 @@ const Payments = () => {
             </div>
             <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl items-center gap-2 hidden md:flex">
               <RxDotFilled className="text-lg" />
-              <p className="text-sm font-bold">Paid</p>
+              <p className="text-xs font-bold">Paid</p>
             </div>
             <div>
               <BsThreeDots className="cursor-pointer text-xl" />
             </div>
           </div>
+          {paymentsList &&
+            paymentsList.map((payment, index) => {
+              return (
+                <div
+                  key={index}
+                  className="font-medium text-[#364a63] text-sm grid grid-cols-[6%,80%,5%] md:grid-cols-[3em,15em,7em,4em,7em,9em,7em,3em] lg:grid-cols-[3%,25%,15%,10%,12%,14%,10%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
+                >
+                  <div>{index + 1}</div>
+                  <div className="flex items-center gap-2">
+                    <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
+                      ME
+                    </p>
+                    <div>
+                      <h2 className="font-medium">{payment.job}</h2>
+                      <p className="text-xs text-[#8094ae]">+2348167821219</p>
+                    </div>
+                  </div>
+                  <div className="hidden md:block">
+                    <h3 className="font-medium">TOYOTA Sienna</h3>
+                    <p className="text-xs text-[#8094ae]">AAA808EJ</p>
+                  </div>
+                  <div className="hidden md:block">
+                    <p className="font-medium">Invoice #117</p>
+                  </div>
+                  <div className="hidden md:block text-[#8094ae]">
+                    <p>{payment.paymentDate}</p>
+                  </div>
+                  <div className="font-medium hidden md:block">
+                    <p>N{payment.amount}</p>
+                    <p className="text-[#8094ae] text-xs">
+                      {payment.paymentMethod}
+                    </p>
+                  </div>
+                  <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl items-center gap-2 hidden md:flex">
+                    <RxDotFilled className="text-lg" />
+                    <p className="text-xs font-bold">Paid</p>
+                  </div>
+                  <div>
+                    <BsThreeDots className="cursor-pointer text-xl" />
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
     </Layout>

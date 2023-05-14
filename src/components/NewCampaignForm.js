@@ -1,11 +1,16 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsShieldCheck } from "react-icons/bs";
+import { useFormContext } from "@/context/form_context";
 
 const NewCampaignForm = ({ open, setOpen }) => {
   const cancelButtonRef = useRef(null);
+  const {
+    campaignForm: { campaignTitle, send, message },
+    newCampaignData,
+    addNewCampaign,
+  } = useFormContext();
   // MdTaskAlt IMPORTANT
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -54,10 +59,10 @@ const NewCampaignForm = ({ open, setOpen }) => {
                     <div className="text-sm grid gap-2">
                       <label>Campaign title</label>
                       <input
-                        name="title"
+                        name="campaignTitle"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={campaignTitle}
+                        onChange={newCampaignData}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Campaign Title"
                       />
@@ -69,7 +74,9 @@ const NewCampaignForm = ({ open, setOpen }) => {
                       <label>Send to</label>
                       <select
                         className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
-                        //   value={user}
+                        name="send"
+                        value={send}
+                        onChange={newCampaignData}
                       >
                         <option>Select</option>
                         <option>All clients</option>
@@ -85,13 +92,13 @@ const NewCampaignForm = ({ open, setOpen }) => {
                       <textarea
                         name="message"
                         type="text"
-                        //   value={message}
-                        //   onChange={updateCampaignDetails}
-                        className="w-full outline-none border rounded-md pl-3 py-1 min-h-[6em] placeholder:text-[#8094ae]"
+                        value={message}
+                        onChange={newCampaignData}
+                        className="w-full outline-none border rounded-md pl-3 py-1 h-28 placeholder:text-[#8094ae]"
                         placeholder="Campaign Title"
                       />
                       <p className="text-xs text-[#8094ae] normal-case italic">
-                        We`ll include your company name Lura Vpn Limited at the
+                        We`ll include your company name One-Mech Limited at the
                         end of every message.
                       </p>
                     </div>
@@ -107,11 +114,11 @@ const NewCampaignForm = ({ open, setOpen }) => {
                     <article
                       className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
                       onClick={() => {
-                        addNewCampaign();
-                        toggleOfferPopup();
+                        addNewCampaign()
+                        setOpen(false)
                       }}
                     >
-                      <BsShieldCheck />
+                      <MdTaskAlt />
                       <p className="text-xs">send campaign</p>
                     </article>
                   </div>

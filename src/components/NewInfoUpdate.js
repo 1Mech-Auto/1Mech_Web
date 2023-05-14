@@ -1,11 +1,16 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsShieldCheck } from "react-icons/bs";
+import { useFormContext } from "@/context/form_context";
 
 const NewInfoUpdate = ({ info, setInfo }) => {
   const cancelButtonRef = useRef(null);
+  const {
+    updateForm: { fullName, phone, email, address },
+    newUpdateData,
+    addNewUpdate,
+  } = useFormContext();
 
   return (
     <Transition.Root show={info} as={Fragment}>
@@ -54,10 +59,10 @@ const NewInfoUpdate = ({ info, setInfo }) => {
                     <div className="text-sm grid gap-2">
                       <label>Full Name</label>
                       <input
-                        name="title"
+                        name="fullName"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={fullName}
+                        onChange={newUpdateData}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Full Name"
                       />
@@ -66,10 +71,10 @@ const NewInfoUpdate = ({ info, setInfo }) => {
                       <div className="text-sm grid gap-2">
                         <label>Phone Number</label>
                         <input
-                          name="telephone"
+                          name="phone"
                           type="tel"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={phone}
+                          onChange={newUpdateData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Phone Number"
                         />
@@ -79,8 +84,8 @@ const NewInfoUpdate = ({ info, setInfo }) => {
                         <input
                           name="email"
                           type="email"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={email}
+                          onChange={newUpdateData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Email Address"
                         />
@@ -89,10 +94,10 @@ const NewInfoUpdate = ({ info, setInfo }) => {
                     <div className="text-sm grid gap-2">
                       <label>Address</label>
                       <input
-                        name="title"
+                        name="address"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={address}
+                        onChange={newUpdateData}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Address"
                       />
@@ -106,8 +111,14 @@ const NewInfoUpdate = ({ info, setInfo }) => {
                       <MdOutlineCancel />
                       <p className="text-xs">cancel</p>
                     </article>
-                    <article className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer">
-                      <BsShieldCheck />
+                    <article
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                      onClick={() => {
+                        addNewUpdate();
+                        setInfo(false);
+                      }}
+                    >
+                      <MdTaskAlt />
                       <p className="text-xs">Save Changes</p>
                     </article>
                   </div>

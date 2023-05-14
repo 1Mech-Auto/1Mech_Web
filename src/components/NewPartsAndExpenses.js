@@ -1,13 +1,29 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsShieldCheck } from "react-icons/bs";
 import DatePicker from "./DatePicker";
 import ToggleInputForm from "./ToggleInputForm";
+import { useFormContext } from "@/context/form_context";
 
 const NewPartsAndExpenses = ({ parts, setParts }) => {
   const cancelButtonRef = useRef(null);
+  const {
+    expenseForm: {
+      source,
+      itemName,
+      supplier,
+      quantity,
+      quantityUnit,
+      total,
+      expense,
+      type,
+      status,
+      paymentDue,
+    },
+    newExpenseData,
+    addNewExpense,
+  } = useFormContext();
 
   return (
     <Transition.Root show={parts} as={Fragment}>
@@ -57,7 +73,9 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                       <label>Source</label>
                       <select
                         className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
-                        //   value={user}
+                        name="source"
+                        value={source}
+                        onChange={newExpenseData}
                       >
                         <option>External Suppliers</option>
                         <option>All clients</option>
@@ -67,10 +85,10 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                       <div className="text-sm grid gap-2">
                         <label>Expense / Item name</label>
                         <input
-                          name="title"
+                          name="itemName"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={itemName}
+                          onChange={newExpenseData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Expense / Item name"
                         />
@@ -79,7 +97,9 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                         <label>Supplier</label>
                         <select
                           className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
-                          //   value={user}
+                          name="supplier"
+                          value={supplier}
+                          onChange={newExpenseData}
                         >
                           <option>Select Supplier</option>
                           <option>All clients</option>
@@ -90,10 +110,10 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                       <div className="text-sm grid gap-2">
                         <label>Quantity</label>
                         <input
-                          name="title"
+                          name="quantity"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={quantity}
+                          onChange={newExpenseData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Quantity"
                         />
@@ -102,7 +122,9 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                         <label>Quantity Unit</label>
                         <select
                           className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
-                          //   value={user}
+                          name="quantityUnit"
+                          value={quantityUnit}
+                          onChange={newExpenseData}
                         >
                           <option>Pieces</option>
                           <option>All clients</option>
@@ -114,19 +136,27 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                         <label>Total Amount</label>
                         <input
                           type="text"
+                          name="total"
+                          value={total}
+                          onChange={newExpenseData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         />
                       </div>
-                      <DatePicker label="Expense Date" />
+                      <DatePicker
+                        label="Expense Date"
+                        name={"expense"}
+                        date={expense}
+                        setDate={newExpenseData}
+                      />
                     </section>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div className="text-sm grid gap-2">
                         <label>Type</label>
                         <input
-                          name="title"
+                          name="type"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={type}
+                          onChange={newExpenseData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Type"
                         />
@@ -135,7 +165,9 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                         <label>Status</label>
                         <select
                           className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
-                          //   value={user}
+                          name="status"
+                          value={status}
+                          onChange={newExpenseData}
                         >
                           <option>Delivered</option>
                           <option>All clients</option>
@@ -143,7 +175,12 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                       </div>
                     </div>
                     <ToggleInputForm label={"Expense / Item supplier paid"} />
-                    <DatePicker label="Payment due on" />
+                    <DatePicker
+                      label="Payment due on"
+                      name={"paymentDue"}
+                      date={paymentDue}
+                      setDate={newExpenseData}
+                    />
                   </form>
                   <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
                     <article
@@ -153,8 +190,14 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                       <MdOutlineCancel />
                       <p className="text-xs">cancel</p>
                     </article>
-                    <article className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer">
-                      <BsShieldCheck />
+                    <article
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                      onClick={() => {
+                        addNewExpense();
+                        setParts(false);
+                      }}
+                    >
+                      <MdTaskAlt />
                       <p className="text-xs">Save Expense</p>
                     </article>
                   </div>

@@ -5,6 +5,8 @@ import { BsPlusLg } from "react-icons/bs";
 import NewCampaignForm from "@/components/NewCampaignForm";
 import Layout from "../../layout/Layout";
 import { CgMenuRight } from "react-icons/cg";
+import { useFormContext } from "@/context/form_context";
+
 
 const Marketing = () => {
   const [open, setOpen] = useState(false);
@@ -13,6 +15,8 @@ const Marketing = () => {
   const toggleDropDown = () => {
     setDropDown(!dropDown);
   };
+  const {campaignList} = useFormContext();
+
 
   return (
     <Layout>

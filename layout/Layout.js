@@ -89,7 +89,7 @@ const Layout = ({ children }) => {
         } pt-8`}
       >
         <div className="mb-8 text-2xl font-extrabold px-8 flex justify-between items-center text-[#6e82a5]">
-          <Link href={'/overview'}>
+          <Link href={"/overview"}>
             <Image src={oneMech} alt="oneMech" className="w-[3.5em] my-auto" />
           </Link>
           {activeMenu && (

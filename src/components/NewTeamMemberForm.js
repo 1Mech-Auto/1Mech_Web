@@ -1,12 +1,25 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsShieldCheck } from "react-icons/bs";
+import { useFormContext } from "@/context/form_context";
 
-export default function NewTeamMemberForm({open,setOpen}) {
+export default function NewTeamMemberForm({ open, setOpen }) {
   const cancelButtonRef = useRef(null);
-
+  const {
+    teamForm: {
+      firstName,
+      lastName,
+      phone,
+      email,
+      role,
+      type,
+      status,
+      address,
+    },
+    newTeamMemberData,
+    addNewTeamMember,
+  } = useFormContext();
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -57,10 +70,10 @@ export default function NewTeamMemberForm({open,setOpen}) {
                       <div className="text-sm grid gap-2">
                         <label>First Name</label>
                         <input
-                          name="title"
+                          name="firstName"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={firstName}
+                          onChange={newTeamMemberData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="First Name"
                         />
@@ -68,10 +81,10 @@ export default function NewTeamMemberForm({open,setOpen}) {
                       <div className="text-sm grid gap-2">
                         <label>Last Name</label>
                         <input
-                          name="title"
+                          name="lastName"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={lastName}
+                          onChange={newTeamMemberData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Last Name"
                         />
@@ -81,10 +94,10 @@ export default function NewTeamMemberForm({open,setOpen}) {
                       <div className="text-sm grid gap-2">
                         <label>Phone Number</label>
                         <input
-                          name="telephone"
+                          name="phone"
                           type="tel"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={phone}
+                          onChange={newTeamMemberData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Phone Number"
                         />
@@ -94,8 +107,8 @@ export default function NewTeamMemberForm({open,setOpen}) {
                         <input
                           name="email"
                           type="email"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={email}
+                          onChange={newTeamMemberData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Email Address"
                         />
@@ -105,7 +118,9 @@ export default function NewTeamMemberForm({open,setOpen}) {
                       <label>Role</label>
                       <select
                         className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                        // value={user}
+                        name="role"
+                        value={role}
+                        onChange={newTeamMemberData}
                       >
                         <option>Staff</option>
                         <option>All clients</option>
@@ -122,7 +137,9 @@ export default function NewTeamMemberForm({open,setOpen}) {
                         <label>Type</label>
                         <select
                           className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                          // value={user}
+                          name="type"
+                          value={type}
+                          onChange={newTeamMemberData}
                         >
                           <option>Full Time</option>
                           <option>All clients</option>
@@ -132,7 +149,9 @@ export default function NewTeamMemberForm({open,setOpen}) {
                         <label>Status</label>
                         <select
                           className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                          // value={user}
+                          name="status"
+                          value={status}
+                          onChange={newTeamMemberData}
                         >
                           <option>Active</option>
                           <option>All clients</option>
@@ -143,10 +162,12 @@ export default function NewTeamMemberForm({open,setOpen}) {
                       <label>Address</label>
                       <select
                         className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                        // value={user}
+                        name="address"
+                        value={address}
+                        onChange={newTeamMemberData}
                       >
                         <option>Select State</option>
-                        <option>All clients</option>
+                        <option>Abia</option>
                       </select>
                     </div>
                   </form>
@@ -163,11 +184,11 @@ export default function NewTeamMemberForm({open,setOpen}) {
                     <article
                       className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
                       onClick={() => {
-                        addNewCampaign();
-                        toggleOfferPopup();
+                        addNewTeamMember();
+                        setOpen(false);
                       }}
                     >
-                      <BsShieldCheck />
+                      <MdTaskAlt />
                       <p className="text-xs">Create Member</p>
                     </article>
                   </div>

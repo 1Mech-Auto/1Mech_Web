@@ -5,10 +5,12 @@ import { BsThreeDots } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
 import NewInsuranceForm from "@/components/NewInsuranceForm";
 import { CgMenuRight } from "react-icons/cg";
+import { useFormContext } from "@/context/form_context";
 
 const Insurance = () => {
   const [open, setOpen] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
+  const { insuranceList } = useFormContext();
 
   return (
     <Layout>
@@ -107,6 +109,47 @@ const Insurance = () => {
               <BsThreeDots className="cursor-pointer" />
             </div>
           </div>
+          {insuranceList &&
+            insuranceList.map((insurance, index) => {
+              return (
+                <div
+                  key={index}
+                  className="font-medium text-[#364a63] text-sm grid grid-cols-[4%,50%,35%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[3%,25%,20%,14%,7%,12%,10%,4%] items-center p-2.5 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
+                >
+                  <div>{index + 1}</div>
+                  <div className="flex items-center gap-2">
+                    <p className="p-2.5 bg-blue-500 rounded-full text-white">
+                      ME
+                    </p>
+                    <div>
+                      <h2 className="font-medium text-[#364a63]">
+                        {insurance.companyName}
+                      </h2>
+                      <p className="text-xs text-[#8094ae]">
+                        {insurance.phone}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="hidden md:block text-[#8094ae]">
+                    {insurance.email}
+                  </div>
+                  <div>N390,000.00</div>
+                  <div className="hidden md:block text-[#8094ae] text-center">
+                    1/1
+                  </div>
+                  <div className="hidden md:block text-[#8094ae]">
+                    {insurance.date}
+                  </div>
+                  <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl items-center gap-2 hidden md:flex">
+                    <RxDotFilled className="text-lg" />
+                    <p className="text-sm font-bold">Active</p>
+                  </div>
+                  <div>
+                    <BsThreeDots className="cursor-pointer" />
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
     </Layout>

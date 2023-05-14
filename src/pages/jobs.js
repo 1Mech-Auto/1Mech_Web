@@ -70,7 +70,7 @@ const Jobs = () => {
           </div>
         </div>
         <div className="border rounded-md min-h-[30vh] overflow-x-auto">
-          <main className="font-semibold text-[#8094ae] text-xs grid grid-cols-[3em,15em,10em,11em,8em,6em,9em,3em] lg:grid-cols-[3%,25%,15%,20%,15%,10%,14%,4%] p-2.5 border border-transparent border-b-gray-200">
+          <main className="font-semibold text-[#8094ae] text-xs grid grid-cols-[3em,15em,10em,11em,8em,6em,9em,3em] lg:grid-cols-[3%,25%,15%,20%,12%,8%,14%,4%] p-2.5 border border-transparent border-b-gray-200">
             <div>#</div>
             <div>Client</div>
             <div>Project</div>
@@ -80,7 +80,7 @@ const Jobs = () => {
             <div>Status</div>
             <div></div>
           </main>
-          <div className="font-normal text-[#364a63] text-[13px] grid grid-cols-[3em,15em,10em,11em,8em,6em,9em,3em] lg:grid-cols-[3%,25%,15%,20%,15%,10%,14%,4%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 hover:shadow-hoverPurple">
+          <div className="font-normal text-[#364a63] text-[13px] grid grid-cols-[3em,15em,10em,11em,8em,6em,9em,3em] lg:grid-cols-[3%,25%,15%,20%,12%,8%,14%,4%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 hover:shadow-hoverPurple">
             <div>1</div>
             <div className="flex items-center gap-2">
               <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">

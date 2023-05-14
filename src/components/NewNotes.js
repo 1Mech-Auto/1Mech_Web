@@ -1,12 +1,17 @@
 import React from "react";
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsShieldCheck } from "react-icons/bs";
+import { useFormContext } from "@/context/form_context";
 
-const NewNotes = ({notes,setNotes}) => {
+const NewNotes = ({ notes, setNotes }) => {
   const cancelButtonRef = useRef(null);
+  const {
+    notesForm: { note },
+    newNotesData,
+    addNewNotes,
+  } = useFormContext();
 
   return (
     <Transition.Root show={notes} as={Fragment}>
@@ -55,10 +60,10 @@ const NewNotes = ({notes,setNotes}) => {
                     <div className="text-sm grid gap-2">
                       <label>Write your note</label>
                       <textarea
-                        name="title"
+                        name="note"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={note}
+                        onChange={newNotesData}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae] h-32"
                         placeholder="Write your note"
                       />
@@ -72,8 +77,14 @@ const NewNotes = ({notes,setNotes}) => {
                       <MdOutlineCancel />
                       <p className="text-xs">cancel</p>
                     </article>
-                    <article className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer">
-                      <BsShieldCheck />
+                    <article
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                      onClick={() => {
+                        addNewNotes();
+                        setNotes(false);
+                      }}
+                    >
+                      <MdTaskAlt />
                       <p className="text-xs">Save Note</p>
                     </article>
                   </div>

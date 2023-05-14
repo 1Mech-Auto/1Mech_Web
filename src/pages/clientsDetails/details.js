@@ -1,14 +1,13 @@
-import {useState} from "react";
+import { useState } from "react";
 import DetailsPage from ".";
 import { RiInformationLine } from "react-icons/ri";
 import { BsPlus } from "react-icons/bs";
 import NewNotes from "@/components/NewNotes";
-
-
+import { useFormContext } from "@/context/form_context";
 
 const Details = () => {
   const [notes, setNotes] = useState(false);
-
+  const { notesList } = useFormContext();
   return (
     <DetailsPage>
       {notes && <NewNotes notes={notes} setNotes={setNotes} />}
@@ -82,10 +81,20 @@ const Details = () => {
               <p className="font-medium cursor-pointer text-xs">Add Note</p>
             </div>
           </div>
-          <div className="min-h-[40vh] flex flex-col items-center justify-center gap-2 text-[#8094ae]">
-            <RiInformationLine className="text-5xl" />
-            <p>No notes added yet</p>
-          </div>
+          {notesList.length >= 1 ? (
+            notesList.map((note, index) => {
+              return (
+                <div key={index} className="h-12 mb-4 grid items-center pl-4 bg-gray-50">
+                  {note.note}
+                </div>
+              );
+            })
+          ) : (
+            <div className="min-h-[40vh] flex flex-col items-center justify-center gap-2 text-[#8094ae]">
+              <RiInformationLine className="text-5xl" />
+              <p>No notes added yet</p>
+            </div>
+          )}
         </div>
       </div>
     </DetailsPage>

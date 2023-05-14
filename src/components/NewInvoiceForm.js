@@ -1,13 +1,29 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import { BsShieldCheck } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
 import DatePicker from "./DatePicker";
+import { useFormContext } from "@/context/form_context";
 
 const NewInvoiceForm = ({ invoice, setInvoice }) => {
   const cancelButtonRef = useRef(null);
+  const {
+    invoiceForm: {
+      job,
+      itemDesc,
+      quantity,
+      unitCost,
+      tax,
+      total,
+      notes,
+      invoiceDate,
+      paymentDate,
+      paymentDetails,
+    },
+    newInvoiceData,
+    addNewInvoice,
+  } = useFormContext();
 
   return (
     <Transition.Root show={invoice} as={Fragment}>
@@ -56,8 +72,10 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                     <div className="text-sm grid gap-2">
                       <label>Select Job</label>
                       <select
+                        name="job"
+                        value={job}
+                        onChange={newInvoiceData}
                         className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                        // value={user}
                       >
                         <option>Select Job</option>
                         <option>All clients</option>
@@ -68,10 +86,10 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                       <div className="text-sm grid gap-2">
                         <label>Item Description</label>
                         <input
-                          name="description"
+                          name="itemDesc"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={itemDesc}
+                          onChange={newInvoiceData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Item Description"
                         />
@@ -81,8 +99,8 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                         <input
                           name="quantity"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={quantity}
+                          onChange={newInvoiceData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="1"
                         />
@@ -90,10 +108,10 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                       <div className="text-sm grid gap-2">
                         <label>Unit Cost ( N )</label>
                         <input
-                          name="unit"
+                          name="unitCost"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={unitCost}
+                          onChange={newInvoiceData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="0.00"
                         />
@@ -103,8 +121,8 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                         <input
                           name="tax"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={tax}
+                          onChange={newInvoiceData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Tax (%)"
                         />
@@ -112,10 +130,10 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                       <div className="text-sm grid gap-2">
                         <label>Total ( N )</label>
                         <input
-                          name="tax"
+                          name="total"
                           type="text"
-                          //   value={title}
-                          //   onChange={updateCampaignDetails}
+                          value={total}
+                          onChange={newInvoiceData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="0.00"
                         />
@@ -129,11 +147,11 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                       <div className="w-80 grid gap-2">
                         <div className="flex justify-between">
                           <p>Sub Total:</p>
-                          <p className="font-semibold">N0.00</p>
+                          <p className="font-semibold">{total}</p>
                         </div>
                         <div className="flex justify-between">
                           <p>Tax:</p>
-                          <p className="font-semibold">N0.00</p>
+                          <p className="font-semibold">{tax}</p>
                         </div>
                         <hr />
                         <div className="flex justify-between text-md font-semibold">
@@ -144,13 +162,26 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                     </section>
                     <hr />
                     <section className="grid grid-cols-2 items-center gap-4">
-                      <DatePicker label="Invoice Date" />
-                      <DatePicker label="Payment Date" />
+                      <DatePicker
+                        label="Invoice Date"
+                        name={"invoiceDate"}
+                        date={invoiceDate}
+                        setDate={newInvoiceData}
+                      />
+                      <DatePicker
+                        label="Payment Date"
+                        name={"paymentDate"}
+                        date={paymentDate}
+                        setDate={newInvoiceData}
+                      />
                     </section>
                     <section className="grid grid-cols-2 items-center gap-4">
                       <div className="text-sm grid gap-2">
                         <label>Notes</label>
                         <textarea
+                          name="notes"
+                          value={notes}
+                          onChange={newInvoiceData}
                           placeholder="Notes"
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         />
@@ -161,6 +192,9 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                       <div className="text-sm grid gap-2">
                         <label>Payment Details</label>
                         <textarea
+                          name="paymentDetails"
+                          value={paymentDetails}
+                          onChange={newInvoiceData}
                           placeholder="Notes"
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         />
@@ -178,8 +212,14 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                       <MdOutlineCancel />
                       <p className="text-xs">cancel</p>
                     </article>
-                    <article className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer">
-                      <BsShieldCheck />
+                    <article
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                      onClick={() => {
+                        addNewInvoice();
+                        setInvoice(false);
+                      }}
+                    >
+                      <MdTaskAlt />
                       <p className="text-xs">Create Invoice</p>
                     </article>
                   </div>

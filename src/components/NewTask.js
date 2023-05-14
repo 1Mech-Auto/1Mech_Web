@@ -4,9 +4,24 @@ import { MdOutlineCancel } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsShieldCheck } from "react-icons/bs";
 import DatePicker from "./DatePicker";
+import { useFormContext } from "@/context/form_context";
 
 const NewTask = ({ task, setTask }) => {
   const cancelButtonRef = useRef(null);
+  const {
+    taskForm: {
+      taskTitle,
+      assign,
+      status,
+      taskDesc,
+      taskCost,
+      dueDate,
+      dueTime,
+      required,
+    },
+    newTaskData,
+    addNewTask,
+  } = useFormContext();
 
   return (
     <Transition.Root show={task} as={Fragment}>
@@ -55,10 +70,10 @@ const NewTask = ({ task, setTask }) => {
                     <div className="text-sm grid gap-2">
                       <label>Task Title</label>
                       <input
-                        name="title"
+                        name="taskTitle"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={taskTitle}
+                        onChange={newTaskData}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Task Name"
                       />
@@ -68,7 +83,9 @@ const NewTask = ({ task, setTask }) => {
                         <label>Assign To</label>
                         <select
                           className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
-                          //   value={user}
+                          name="assign"
+                          value={assign}
+                          onChange={newTaskData}
                         >
                           <option>Select Staff</option>
                           <option>All clients</option>
@@ -78,7 +95,9 @@ const NewTask = ({ task, setTask }) => {
                         <label>Status</label>
                         <select
                           className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
-                          //   value={user}
+                          name="status"
+                          value={status}
+                          onChange={newTaskData}
                         >
                           <option>In Progress</option>
                           <option>All clients</option>
@@ -88,10 +107,10 @@ const NewTask = ({ task, setTask }) => {
                     <div className="text-sm grid gap-2">
                       <label>Task Description</label>
                       <textarea
-                        name="message"
+                        name="taskDesc"
                         type="text"
-                        //   value={message}
-                        //   onChange={updateCampaignDetails}
+                        value={taskDesc}
+                        onChange={newTaskData}
                         className="w-full outline-none border rounded-md pl-3 py-1 min-h-[9em] placeholder:text-[#8094ae]"
                         placeholder="Task Description"
                       />
@@ -99,10 +118,10 @@ const NewTask = ({ task, setTask }) => {
                     <div className="text-sm grid gap-2">
                       <label>Task Cost</label>
                       <input
-                        name="title"
+                        name="taskCost"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={taskCost}
+                        onChange={newTaskData}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="0.00"
                       />
@@ -111,11 +130,19 @@ const NewTask = ({ task, setTask }) => {
                       </p>
                     </div>
                     <section className="grid grid-cols-2 gap-4">
-                      <DatePicker label="Due Date" />
+                      <DatePicker
+                        label="Due Date"
+                        name={"dueDate"}
+                        date={dueDate}
+                        setDate={newTaskData}
+                      />
                       <div className="text-sm grid gap-2">
                         <label>Due Time</label>
                         <input
                           type="time"
+                          name="dueTime"
+                          value={dueTime}
+                          onChange={newTaskData}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         />
                       </div>
@@ -124,7 +151,9 @@ const NewTask = ({ task, setTask }) => {
                       <label>Select required parts</label>
                       <select
                         className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
-                        //   value={user}
+                        name="required"
+                        value={required}
+                        onChange={newTaskData}
                       >
                         <option>Select parts</option>
                       </select>
@@ -144,7 +173,13 @@ const NewTask = ({ task, setTask }) => {
                       <MdOutlineCancel />
                       <p className="text-xs">cancel</p>
                     </article>
-                    <article className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer">
+                    <article
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                      onClick={() => {
+                        addNewTask();
+                        setTask(false);
+                      }}
+                    >
                       <BsShieldCheck />
                       <p className="text-xs">Create Task</p>
                     </article>
