@@ -84,7 +84,7 @@ const Layout = ({ children }) => {
         <NewFeedbackForm feedback={feedback} setFeedback={setFeedback} />
       ) : null}
       <div
-        className={`fixed min-h-screen top-0 left-0 w-72 overflow-auto h-full xl:w-72 xl:translate-x-0 transition-{transform,width} duration-500 linear z-30 bg-white ${
+        className={`scrollbar fixed min-h-screen top-0 left-0 w-72 overflow-auto h-full xl:w-72 xl:translate-x-0 transition-{transform,width} duration-500 linear z-30 bg-white ${
           activeMenu ? "translate-x-0 w-72" : "-translate-x-full"
         } pt-8`}
       >

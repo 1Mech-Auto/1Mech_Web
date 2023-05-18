@@ -122,7 +122,7 @@ const DetailsPage = ({ children }) => {
 
       <div className="bg-white min-h-[75vh] relative mx-6 md:mx-0">
         <div
-          className={`px-6 flex sm:hidden items-center justify-between transition-all duration-300 linear bg-white absolute left-0 top-0 w-full shadow-md ${
+          className={`px-6 flex sm:hidden z-10 items-center justify-between transition-all duration-300 linear bg-white absolute left-0 top-0 w-full shadow-md ${
             moreInfo ? " h-20 opacity-100" : " h-0 opacity-0"
           }`}
         >

@@ -19,6 +19,10 @@ input::-webkit-datetime-edit {
   position: relative;
   left: 5%;
 }
+.scrollbar::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
 /* ::-webkit-scrollbar {
   width: 6px;
 }
