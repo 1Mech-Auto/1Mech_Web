@@ -3,7 +3,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { useFormContext } from "@/context/form_context";
-import ErrorPopup from "./ErrorPopup";
 
 export default function NewClientForm({ open, setOpen }) {
   const cancelButtonRef = useRef(null);
