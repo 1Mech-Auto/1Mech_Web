@@ -4,9 +4,7 @@ import { IoNotifications } from "react-icons/io5";
 import { Dialog } from "@headlessui/react";
 import Link from "next/link";
 
-const navigation = [
-  { name: "Billing", to: "/" },
-];
+const navigation = [{ name: "Billing", to: "/" }];
 
 const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -42,12 +40,13 @@ const NavBar = () => {
               {item.name}
             </Link>
           ))}
-          <button
+          <Link
+            href={"/"}
             className="font-semibold text-sm text-purpleLura"
             onClick={() => signOut()}
           >
             Log Out
-          </button>
+          </Link>
           <IoNotifications />
         </div>
       </nav>
