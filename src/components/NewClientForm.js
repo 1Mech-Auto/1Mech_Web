@@ -3,6 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { useFormContext } from "@/context/form_context";
+import ErrorPopup from "./ErrorPopup";
 
 export default function NewClientForm({ open, setOpen }) {
   const cancelButtonRef = useRef(null);
@@ -70,7 +71,7 @@ export default function NewClientForm({ open, setOpen }) {
                       />
                     </div>
                     <section className="grid grid-cols-2 gap-4">
-                      <div className="text-sm grid gap-2">
+                      <div className="text-sm grid gap-2 relative">
                         <label>Phone Number</label>
                         <input
                           name="phone"

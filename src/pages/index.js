@@ -1,72 +1,91 @@
-import NavBar from "@/components/NavBar";
-import React, { useEffect } from "react";
+import React from "react";
 import Image from "next/image";
+import oneMech from "../../public/logo-dark.png";
 import Link from "next/link";
-import deviceImage from "../../public/devices.svg";
-import rocketImg from "../../public/rocket.svg";
-import vaultImg from "../../public/vault.svg";
-import wifiImg from "../../public/wifi.svg";
 
-export default function Home() {
-  useEffect(() => {
-    const axios = require("axios");
-
-    const config = {
-      method: "get",
-      url: "https://api.vehicledatabases.com/vehicle-history/{vin}",
-      headers: {
-        "x-AuthKey": "{X-AUTHKEY}",
-      },
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
+const Index = () => {
   return (
-    <main className="h-full relative">
-      <div className="min-h-[5em]">
-        <NavBar />
+    <div className="flex h-screen flex-1 flex-col justify-center px-6 pt-12 pb-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <Image
+          className="mx-auto h-10 w-auto"
+          src={oneMech}
+          alt="Your Company"
+        />
+        <h2 className="mt-10 text-left text-2xl font-bold leading-9 capitalize tracking-tight text-[#364a63]">
+          Sign in
+        </h2>
+        <p className="text-[#526484] text-sm">
+          Access your One-Mech account using your email address and password.
+        </p>
       </div>
-      <section className="grid items-center px-12 min-h-[85vh]">
-        <div className="">
-          <h1 className="text-3xl font-semibold mb-10">Welcome, Emmanuel!</h1>
-          <div className="grid grid-cols-2 md:grid-cols-4 items-center justify-items-center">
-            <Link
-              href={"/overview"}
-              className="rounded-md w-full text-center h-full grid gap-4 justify-center"
+
+      <div className="mt-5 mb-10 sm:mx-auto sm:w-full sm:max-w-md shadow-sm p-6">
+        <form className="space-y-6" action="#" method="POST">
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium leading-6 text-[#344357]"
             >
-              <Image src={deviceImage} alt="coins" className="mx-auto" />
-              <p>Mechanic Management System</p>
-            </Link>
+              Email address
+            </label>
+            <div className="mt-2">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="block w-full rounded-md border-0 pl-4 py-2 outline-[#0971fe] text-[#344357] shadow-sm ring-1 ring-inset ring-[#0971fe1a] placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-[#0971fe1a] sm:text-sm sm:leading-7"
+              />
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-[#344357]"
+              >
+                Password
+              </label>
+              <div className="text-sm">
+                <a href="#" className="font-medium text-xs text-[#0971fe]">
+                  Forgot password?
+                </a>
+              </div>
+            </div>
+            <div className="mt-2">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                className="block w-full rounded-md border-0 pl-4 py-2 outline-[#0971fe] text-[#344357] shadow-sm ring-1 ring-inset ring-[#0971fe1a] placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#0971fe1a] sm:text-sm sm:leading-7"
+              />
+            </div>
+          </div>
+
+          <div>
             <Link
-              href={"/overview"}
-              className="rounded-md w-full text-center h-full grid gap-4 justify-center"
+              href={"/navigate"}
+              type="submit"
+              className="flex w-full justify-center rounded-md bg-[#0971fe] px-3 py-2 text-sm font-semibold leading-7 text-white shadow-sm hover:bg-[#0971fe] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0971fe]"
             >
-              <Image src={vaultImg} alt="coins" className="mx-auto" />
-              <p>Insurance</p>
-            </Link>
-            <Link
-              href={"/overview"}
-              className="rounded-md w-full text-center h-full grid gap-4 justify-center"
-            >
-              <Image src={rocketImg} alt="coins" className="mx-auto" />
-              <p>Fleet Management</p>
-            </Link>
-            <Link
-              href={"/overview"}
-              className="rounded-md w-full text-center h-full grid gap-4 justify-center"
-            >
-              <Image src={wifiImg} alt="coins" className="mx-auto" />
-              <p>Customer-As-A-Service</p>
+              Access Account
             </Link>
           </div>
-        </div>
-      </section>
-    </main>
+        </form>
+      </div>
+      <div className="mt-auto text-xs text-center grid">
+        <hr className="" />
+        <footer className="mt-5 text-[#8094ae]">
+          © 2023 One-Mech • All Rights Reserved.
+        </footer>
+      </div>
+    </div>
   );
-}
+};
+
+export default Index;

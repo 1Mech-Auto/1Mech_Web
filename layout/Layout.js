@@ -267,10 +267,10 @@ const Layout = ({ children }) => {
                       <p>Help Center</p>
                     </Link>
                   </div>
-                  <div className="px-6 my-auto text-sm flex items-center text-[#526484] gap-2">
+                  <Link href={'/'} className="px-6 my-auto text-sm flex items-center text-[#526484] gap-2">
                     <HiOutlineLogout className="text-lg" />
                     <p>Sign Out</p>
-                  </div>
+                  </Link>
                 </div>
               )}
             </div>
