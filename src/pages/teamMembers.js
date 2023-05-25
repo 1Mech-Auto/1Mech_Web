@@ -6,11 +6,34 @@ import { RxDotFilled } from "react-icons/rx";
 import NewTeamMemberForm from "@/components/NewTeamMemberForm";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";
+import MoreButton from "@/components/MoreButton";
+import { HiOutlinePencil } from "react-icons/hi";
+import { TbMessageCircle, TbReportAnalytics } from "react-icons/tb";
+import { BsTrash } from "react-icons/bs";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
 
 const TeamMembers = () => {
   const [open, setOpen] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
   const { teamList } = useFormContext();
+  const [show, setShow] = useState(false);
+  const checkInitials = (fullName) => {
+    const words = fullName;
+    const wordList = words.split(" ");
+    const firstLetters = wordList.map((word) => word[0]);
+    const joinedWord = firstLetters.join("");
+    return joinedWord;
+  };
+  const extraInfo = [
+    { name: "Edit Details", icon: <HiOutlinePencil />, state: "setInfo" },
+    { name: "Send SMS", icon: <TbMessageCircle />, state: "setSms" },
+    {
+      name: "View Report",
+      icon: <TbReportAnalytics />,
+      state: "setInvoice",
+    },
+    { name: "Delete", icon: <BsTrash />, state: "none" },
+  ];
 
   return (
     <Layout>
@@ -93,16 +116,30 @@ const TeamMembers = () => {
                 <p className="text-xs text-[#8094ae]">+2348167821219</p>
               </div>
             </div>
-            <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl flex items-center gap-2 mr-auto">
+            <div className="py-1.5 px-2.5 text-[#1ee0ac] bg-[#1ee0ac26] rounded-2xl flex items-center gap-2 mr-auto">
               <RxDotFilled className="text-lg" />
               <p className="text-xs font-bold">Owner</p>
             </div>
             <div>N0.00</div>
             <div className="hidden md:block text-[#8094ae]">0/0</div>
             <div className="hidden md:block text-[#8094ae]">April 18,2023</div>
-            <div className="text-green-500 hidden md:block">Active</div>
+            <div className="text-[#1ee0ac] hidden md:block">Active</div>
             <div>
-              <BsThreeDots className="cursor-pointer" />
+              <BsThreeDots
+                className="cursor-pointer"
+                onClick={() => setShow(!show)}
+              />
+              {show && (
+                <MoreButton
+                  href={"/teamDetails/details"}
+                  extraInfo={extraInfo}
+                  // setInvoice={setInvoice}
+                  // setJobCard={setJobCard}
+                  // setQuote={setQuote}
+                  // setSms={setSms}
+                  // setInfo={setInfo}
+                />
+              )}
             </div>
           </div>
           {teamList &&
@@ -115,7 +152,7 @@ const TeamMembers = () => {
                   <div>{index + 1}</div>
                   <div className="flex items-center gap-2">
                     <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
-                      ME
+                      {checkInitials(`${team.firstName} ${team.lastName}`)}
                     </p>
                     <div>
                       <h2 className="font-medium">
@@ -124,7 +161,7 @@ const TeamMembers = () => {
                       <p className="text-xs text-[#8094ae]">{team.phone}</p>
                     </div>
                   </div>
-                  <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl flex items-center gap-2 mr-auto">
+                  <div className="py-1.5 px-2.5 text-[#1ee0ac] bg-[#1ee0ac26] rounded-2xl flex items-center gap-2 mr-auto">
                     <RxDotFilled className="text-lg" />
                     <p className="text-xs font-bold">{team.role}</p>
                   </div>
@@ -133,11 +170,25 @@ const TeamMembers = () => {
                   <div className="hidden md:block text-[#8094ae]">
                     {team.date}
                   </div>
-                  <div className="text-green-500 hidden md:block">
-                    {team.type}
+                  <div className="text-[#1ee0ac] hidden md:block">
+                    {team.status}
                   </div>
                   <div>
-                    <BsThreeDots className="cursor-pointer" />
+                    <BsThreeDots
+                      className="cursor-pointer"
+                      onClick={() => setShow(!show)}
+                    />
+                    {show && (
+                      <MoreButton
+                        href={"/teamDetails/details"}
+                        extraInfo={extraInfo}
+                        // setInvoice={setInvoice}
+                        // setJobCard={setJobCard}
+                        // setQuote={setQuote}
+                        // setSms={setSms}
+                        // setInfo={setInfo}
+                      />
+                    )}
                   </div>
                 </div>
               );

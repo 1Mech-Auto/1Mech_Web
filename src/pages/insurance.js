@@ -6,11 +6,39 @@ import { BiPlus } from "react-icons/bi";
 import NewInsuranceForm from "@/components/NewInsuranceForm";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";
+import MoreButton from "@/components/MoreButton";
+import { HiOutlinePencil } from "react-icons/hi";
+import { TbMessageCircle } from "react-icons/tb";
+import { BsTrash, BsEye } from "react-icons/bs";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
 
 const Insurance = () => {
   const [open, setOpen] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
   const { insuranceList } = useFormContext();
+  const [show, setShow] = useState(false);
+  const checkInitials = (fullName) => {
+    const words = fullName;
+    const wordList = words.split(" ");
+    const firstLetters = wordList.map((word) => word[0]);
+    const joinedWord = firstLetters.join("");
+    return joinedWord;
+  };
+  const extraInfo = [
+    { name: "Edit Details", icon: <HiOutlinePencil />, state: "setInfo" },
+    {
+      name: "Create Job Card",
+      icon: <HiOutlineMenuAlt2 />,
+      state: "setJobCard",
+    },
+    { name: "Create Quote", icon: <HiOutlineMenuAlt2 />, state: "setQuote" },
+    {
+      name: "Create Invoice",
+      icon: <HiOutlineMenuAlt2 />,
+      state: "setInvoice",
+    },
+    { name: "Delete", icon: <BsTrash />, state: "none" },
+  ];
 
   return (
     <Layout>
@@ -72,7 +100,7 @@ const Insurance = () => {
           </div>
         </div>
         <div className="border rounded-md min-h-[30vh] overflow-x-auto ">
-          <main className="font-semibold text-[#8094ae] text-sm grid grid-cols-[4%,50%,35%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[3%,25%,20%,14%,7%,12%,10%,4%] p-2.5 border border-transparent border-b-gray-200 gap-2">
+          <main className="font-semibold text-[#8094ae] text-sm grid grid-cols-[4%,50%,35%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[3%,25%,20%,14%,6%,12%,10%,4%] p-2.5 border border-transparent border-b-gray-200 gap-2">
             <div>#</div>
             <div>Client</div>
             <div className="hidden md:block">Email</div>
@@ -82,7 +110,7 @@ const Insurance = () => {
             <div className="hidden md:block">Status</div>
             <div></div>
           </main>
-          <div className="font-medium text-[#364a63] text-sm grid grid-cols-[4%,50%,35%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[3%,25%,20%,14%,7%,12%,10%,4%] items-center p-2.5 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
+          <div className="font-medium text-[#364a63] text-sm grid grid-cols-[4%,50%,35%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[3%,25%,20%,14%,6%,12%,10%,4%] items-center p-2.5 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
             <div>1</div>
             <div className="flex items-center gap-2">
               <p className="p-2.5 bg-blue-500 rounded-full text-white">ME</p>
@@ -101,12 +129,26 @@ const Insurance = () => {
               1/1
             </div>
             <div className="hidden md:block text-[#8094ae]">April 20,2023</div>
-            <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl items-center gap-2 hidden md:flex">
-              <RxDotFilled className="text-lg" />
-              <p className="text-sm font-bold">Active</p>
+            <div className="py-1.5 px-2.5 text-[#1ee0ac] bg-[#1ee0ac26] rounded-2xl items-center gap-1 hidden md:flex">
+              <RxDotFilled className="text-xl" />
+              <p className="text-xs font-bold">Active</p>
             </div>
             <div>
-              <BsThreeDots className="cursor-pointer" />
+              <BsThreeDots
+                className="cursor-pointer text-xl"
+                onClick={() => setShow(!show)}
+              />
+              {show && (
+                <MoreButton
+                  href={"/insuranceDetails/details"}
+                  extraInfo={extraInfo}
+                  // setInvoice={setInvoice}
+                  // setJobCard={setJobCard}
+                  // setQuote={setQuote}
+                  // setSms={setSms}
+                  // setInfo={setInfo}
+                />
+              )}
             </div>
           </div>
           {insuranceList &&
@@ -114,12 +156,12 @@ const Insurance = () => {
               return (
                 <div
                   key={index}
-                  className="font-medium text-[#364a63] text-sm grid grid-cols-[4%,50%,35%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[3%,25%,20%,14%,7%,12%,10%,4%] items-center p-2.5 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
+                  className="font-medium text-[#364a63] text-sm grid grid-cols-[4%,50%,35%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[3%,25%,20%,14%,6%,12%,10%,4%] items-center p-2.5 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
                 >
                   <div>{index + 1}</div>
                   <div className="flex items-center gap-2">
                     <p className="p-2.5 bg-blue-500 rounded-full text-white">
-                      ME
+                      {checkInitials(insurance.companyName)}
                     </p>
                     <div>
                       <h2 className="font-medium text-[#364a63]">
@@ -140,12 +182,26 @@ const Insurance = () => {
                   <div className="hidden md:block text-[#8094ae]">
                     {insurance.date}
                   </div>
-                  <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl items-center gap-2 hidden md:flex">
-                    <RxDotFilled className="text-lg" />
-                    <p className="text-sm font-bold">Active</p>
+                  <div className="py-1.5 px-2.5 text-[#1ee0ac] bg-[#1ee0ac26] rounded-2xl items-center gap-1 hidden md:flex">
+                    <RxDotFilled className="text-xl" />
+                    <p className="text-xs font-bold">Active</p>
                   </div>
                   <div>
-                    <BsThreeDots className="cursor-pointer" />
+                    <BsThreeDots
+                      className="cursor-pointer text-xl"
+                      onClick={() => setShow(!show)}
+                    />
+                    {show && (
+                      <MoreButton
+                        href={"/insuranceDetails/details"}
+                        extraInfo={extraInfo}
+                        // setInvoice={setInvoice}
+                        // setJobCard={setJobCard}
+                        // setQuote={setQuote}
+                        // setSms={setSms}
+                        // setInfo={setInfo}
+                      />
+                    )}
                   </div>
                 </div>
               );

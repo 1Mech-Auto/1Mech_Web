@@ -30,7 +30,7 @@ const Receivables = () => {
           </div>
         </div>
         <div className="border rounded-md min-h-[30vh] overflow-x-auto ">
-          <main className="font-semibold text-[#8094ae] text-sm grid grid-cols-[3em,8em,7em,5em,8em,12em] md:grid-cols-[3em,8em,10em,7em,5em,8em,12em] lg:grid-cols-[3%,20%,15%,12%,10%,15%,20%] p-2.5 border border-transparent border-b-gray-200">
+          <main className="font-semibold text-[#8094ae] text-sm grid grid-cols-[3em,8em,7em,5em,8em,12em] md:grid-cols-[3em,8em,10em,7em,5em,8em,12em] lg:grid-cols-[3%,20%,17%,12%,10%,18%,20%] p-2.5 border border-transparent border-b-gray-200">
             <div>#</div>
             <div className="hidden md:block">Supplier</div>
             <div>Vehicle</div>
@@ -39,7 +39,7 @@ const Receivables = () => {
             <div className="opacity-0 sm:opacity-100">Unit Cost</div>
             <div>Confirm</div>
           </main>
-          <div className="font-medium text-[#364a63] text-sm grid grid-cols-[3em,8em,7em,5em,8em,12em] md:grid-cols-[3em,8em,10em,7em,5em,8em,12em] lg:grid-cols-[3%,20%,15%,12%,10%,15%,20%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 hover:shadow-hoverPurple">
+          <div className="font-medium text-[#364a63] text-sm grid grid-cols-[3em,8em,7em,5em,8em,12em] md:grid-cols-[3em,8em,10em,7em,5em,8em,12em] lg:grid-cols-[3%,20%,17%,12%,10%,18%,20%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 hover:shadow-hoverPurple">
             <div>1</div>
             <div className="md:grid hidden">
               <p className="text-xs">--|--</p>
@@ -58,7 +58,7 @@ const Receivables = () => {
             </div>
 
             <div>
-              <button className="flex items-center gap-2 bg-blue-500 p-1.5 rounded-md text-xs text-white cursor-pointer font-bold">
+              <button className="flex items-center gap-2 bg-[#0971fe] py-0.5 px-2.5 rounded-sm text-xs text-white cursor-pointer font-bold">
                 <BsCheckLg className="text-xl" />
                 <span>Confirm Receipt</span>
               </button>

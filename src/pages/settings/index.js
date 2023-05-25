@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const Settings = ({ children, activeSubmenu, setActiveSubmenu }) => {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <Layout>
       {activeSubmenu && (
@@ -28,7 +28,7 @@ const Settings = ({ children, activeSubmenu, setActiveSubmenu }) => {
         <div
           className={`fixed lg:relative min-h-screen top-0 left-0 w-72 overflow-auto h-full lg:w-72 lg:translate-x-0 transition-{transform,width} duration-500 linear z-30 lg:z-[19] bg-white ${
             activeSubmenu ? "translate-x-0 w-72" : "-translate-x-full"
-          } pt-8`}
+          } pt-8 border border-r-gray-200 border-transparent`}
         >
           <div className="flex items-center gap-2 px-6 py-7 border border-transparent border-b-gray-200">
             <p className="p-2.5 bg-blue-500 rounded-full text-white">ME</p>
@@ -37,7 +37,7 @@ const Settings = ({ children, activeSubmenu, setActiveSubmenu }) => {
               <p className="text-xs">+2348167821219</p>
             </div>
           </div>
-          <ul className="px-6 font-medium text-[#526484]">
+          <ul className="px-6 font-medium text-[#526484] text-sm">
             <li className="my-8 flex items-center justify-between cursor-pointer hover:text-blue-500">
               <Link
                 className={`${

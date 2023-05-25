@@ -12,6 +12,10 @@ import NewQuotesForm from "@/components/NewQuotesForm";
 import NewInfoUpdate from "@/components/NewInfoUpdate";
 import NewSMSForm from "@/components/NewSMSForm";
 import { useFormContext } from "@/context/form_context";
+import { HiOutlinePencil } from "react-icons/hi";
+import { TbMessageCircle } from "react-icons/tb";
+import { BsTrash } from "react-icons/bs";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
 
 const Clients = () => {
   const [open, setOpen] = useState(false);
@@ -23,6 +27,29 @@ const Clients = () => {
   const [info, setInfo] = useState(false);
   const [sms, setSms] = useState(false);
   const { clientList } = useFormContext();
+  const checkInitials = (fullName) => {
+    const words = fullName;
+    const wordList = words.split(" ");
+    const firstLetters = wordList.map((word) => word[0]);
+    const joinedWord = firstLetters.join("");
+    return joinedWord;
+  };
+  const extraInfo = [
+    { name: "Edit Details", icon: <HiOutlinePencil />, state: "setInfo" },
+    { name: "Send SMS", icon: <TbMessageCircle />, state: "setSms" },
+    {
+      name: "Create Job Card",
+      icon: <HiOutlineMenuAlt2 />,
+      state: "setJobCard",
+    },
+    { name: "Create Quote", icon: <HiOutlineMenuAlt2 />, state: "setQuote" },
+    {
+      name: "Create Invoice",
+      icon: <HiOutlineMenuAlt2 />,
+      state: "setInvoice",
+    },
+    { name: "Delete", icon: <BsTrash />, state: "none" },
+  ];
   return (
     <Layout>
       {open && <NewClientForm open={open} setOpen={setOpen} />}
@@ -89,7 +116,7 @@ const Clients = () => {
             </select>
           </div>
         </div>
-        <div className="border rounded-md min-h-[30vh] overflow-x-auto ">
+        <div className="border rounded-md min-h-[60vh] overflow-x-auto relative z-10">
           <main className="font-semibold min-w-full text-[#8094ae] text-sm grid grid-cols-[4%,50%,35%,5%] md:grid-cols-[3em,15em,14em,9em,6em,9em,8em,3em] lg:grid-cols-[3%,25%,23%,12%,5%,12%,10%,4%] p-2.5 border border-transparent border-b-gray-200 gap-2">
             <div>#</div>
             <div>Client</div>
@@ -119,9 +146,9 @@ const Clients = () => {
               1/1
             </div>
             <div className="hidden md:block">April 20,2023</div>
-            <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl items-center gap-2 hidden md:flex">
+            <div className="py-1.5 px-2.5 text-[#1ee0ac] bg-[#1ee0ac26] rounded-2xl items-center gap-1 hidden md:flex">
               <RxDotFilled className="text-lg" />
-              <p className="text-sm font-bold">Active</p>
+              <p className="text-xs font-bold">Active</p>
             </div>
             <div>
               <BsThreeDots
@@ -131,6 +158,7 @@ const Clients = () => {
               {show && (
                 <MoreButton
                   href={"/clientsDetails/details"}
+                  extraInfo={extraInfo}
                   setInvoice={setInvoice}
                   setJobCard={setJobCard}
                   setQuote={setQuote}
@@ -150,7 +178,7 @@ const Clients = () => {
                   <div>{index + 1}</div>
                   <div className="flex items-center gap-2">
                     <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
-                      ME
+                      {checkInitials(clients.clientName)}
                     </p>
                     <div>
                       <h2 className="font-medium text-black">
@@ -169,9 +197,9 @@ const Clients = () => {
                     1/1
                   </div>
                   <div className="hidden md:block">{clients.clientDate}</div>
-                  <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl items-center gap-2 hidden md:flex">
+                  <div className="py-1.5 px-2.5 text-[#1ee0ac] bg-[#1ee0ac26] rounded-2xl items-center gap-2 hidden md:flex">
                     <RxDotFilled className="text-lg" />
-                    <p className="text-sm font-bold">Active</p>
+                    <p className="text-xs font-bold">Active</p>
                   </div>
                   <div>
                     <BsThreeDots
@@ -181,10 +209,11 @@ const Clients = () => {
                     {show && (
                       <MoreButton
                         href={"/clientsDetails/details"}
-                        setInvoice={setInvoice}
-                        setJobCard={setJobCard}
-                        setQuote={setQuote}
-                        setSms={setSms}
+                        extraInfo={extraInfo}
+                        // setInvoice={setInvoice}
+                        // setJobCard={setJobCard}
+                        // setQuote={setQuote}
+                        // setSms={setSms}
                         setInfo={setInfo}
                       />
                     )}

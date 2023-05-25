@@ -88,7 +88,7 @@ const Layout = ({ children }) => {
           activeMenu ? "translate-x-0 w-72" : "-translate-x-full"
         } pt-8`}
       >
-        <div className="mb-8 text-2xl font-extrabold px-8 flex justify-between items-center text-[#6e82a5]">
+        <div className="mb-8 text-2xl font-extrabold px-8 flex justify-between items-center text-[#526484]">
           <Link href={"/overview"}>
             <Image src={oneMech} alt="oneMech" className="w-[3.5em] my-auto" />
           </Link>
@@ -101,7 +101,7 @@ const Layout = ({ children }) => {
             />
           )}
         </div>
-        <div className="uppercase font-semibold text-[16px] mb-6 text-[#6e82a5]">
+        <div className="uppercase font-semibold text-[15px] mb-6 text-[#526484]">
           <div className="uppercase font-medium text-xs mb-3 px-8  tracking-wider">
             Overview
           </div>
@@ -121,7 +121,7 @@ const Layout = ({ children }) => {
             </Link>
           </div>
         </div>
-        <div className="uppercase font-semibold text-[16px] mb-6 text-[#6e82a5]">
+        <div className="uppercase font-semibold text-[15px] mb-6 text-[#526484]">
           <div className="uppercase font-bold text-xs mb-3 px-8 tracking-wider">
             Application
           </div>
@@ -159,7 +159,7 @@ const Layout = ({ children }) => {
             </Link>
           </div>
         </div>
-        <div className="uppercase font-semibold text-[16px] mb-4 text-[#6e82a5]">
+        <div className="uppercase font-semibold text-[15px] mb-4 text-[#526484]">
           <div className="uppercase font-bold text-xs mb-3 px-8 tracking-wider">
             Management
           </div>
@@ -238,7 +238,7 @@ const Layout = ({ children }) => {
                       MJ
                     </p>
                     <div>
-                      <h2 className="text-sm text-[#6e82a5]">
+                      <h2 className="text-sm text-[#526484]">
                         Mr. Emmanuel Johnson
                       </h2>
                       <p className="text-xs">+2348167821219</p>
@@ -267,7 +267,10 @@ const Layout = ({ children }) => {
                       <p>Help Center</p>
                     </Link>
                   </div>
-                  <Link href={'/'} className="px-6 my-auto text-sm flex items-center text-[#526484] gap-2">
+                  <Link
+                    href={"/"}
+                    className="px-6 my-auto text-sm flex items-center text-[#526484] gap-2"
+                  >
                     <HiOutlineLogout className="text-lg" />
                     <p>Sign Out</p>
                   </Link>

@@ -8,6 +8,109 @@ import {
 import { FaUserFriends } from "react-icons/fa";
 import { RiFileList3Fill } from "react-icons/ri";
 import Link from "next/link";
+import Chart from "chart.js/auto";
+import { Legend, ArcElement, Tooltip } from "chart.js";
+import { Doughnut, Line } from "react-chartjs-2";
+Chart.register(ArcElement, Tooltip, Legend);
+const data1 = {
+  labels: ["Completed", "In Progress", "Booked In"],
+  datasets: [
+    {
+      data: [1, 12, 1], // Replace with your data points
+      backgroundColor: ["#0fac81", "#ffbb00", "#e85347"], // Replace with desired colors
+      hoverBackgroundColor: ["#0fac81", "#ffbb00", "#e85347"], // Replace with desired hover colors
+      borderWidth: 2,
+    },
+  ],
+};
+const data2 = {
+  labels: ["Completed", "In Progress", "Cancelled"],
+  datasets: [
+    {
+      data: [1, 3, 0], // Replace with your data points
+      backgroundColor: ["#0fac81", "#ffbb00", "#f1f3f5"], // Replace with desired colors
+      hoverBackgroundColor: ["#0fac81", "#ffbb00", "#f1f3f5"], // Replace with desired hover colors
+      borderWidth: 2,
+    },
+  ],
+};
+const data3 = {
+  labels: [
+    "Jun",
+    "July",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+  ],
+  datasets: [
+    {
+      label: "Payments",
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2100000, 1000000], // Replace with your data points
+      // backgroundColor: ["#0fac81", "#ffbb00", "#f1f3f5"], // Replace with desired colors
+      fill: {
+        target: "origin",
+        above: "#1ee0ac26", // Area will be red above the origin
+      },
+      borderColor: "rgb(15, 172, 129)",
+      tension: 0.5,
+      pointBorderWidth: 1.5,
+      pointBorderColor: "rgb(15, 172, 129)",
+      pointBackgroundColor: "white",
+      pointRadius: 3.5,
+      borderWidth: 2,
+    },
+  ],
+};
+const options1 = {
+  cutout: "65%",
+  plugins: {
+    legend: {
+      display: true,
+      marginTop: 12,
+      position: "bottom",
+      labels: {
+        boxWidth: 12, // Adjust the width of the label color box
+      },
+    },
+  },
+};
+const options2 = {
+  responsive: true, // Enable responsiveness
+  maintainAspectRatio: false, // Disable aspect ratio locking
+  scales: {
+    y: {
+      maxTicksLimit: 5, // Adjust the value to set the maximum number of ticks (data points) on the y-axis
+      ticks: {
+        stepSize: 500000, // Adjust the stepSize value to control the spacing between the data points on the y-axis
+        color: "#8094ae", // Set the desired font color for the y-axis
+      },
+    },
+    x: {
+      ticks: {
+        color: "#8094ae", // Set the desired font color for the y-axis
+      },
+      grid: {
+        display: false, // Set display property to false to hide the grid lines inside the chart area for the y-axis
+      },
+    },
+  },
+  plugins: {
+    legend: {
+      labels: {
+        boxWidth: 10, // Adjust the width of the label color box
+        color: "#8094ae",
+      },
+    },
+    backgroundColor: "blue", // Set the desired background color for the legend box
+  },
+};
 
 const Overview = () => {
   const [moreInfo, setMoreInfo] = useState(false);
@@ -116,13 +219,19 @@ const Overview = () => {
               </div>
             </div>
           </article>
-          <article className="bg-white border border-t-teal-400 rounded-md p-5">
+          <article className="bg-white border border-t-teal-400 rounded-md p-5 h-[22rem] w-full">
             <h2 className="font-bold capitalize text-md">job statistics</h2>
+            {/* <div className="pb-5 h-[18.5rem] flex justify-center text-xl">
+              <Doughnut data={data1} options={options1} />
+            </div> */}
           </article>
         </div>
         <div className="grid md:grid-cols-2 gap-6 ">
           <article className="bg-white border border-t-indigo-400 rounded-md p-5">
             <h2 className="font-bold capitalize text-md">Task statistics</h2>
+            {/* <div className="pb-5 h-[18.5rem] flex justify-center text-xl">
+              <Doughnut data={data2} options={options1} />
+            </div> */}
           </article>
           <article className="grid md:grid-cols-2 grid-rows-2 gap-6">
             <div className="border border-t-indigo-400 bg-white rounded-md min-h-[10em] px-5 md:px-2 lg:px-5 py-3 grid items-between">
@@ -169,8 +278,11 @@ const Overview = () => {
             </div>
           </article>
         </div>
-        <div className="p-5 bg-white rounded-md min-h-[20em]">
+        <div className="p-5 bg-white rounded-md h-[22em]">
           <h2 className="font-bold text-sm">Payments last 12 months</h2>
+          {/* <div className="grid max-w-full w-full h-[18.5rem]">
+            <Line data={data3} options={options2} />
+          </div> */}
         </div>
       </div>
     </Layout>

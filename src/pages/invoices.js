@@ -6,11 +6,35 @@ import { RxDotFilled } from "react-icons/rx";
 import NewInvoiceForm from "@/components/NewInvoiceForm";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";
+import MoreButton from "@/components/MoreButton";
+import { HiOutlinePencil } from "react-icons/hi";
+import { TbMessageCircle } from "react-icons/tb";
+import { BsTrash, BsEye } from "react-icons/bs";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import { FiDownloadCloud, FiMail } from "react-icons/fi";
 
 const Invoices = () => {
   const [invoice, setInvoice] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
   const { invoiceList } = useFormContext();
+  const [show, setShow] = useState(false);
+  const checkInitials = (fullName) => {
+    const words = fullName;
+    const wordList = words.split(" ");
+    const firstLetters = wordList.map((word) => word[0]);
+    const joinedWord = firstLetters.join("");
+    return joinedWord;
+  };
+  const extraInfo = [
+    { name: "Download", icon: <FiDownloadCloud />, state: "setInfo" },
+    {
+      name: "Send Via Email",
+      icon: <FiMail />,
+      state: "setJobCard",
+    },
+    { name: "Edit Invoice", icon: <HiOutlinePencil />, state: "setQuote" },
+    { name: "Delete Quote", icon: <BsTrash />, state: "none" },
+  ];
 
   return (
     <Layout>
@@ -105,12 +129,26 @@ const Invoices = () => {
               <p>N64,000.00</p>
               <p className="text-[#8094ae]">N0.00</p>
             </div>
-            <div className="py-1.5 px-2.5 text-yellow-500 bg-yellow-100 rounded-2xl items-center gap-2 hidden md:flex">
+            <div className="py-1.5 px-2.5 text-[#1ee0ac] mr-auto bg-[#1ee0ac26] rounded-2xl items-center gap-1 hidden md:flex">
               <RxDotFilled className="text-lg" />
-              <p className="text-sm font-bold">Partial</p>
+              <p className="text-xs font-bold">Paid</p>
             </div>
             <div>
-              <BsThreeDots className="cursor-pointer text-xl" />
+              <BsThreeDots
+                className="cursor-pointer text-xl"
+                onClick={() => setShow(!show)}
+              />
+              {show && (
+                <MoreButton
+                  href={"/invoiceDetails"}
+                  extraInfo={extraInfo}
+                  // setInvoice={setInvoice}
+                  // setJobCard={setJobCard}
+                  // setQuote={setQuote}
+                  // setSms={setSms}
+                  // setInfo={setInfo}
+                />
+              )}
             </div>
           </div>
           {invoiceList &&
@@ -123,7 +161,7 @@ const Invoices = () => {
                   <div>{index + 1}</div>
                   <div className="flex items-center gap-2">
                     <p className="p-2.5 bg-blue-500 rounded-full text-white">
-                      ME
+                      {checkInitials(invoice.job)}
                     </p>
                     <div>
                       <h2 className="font-medium">{invoice.job}</h2>
@@ -145,12 +183,26 @@ const Invoices = () => {
                     <p>N64,000.00</p>
                     <p className="text-[#8094ae]">N0.00</p>
                   </div>
-                  <div className="py-1.5 px-2.5 text-yellow-500 bg-yellow-100 rounded-2xl items-center gap-2 hidden md:flex">
+                  <div className="py-1.5 px-2.5 text-[#1ee0ac] mr-auto bg-[#1ee0ac26] rounded-2xl items-center gap-1 hidden md:flex">
                     <RxDotFilled className="text-lg" />
-                    <p className="text-xs font-bold">Partial</p>
+                    <p className="text-xs font-bold">Paid</p>
                   </div>
                   <div>
-                    <BsThreeDots className="cursor-pointer text-xl" />
+                    <BsThreeDots
+                      className="cursor-pointer text-xl"
+                      onClick={() => setShow(!show)}
+                    />
+                    {show && (
+                      <MoreButton
+                        href={"/invoiceDetails"}
+                        extraInfo={extraInfo}
+                        // setInvoice={setInvoice}
+                        // setJobCard={setJobCard}
+                        // setQuote={setQuote}
+                        // setSms={setSms}
+                        // setInfo={setInfo}
+                      />
+                    )}
                   </div>
                 </div>
               );

@@ -5,11 +5,26 @@ import { BiPlus } from "react-icons/bi";
 import NewSuppliersForm from "@/components/NewSuppliersForm";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";
+import { HiOutlinePencil } from "react-icons/hi";
+import { TbReportAnalytics } from "react-icons/tb";
+import { BsTrash } from "react-icons/bs";
+import MoreButton from "@/components/MoreButton";
 
 const Suppliers = () => {
   const [open, setOpen] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
+  const [show, setShow] = useState(false);
   const { supplierList } = useFormContext();
+  const extraInfo = [
+    { name: "Edit Details", icon: <HiOutlinePencil />, state: "setQuote" },
+    {
+      name: "View Report",
+      icon: <TbReportAnalytics />,
+      state: "setInvoice",
+    },
+    { name: "Delete Supplier", icon: <BsTrash />, state: "none" },
+  ];
+
 
   return (
     <Layout>
@@ -99,7 +114,21 @@ const Suppliers = () => {
             <div className="hidden sm:block text-[#8094ae]">0</div>
             <div className="hidden sm:block">N0.00</div>
             <div>
-              <BsThreeDots className="cursor-pointer text-xl" />
+              <BsThreeDots
+                className="cursor-pointer text-xl"
+                onClick={() => setShow(!show)}
+              />
+              {show && (
+                <MoreButton
+                  href={"/inventoryDetails"}
+                  extraInfo={extraInfo}
+                  // setInvoice={setInvoice}
+                  // setJobCard={setJobCard}
+                  // setQuote={setQuote}
+                  // setSms={setSms}
+                  // setInfo={setInfo}
+                />
+              )}
             </div>
           </div>
           {supplierList &&
@@ -126,7 +155,21 @@ const Suppliers = () => {
                   <div className="hidden sm:block text-[#8094ae]">0</div>
                   <div className="hidden sm:block">N0.00</div>
                   <div>
-                    <BsThreeDots className="cursor-pointer text-xl" />
+                    <BsThreeDots
+                      className="cursor-pointer text-xl"
+                      onClick={() => setShow(!show)}
+                    />
+                    {show && (
+                      <MoreButton
+                        href={"/inventoryDetails"}
+                        extraInfo={extraInfo}
+                        // setInvoice={setInvoice}
+                        // setJobCard={setJobCard}
+                        // setQuote={setQuote}
+                        // setSms={setSms}
+                        // setInfo={setInfo}
+                      />
+                    )}
                   </div>
                 </div>
               );

@@ -5,11 +5,34 @@ import { BiPlus } from "react-icons/bi";
 import NewQuotesForm from "@/components/NewQuotesForm";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";
+import MoreButton from "@/components/MoreButton";
+import { FiDownloadCloud, FiMail } from "react-icons/fi";
+import { HiOutlinePencil } from "react-icons/hi";
+import { TbMessageCircle } from "react-icons/tb";
+import { BsTrash, BsEye } from "react-icons/bs";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
 
 const Quotes = () => {
   const [quote, setQuote] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
   const { quoteList } = useFormContext();
+  const [show, setShow] = useState(false);
+   const extraInfo = [
+     { name: "Download", icon: <FiDownloadCloud />, state: "setInfo" },
+     {
+       name: "Send Via Email",
+       icon: <FiMail />,
+       state: "setJobCard",
+     },
+     { name: "Edit Quote", icon: <HiOutlinePencil />, state: "setQuote" },
+     {
+       name: "Convert to Invoice",
+       icon: <HiOutlineMenuAlt2 />,
+       state: "setInvoice",
+     },
+     { name: "Delete Quote", icon: <BsTrash />, state: "none" },
+   ];
+
   return (
     <Layout>
       {quote && <NewQuotesForm quote={quote} setQuote={setQuote} />}
@@ -96,7 +119,21 @@ const Quotes = () => {
               N538,075.00
             </div>
             <div>
-              <BsThreeDots className="cursor-pointer text-xl" />
+              <BsThreeDots
+                className="cursor-pointer text-xl"
+                onClick={() => setShow(!show)}
+              />
+              {show && (
+                <MoreButton
+                  href={"/quoteDetails"}
+                  extraInfo={extraInfo}
+                  // setInvoice={setInvoice}
+                  // setJobCard={setJobCard}
+                  // setQuote={setQuote}
+                  // setSms={setSms}
+                  // setInfo={setInfo}
+                />
+              )}
             </div>
           </div>
           {quoteList &&
@@ -125,7 +162,21 @@ const Quotes = () => {
                     N538,075.00
                   </div>
                   <div>
-                    <BsThreeDots className="cursor-pointer text-xl" />
+                    <BsThreeDots
+                      className="cursor-pointer text-xl"
+                      onClick={() => setShow(!show)}
+                    />
+                    {show && (
+                      <MoreButton
+                        href={"/quoteDetails"}
+                        extraInfo={extraInfo}
+                        // setInvoice={setInvoice}
+                        // setJobCard={setJobCard}
+                        // setQuote={setQuote}
+                        // setSms={setSms}
+                        // setInfo={setInfo}
+                      />
+                    )}
                   </div>
                 </div>
               );

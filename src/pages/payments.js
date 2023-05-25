@@ -6,11 +6,27 @@ import { RxDotFilled } from "react-icons/rx";
 import NewPaymentForm from "@/components/NewPaymentForm";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";
+import MoreButton from "@/components/MoreButton";
+import { HiOutlinePencil } from "react-icons/hi";
+import { BsTrash, BsEye } from "react-icons/bs";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
 
 const Payments = () => {
   const [payment, setPayment] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
   const { paymentsList } = useFormContext();
+  const [show, setShow] = useState(false);
+  const checkInitials = (fullName) => {
+    const words = fullName;
+    const wordList = words.split(" ");
+    const firstLetters = wordList.map((word) => word[0]);
+    const joinedWord = firstLetters.join("");
+    return joinedWord;
+  };
+  const extraInfo = [
+    { name: "Edit Payment", icon: <HiOutlinePencil />, state: "setQuote" },
+    { name: "Delete Quote", icon: <BsTrash />, state: "none" },
+  ];
 
   return (
     <Layout>
@@ -105,12 +121,26 @@ const Payments = () => {
               <p>N64,000.00</p>
               <p className="text-[#8094ae] text-xs">Online Payment</p>
             </div>
-            <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl items-center gap-2 hidden md:flex">
+            <div className="py-1.5 px-2.5 text-[#1ee0ac] bg-[#1ee0ac26] rounded-2xl mr-auto items-center gap-1 hidden md:flex">
               <RxDotFilled className="text-lg" />
               <p className="text-xs font-bold">Paid</p>
             </div>
             <div>
-              <BsThreeDots className="cursor-pointer text-xl" />
+              <BsThreeDots
+                className="cursor-pointer text-xl"
+                onClick={() => setShow(!show)}
+              />
+              {show && (
+                <MoreButton
+                  href={"/quoteDetails"}
+                  extraInfo={extraInfo}
+                  // setInvoice={setInvoice}
+                  // setJobCard={setJobCard}
+                  // setQuote={setQuote}
+                  // setSms={setSms}
+                  // setInfo={setInfo}
+                />
+              )}
             </div>
           </div>
           {paymentsList &&
@@ -123,6 +153,7 @@ const Payments = () => {
                   <div>{index + 1}</div>
                   <div className="flex items-center gap-2">
                     <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
+                      {/* {checkInitials(payment.job)} */}
                       ME
                     </p>
                     <div>
@@ -146,12 +177,26 @@ const Payments = () => {
                       {payment.paymentMethod}
                     </p>
                   </div>
-                  <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl items-center gap-2 hidden md:flex">
+                  <div className="py-1.5 px-2.5 text-[#1ee0ac] bg-[#1ee0ac26] rounded-2xl mr-auto items-center gap-1 hidden md:flex">
                     <RxDotFilled className="text-lg" />
                     <p className="text-xs font-bold">Paid</p>
                   </div>
                   <div>
-                    <BsThreeDots className="cursor-pointer text-xl" />
+                    <BsThreeDots
+                      className="cursor-pointer text-xl"
+                      onClick={() => setShow(!show)}
+                    />
+                    {show && (
+                      <MoreButton
+                        href={"/quoteDetails"}
+                        extraInfo={extraInfo}
+                        // setInvoice={setInvoice}
+                        // setJobCard={setJobCard}
+                        // setQuote={setQuote}
+                        // setSms={setSms}
+                        // setInfo={setInfo}
+                      />
+                    )}
                   </div>
                 </div>
               );

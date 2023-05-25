@@ -6,11 +6,43 @@ import NewVehicleForm from "@/components/NewVehicleForm";
 import { BiPlus } from "react-icons/bi";
 import { CgMenuRight } from "react-icons/cg";
 import MoreButton from "@/components/MoreButton";
+import { HiOutlinePencil } from "react-icons/hi";
+import { TbMessageCircle } from "react-icons/tb";
+import { BsTrash } from "react-icons/bs";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import { TiCancel } from "react-icons/ti";
 
 const Jobs = () => {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
+  const checkInitials = (fullName) => {
+    const words = fullName;
+    const wordList = words.split(" ");
+    const firstLetters = wordList.map((word) => word[0]);
+    const joinedWord = firstLetters.join("");
+    return joinedWord;
+  };
+  const extraInfo = [
+    { name: "Edit Details", icon: <HiOutlinePencil />, state: "setInfo" },
+    {
+      name: "Create Job Card",
+      icon: <HiOutlineMenuAlt2 />,
+      state: "setJobCard",
+    },
+    { name: "Create Quote", icon: <HiOutlineMenuAlt2 />, state: "setQuote" },
+    {
+      name: "Create Invoice",
+      icon: <HiOutlineMenuAlt2 />,
+      state: "setInvoice",
+    },
+    {
+      name: "Cancel Project",
+      icon: <TiCancel />,
+      state: "setInvoice",
+    },
+    { name: "Delete", icon: <BsTrash />, state: "none" },
+  ];
 
   return (
     <Layout>
@@ -104,8 +136,8 @@ const Jobs = () => {
               <p className="text-[#8094ae]">N0.00</p>
             </div>
             <div className="text-[#8094ae]">0/0</div>
-            <div className="py-1.5 px-2.5 text-yellow-500 bg-yellow-100 rounded-2xl flex items-center mr-auto gap-2 ">
-              <RxDotFilled className="text-md" />
+            <div className="py-1.5 px-2.5 text-[#f4bd0e] bg-[#f4bd0e26] rounded-2xl flex items-center mr-auto ">
+              <RxDotFilled className="text-xl" />
               <p className="text-xs font-bold">In Progress</p>
             </div>
             <div>
@@ -116,6 +148,7 @@ const Jobs = () => {
               {show && (
                 <MoreButton
                   href={"/jobDetails/details"}
+                  extraInfo={extraInfo}
                   // setInvoice={setInvoice}
                   // setJobCard={setJobCard}
                   // setQuote={setQuote}

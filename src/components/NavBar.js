@@ -42,7 +42,7 @@ const NavBar = () => {
           ))}
           <Link
             href={"/"}
-            className="font-semibold text-sm text-purpleLura"
+            className="font-semibold text-sm"
             onClick={() => signOut()}
           >
             Log Out

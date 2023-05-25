@@ -9,7 +9,7 @@ const MenuItems = ({ data }) => {
   const router = useRouter();
 
   return (
-    <div className="text-[16px] text-[#6e82a5]">
+    <div className="text-[16px] text-[#526484]">
       <li
         className={`font-bold capitalize flex items-center justify-between py-2 mb-2 ml-4 mr-2 px-4 rounded-md hover:bg-[#ebeef2] hover:text-[#0971fe] ${
           subMenuOpen && "bg-[#ebeef2] text-[#0971fe]"
@@ -18,7 +18,7 @@ const MenuItems = ({ data }) => {
       >
         <div className="flex items-center gap-4 text-2xl font-bold hover:text-[#0971fe]">
           {data.icon}
-          <p className="text-[16px]">{data.name}</p>
+          <p className="text-[15px]">{data.name}</p>
         </div>
         <IoIosArrowDown
           className={` ${subMenuOpen && "rotate-180"} duration-200 `}

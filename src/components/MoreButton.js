@@ -1,7 +1,4 @@
-import { HiOutlinePencil } from "react-icons/hi";
-import { TbMessageCircle } from "react-icons/tb";
-import { BsTrash, BsEye } from "react-icons/bs";
-import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import { HiOutlineEye } from "react-icons/hi";
 import Link from "next/link";
 
 function MoreButton({
@@ -11,60 +8,29 @@ function MoreButton({
   setInfo,
   setSms,
   href,
+  extraInfo,
 }) {
   return (
-    <div className="absolute py-6 shadow-lg grid gap-4 bg-white rounded-md text-md font-medium top-0 right-16 z-10">
+    <div className="absolute py-2 shadow-lg grid bg-white rounded-md text-md font-medium top-0 right-16 z-10">
       <Link
         href={href}
-        className="flex items-center gap-2 pl-6 pr-8 cursor-pointer text-[#364a63]"
+        className="flex items-center gap-2 pl-6 pr-8 py-2.5 cursor-pointer text-[#526484] hover:bg-[#f5f6fa] hover:text-[#0971fe]"
       >
-        <BsEye />
-        <p className="text-[0.84rem]">View Details</p>
+        <HiOutlineEye className="text-lg" />
+        <p className="text-[0.75rem]">View Details</p>
       </Link>
-      <div
-        className="flex items-center gap-2 pl-6 pr-8 cursor-pointer text-[#364a63]"
-        onClick={() => setInfo(true)}
-      >
-        <HiOutlinePencil />
-        <p className="text-[0.84rem]">Edit Details</p>
-      </div>
-      <div
-        className="flex items-center gap-2 pl-6 pr-8 cursor-pointer text-[#364a63]"
-        onClick={() => setSms(true)}
-      >
-        <TbMessageCircle />
-        <p className="text-[0.84rem]">Send SMS</p>
-      </div>
-      <hr />
-      <div
-        className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
-        onClick={() => setJobCard(true)}
-      >
-        <HiOutlineMenuAlt2 />
-        <p className="text-[0.84rem]">Create Job Card</p>
-      </div>
-      <div
-        className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
-        onClick={() => setQuote(true)}
-      >
-        <HiOutlineMenuAlt2 />
-        <p className="text-[0.84rem]">Create Quote</p>
-      </div>
-      <div
-        className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
-        onClick={() => setInvoice(true)}
-      >
-        <HiOutlineMenuAlt2 />
-        <p className="text-[0.84rem]">Create Invoice</p>
-      </div>
-      <hr />
-      <div
-        className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
-        onClick={() => setOrderPart(true)}
-      >
-        <BsTrash />
-        <p className="text-[0.84rem]">Delete</p>
-      </div>
+      {extraInfo.map((extras, index) => {
+        return (
+          <div
+            key={index}
+            className="flex items-center gap-2 pl-6 pr-12 py-2.5 cursor-pointer text-[#526484] text-lg hover:bg-[#f5f6fa] hover:text-[#0971fe]"
+            onClick={() => setInfo(true)}
+          >
+            {extras.icon}
+            <p className="text-[0.75rem]">{extras.name}</p>
+          </div>
+        );
+      })}
     </div>
   );
 }

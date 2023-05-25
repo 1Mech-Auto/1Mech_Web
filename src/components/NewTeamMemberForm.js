@@ -123,7 +123,12 @@ export default function NewTeamMemberForm({ open, setOpen }) {
                         onChange={newTeamMemberData}
                       >
                         <option>Staff</option>
-                        <option>All clients</option>
+                        <option>Manager</option>
+                        <option>Booking Manager</option>
+                        <option>Inventory Manager</option>
+                        <option>Customer</option>
+                        <option>Mechanic</option>
+                        <option>Owner</option>
                       </select>
                       <p className="text-xs text-[#8094ae] normal-case italic">
                         Owner has full access of the system. Manager have full

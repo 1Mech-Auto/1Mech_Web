@@ -3,14 +3,33 @@ import Layout from "../../layout/Layout";
 import { BsThreeDots } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
 import { RxDotFilled } from "react-icons/rx";
+import { RiAddCircleLine } from "react-icons/ri";
 import NewItemForm from "@/components/NewItemForm";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";
+import MoreButton from "@/components/MoreButton";
+import { HiOutlinePencil } from "react-icons/hi";
+import { TbReportAnalytics } from "react-icons/tb";
+import { BsTrash, BsEye } from "react-icons/bs";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import { MdTaskAlt } from "react-icons/md";
 
 const InventoryList = () => {
   const [open, setOpen] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
   const { inventoryList } = useFormContext();
+  const [show, setShow] = useState(false);
+  const extraInfo = [
+    { name: "Edit Details", icon: <HiOutlinePencil />, state: "setQuote" },
+    { name: "Issue", icon: <MdTaskAlt />, state: "setInfo" },
+    { name: "Add Stock", icon: <RiAddCircleLine />, state: "setInfo" },
+    {
+      name: "View Report",
+      icon: <TbReportAnalytics />,
+      state: "setInvoice",
+    },
+    { name: "Delete Item", icon: <BsTrash />, state: "none" },
+  ];
 
   return (
     <Layout>
@@ -99,12 +118,26 @@ const InventoryList = () => {
             <div className="hidden sm:block">
               <p>--|--</p>
             </div>
-            <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl flex items-center gap-2 mr-auto">
+            <div className="py-1.5 px-2.5 text-[#1ee0ac] bg-[#1ee0ac26] rounded-2xl flex items-center gap-1 mr-auto">
               <RxDotFilled className="text-lg" />
               <p className="text-xs font-bold">In Stock</p>
             </div>
             <div>
-              <BsThreeDots className="cursor-pointer text-xl" />
+              <BsThreeDots
+                className="cursor-pointer text-xl"
+                onClick={() => setShow(!show)}
+              />
+              {show && (
+                <MoreButton
+                  href={"/inventoryDetails"}
+                  extraInfo={extraInfo}
+                  // setInvoice={setInvoice}
+                  // setJobCard={setJobCard}
+                  // setQuote={setQuote}
+                  // setSms={setSms}
+                  // setInfo={setInfo}
+                />
+              )}
             </div>
           </div>
           {inventoryList &&
@@ -117,7 +150,9 @@ const InventoryList = () => {
                   <div>{index + 1}</div>
                   <div className="grid">
                     <h2 className="font-medium">{inventory.itemName}</h2>
-                    <p className="text-xs text-[#8094ae]">{ inventory.shelfNumber}</p>
+                    <p className="text-xs text-[#8094ae]">
+                      {inventory.shelfNumber}
+                    </p>
                   </div>
                   <div>
                     <h3 className="font-medium">{inventory.quantity}</h3>
@@ -131,12 +166,26 @@ const InventoryList = () => {
                   <div className="hidden sm:block">
                     <p>{inventory.supplier || "--|--"}</p>
                   </div>
-                  <div className="py-1.5 px-2.5 text-green-500 bg-green-100 rounded-2xl flex items-center gap-2 mr-auto">
+                  <div className="py-1.5 px-2.5 text-[#1ee0ac] bg-[#1ee0ac26] rounded-2xl flex items-center gap-1 mr-auto">
                     <RxDotFilled className="text-lg" />
                     <p className="text-xs font-bold">In Stock</p>
                   </div>
                   <div>
-                    <BsThreeDots className="cursor-pointer text-xl" />
+                    <BsThreeDots
+                      className="cursor-pointer text-xl"
+                      onClick={() => setShow(!show)}
+                    />
+                    {show && (
+                      <MoreButton
+                        href={"/inventoryDetails"}
+                        extraInfo={extraInfo}
+                        // setInvoice={setInvoice}
+                        // setJobCard={setJobCard}
+                        // setQuote={setQuote}
+                        // setSms={setSms}
+                        // setInfo={setInfo}
+                      />
+                    )}
                   </div>
                 </div>
               );
