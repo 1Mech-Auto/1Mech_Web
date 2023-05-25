@@ -2,8 +2,8 @@ import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import DatePicker from "./DatePicker";
-import ToggleInputForm from "./ToggleInputForm";
+import DatePicker from "../DatePicker";
+import ToggleInputForm from "../ToggleInputForm";
 import { useFormContext } from "@/context/form_context";
 
 const NewPartsAndExpenses = ({ parts, setParts }) => {

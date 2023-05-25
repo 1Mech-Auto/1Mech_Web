@@ -4,7 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsShieldCheck } from "react-icons/bs";
-import ToggleInputForm from "./ToggleInputForm";
+import ToggleInputForm from "../ToggleInputForm";
 
 const NewPartsForm = ({parts,setParts}) => {
   const cancelButtonRef = useRef(null);

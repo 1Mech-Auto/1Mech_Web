@@ -2,7 +2,7 @@ import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
-import DatePicker from "./DatePicker";
+import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
 
 const NewPaymentForm = ({ payment, setPayment }) => {

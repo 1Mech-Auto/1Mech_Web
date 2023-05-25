@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsShieldCheck } from "react-icons/bs";
-import DatePicker from "./DatePicker";
+import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
 
 const NewTask = ({ task, setTask }) => {

@@ -4,11 +4,11 @@ import { MdOutlineCancel } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsShieldCheck } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
-import Test from "./Test";
-import DropDownSelect from "./DropDownSelect";
-import VehicleInput from "./VehicleInput";
-import ToggleInputForm from "./ToggleInputForm";
-import DatePicker from "./DatePicker";
+import Test from "../Test";
+import DropDownSelect from "../DropDownSelect";
+import VehicleInput from "../VehicleInput";
+import ToggleInputForm from "../ToggleInputForm";
+import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
 
 const Form1 = () => {

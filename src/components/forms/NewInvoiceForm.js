@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiPlus } from "react-icons/bi";
-import DatePicker from "./DatePicker";
+import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
 
 const NewInvoiceForm = ({ invoice, setInvoice }) => {
