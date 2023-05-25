@@ -2,7 +2,7 @@ import { useState } from "react";
 import DetailsPage from ".";
 import { BiPlus } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
-import NewQuotesForm from "@/components/NewQuotesForm";
+import NewQuotesForm from "@/components/forms/NewQuotesForm";
 
 const Quotes = () => {
   const [quote, setQuote] = useState(false);

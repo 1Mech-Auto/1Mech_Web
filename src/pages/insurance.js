@@ -3,7 +3,7 @@ import Layout from "../../layout/Layout";
 import { RxDotFilled } from "react-icons/rx";
 import { BsThreeDots } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
-import NewInsuranceForm from "@/components/NewInsuranceForm";
+import NewInsuranceForm from "@/components/forms/NewInsuranceForm";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";
 import MoreButton from "@/components/MoreButton";

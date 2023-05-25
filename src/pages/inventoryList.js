@@ -4,7 +4,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
 import { RxDotFilled } from "react-icons/rx";
 import { RiAddCircleLine } from "react-icons/ri";
-import NewItemForm from "@/components/NewItemForm";
+import NewItemForm from "@/components/forms/NewItemForm";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";
 import MoreButton from "@/components/MoreButton";

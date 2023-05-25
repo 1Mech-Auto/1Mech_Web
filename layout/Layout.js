@@ -7,7 +7,7 @@ import {
   RiMenuFill,
 } from "react-icons/ri";
 import { BsFillClipboard2CheckFill, BsChatDotsFill } from "react-icons/bs";
-import NewVehicleForm from "@/components/NewVehicleForm";
+import NewVehicleForm from "@/components/forms/NewVehicleForm";
 import { FaUser, FaUserClock } from "react-icons/fa";
 import {
   BiPlus,
@@ -22,7 +22,7 @@ import { TbMessageDots } from "react-icons/tb";
 import { HiOutlineLogout } from "react-icons/hi";
 import oneMech from "../public/logo-dark.png";
 import Image from "next/image";
-import NewFeedbackForm from "@/components/NewFeedbackForm";
+import NewFeedbackForm from "@/components/forms/NewFeedbackForm";
 import { useRouter } from "next/router";
 import MenuItems from "@/components/MenuItems";
 

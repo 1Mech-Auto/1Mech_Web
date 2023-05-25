@@ -1,7 +1,7 @@
-import {useState} from 'react'
-import DetailsPage from '.'
+import { useState } from "react";
+import DetailsPage from ".";
 import { BiPlus } from "react-icons/bi";
-import NewInvoiceForm from "@/components/NewInvoiceForm";
+import NewInvoiceForm from "@/components/forms/NewInvoiceForm";
 
 const Invoices = () => {
   const [invoice, setInvoice] = useState(false);
@@ -40,6 +40,6 @@ const Invoices = () => {
       </div>
     </DetailsPage>
   );
-}
+};
 
-export default Invoices
+export default Invoices;

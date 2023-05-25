@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "../../layout/Layout";
 import { BsThreeDots } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
-import NewSuppliersForm from "@/components/NewSuppliersForm";
+import NewSuppliersForm from "@/components/forms/NewSuppliersForm";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";
 import { HiOutlinePencil } from "react-icons/hi";
@@ -24,7 +24,6 @@ const Suppliers = () => {
     },
     { name: "Delete Supplier", icon: <BsTrash />, state: "none" },
   ];
-
 
   return (
     <Layout>

@@ -1,47 +1,45 @@
 import { useState } from "react";
 import JobDetails from ".";
 import { BiPlus } from "react-icons/bi";
-import NewPaymentForm from "@/components/NewPaymentForm";
+import NewPaymentForm from "@/components/forms/NewPaymentForm";
 
 const Payments = () => {
   const [payment, setPayment] = useState(false);
 
-    return (
-      <JobDetails>
-        {payment && (
-          <NewPaymentForm payment={payment} setPayment={setPayment} />
-        )}
-        <div className="px-6">
-          <div className="flex items-center justify-between">
-            <div className="py-6 md:col-span-2">
-              <h3 className="text-xl font-semibold">Project Payments</h3>
-              <p className="text-sm text-[#526484]">
-                A list of payments for TOYOTA Camry - KSF-178-HX project.
-              </p>
-            </div>
-            <button
-              className="flex items-center gap-2 bg-[#0971fe] py-2 px-4 rounded-md text-sm text-white cursor-pointer font-bold"
-              onClick={() => setPayment(true)}
-            >
-              <BiPlus />
-              <span>Add Payment</span>
-            </button>
+  return (
+    <JobDetails>
+      {payment && <NewPaymentForm payment={payment} setPayment={setPayment} />}
+      <div className="px-6">
+        <div className="flex items-center justify-between">
+          <div className="py-6 md:col-span-2">
+            <h3 className="text-xl font-semibold">Project Payments</h3>
+            <p className="text-sm text-[#526484]">
+              A list of payments for TOYOTA Camry - KSF-178-HX project.
+            </p>
           </div>
-          <div className="w-full min-h-[9em] bg-white mx-auto text-[#8094ae] text-md pb-4">
-            <section className="flex items-center justify-between pt-6 pb-4 text-xs font-bold">
-              <p>#</p>
-              <p>Project</p>
-              <p>Invoice</p>
-              <p>Payment Date</p>
-              <p>Amount</p>
-              <p>Status</p>
-            </section>
-            <hr className="mb-3" />
-            <p className="text-xs text-center">It`s empty here!</p>
-          </div>
+          <button
+            className="flex items-center gap-2 bg-[#0971fe] py-2 px-4 rounded-md text-sm text-white cursor-pointer font-bold"
+            onClick={() => setPayment(true)}
+          >
+            <BiPlus />
+            <span>Add Payment</span>
+          </button>
         </div>
-      </JobDetails>
-    );
+        <div className="w-full min-h-[9em] bg-white mx-auto text-[#8094ae] text-md pb-4">
+          <section className="flex items-center justify-between pt-6 pb-4 text-xs font-bold">
+            <p>#</p>
+            <p>Project</p>
+            <p>Invoice</p>
+            <p>Payment Date</p>
+            <p>Amount</p>
+            <p>Status</p>
+          </section>
+          <hr className="mb-3" />
+          <p className="text-xs text-center">It`s empty here!</p>
+        </div>
+      </div>
+    </JobDetails>
+  );
 };
 
 export default Payments;

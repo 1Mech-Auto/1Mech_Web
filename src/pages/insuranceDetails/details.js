@@ -2,7 +2,7 @@ import { useState } from "react";
 import DetailsPage from ".";
 import { RiInformationLine } from "react-icons/ri";
 import { BsPlus } from "react-icons/bs";
-import NewNotes from "@/components/NewNotes";
+import NewNotes from "@/components/forms/NewNotes";
 import { useFormContext } from "@/context/form_context";
 
 const Details = () => {

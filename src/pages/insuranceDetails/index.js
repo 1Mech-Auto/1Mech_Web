@@ -12,22 +12,22 @@ import {
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { HiOutlinePencil } from "react-icons/hi";
 import { FiShoppingCart } from "react-icons/fi";
-import NewJobCard from "@/components/NewJobCard";
-import NewInvoiceForm from "@/components/NewInvoiceForm";
-import NewQuotesForm from "@/components/NewQuotesForm";
-import NewInfoUpdate from "@/components/NewInfoUpdate";
-import NewSMSForm from "@/components/NewSMSForm";
+import NewJobCard from "@/components/forms/NewJobCard";
+import NewInvoiceForm from "@/components/forms/NewInvoiceForm";
+import NewQuotesForm from "@/components/forms/NewQuotesForm";
+import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
+import NewSMSForm from "@/components/forms/NewSMSForm";
 import { useRouter } from "next/router";
 
-const DetailsPage = ({children}) => {
-      const [invoice, setInvoice] = useState(false);
-      const [show, setShow] = useState(false);
-      const [moreInfo, setMoreInfo] = useState(false);
-      const [jobCard, setJobCard] = useState(false);
-      const [quote, setQuote] = useState(false);
-      const [info, setInfo] = useState(false);
-      const [sms, setSms] = useState(false);
-      const router = useRouter();
+const DetailsPage = ({ children }) => {
+  const [invoice, setInvoice] = useState(false);
+  const [show, setShow] = useState(false);
+  const [moreInfo, setMoreInfo] = useState(false);
+  const [jobCard, setJobCard] = useState(false);
+  const [quote, setQuote] = useState(false);
+  const [info, setInfo] = useState(false);
+  const [sms, setSms] = useState(false);
+  const router = useRouter();
   return (
     <Layout>
       {invoice && <NewInvoiceForm invoice={invoice} setInvoice={setInvoice} />}

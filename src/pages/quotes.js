@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "../../layout/Layout";
 import { BsThreeDots } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
-import NewQuotesForm from "@/components/NewQuotesForm";
+import NewQuotesForm from "@/components/forms/NewQuotesForm";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";
 import MoreButton from "@/components/MoreButton";
@@ -17,21 +17,21 @@ const Quotes = () => {
   const [moreInfo, setMoreInfo] = useState(false);
   const { quoteList } = useFormContext();
   const [show, setShow] = useState(false);
-   const extraInfo = [
-     { name: "Download", icon: <FiDownloadCloud />, state: "setInfo" },
-     {
-       name: "Send Via Email",
-       icon: <FiMail />,
-       state: "setJobCard",
-     },
-     { name: "Edit Quote", icon: <HiOutlinePencil />, state: "setQuote" },
-     {
-       name: "Convert to Invoice",
-       icon: <HiOutlineMenuAlt2 />,
-       state: "setInvoice",
-     },
-     { name: "Delete Quote", icon: <BsTrash />, state: "none" },
-   ];
+  const extraInfo = [
+    { name: "Download", icon: <FiDownloadCloud />, state: "setInfo" },
+    {
+      name: "Send Via Email",
+      icon: <FiMail />,
+      state: "setJobCard",
+    },
+    { name: "Edit Quote", icon: <HiOutlinePencil />, state: "setQuote" },
+    {
+      name: "Convert to Invoice",
+      icon: <HiOutlineMenuAlt2 />,
+      state: "setInvoice",
+    },
+    { name: "Delete Quote", icon: <BsTrash />, state: "none" },
+  ];
 
   return (
     <Layout>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "../../layout/Layout";
 import { RxDotFilled } from "react-icons/rx";
 import { BsThreeDots } from "react-icons/bs";
-import NewVehicleForm from "@/components/NewVehicleForm";
+import NewVehicleForm from "@/components/forms/NewVehicleForm";
 import { BiPlus } from "react-icons/bi";
 import { CgMenuRight } from "react-icons/cg";
 import MoreButton from "@/components/MoreButton";

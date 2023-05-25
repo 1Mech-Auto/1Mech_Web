@@ -3,7 +3,7 @@ import Layout from "../../layout/Layout";
 import { BsThreeDots } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
 import { RxDotFilled } from "react-icons/rx";
-import NewInvoiceForm from "@/components/NewInvoiceForm";
+import NewInvoiceForm from "@/components/forms/NewInvoiceForm";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";
 import MoreButton from "@/components/MoreButton";

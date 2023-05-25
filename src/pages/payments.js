@@ -3,7 +3,7 @@ import Layout from "../../layout/Layout";
 import { BsThreeDots } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
 import { RxDotFilled } from "react-icons/rx";
-import NewPaymentForm from "@/components/NewPaymentForm";
+import NewPaymentForm from "@/components/forms/NewPaymentForm";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";
 import MoreButton from "@/components/MoreButton";

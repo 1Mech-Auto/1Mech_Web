@@ -2,17 +2,16 @@ import { useState } from "react";
 import JobDetails from ".";
 import { BiPlus, BiTask } from "react-icons/bi";
 import { BsThreeDots, BsFileMedical } from "react-icons/bs";
-import NewQuotesForm from "@/components/NewQuotesForm";
+import NewQuotesForm from "@/components/forms/NewQuotesForm";
 import { RiArrowLeftRightFill } from "react-icons/ri";
-import NewWorkRequestedForm from "@/components/NewWorkRequestedForm";
+import NewWorkRequestedForm from "@/components/forms/NewWorkRequestedForm";
 import JobCardImport from "@/components/JobCardImport";
 
 const Quotes = () => {
   const [quote, setQuote] = useState(false);
   const [show, setShow] = useState(false);
   const [workRequested, setWorkRequested] = useState(false);
-    const [jobImport, setJobImport] = useState(false);
-
+  const [jobImport, setJobImport] = useState(false);
 
   return (
     <JobDetails>

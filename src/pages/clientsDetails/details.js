@@ -2,7 +2,7 @@ import { useState } from "react";
 import DetailsPage from ".";
 import { RiInformationLine } from "react-icons/ri";
 import { BsPlus } from "react-icons/bs";
-import NewNotes from "@/components/NewNotes";
+import NewNotes from "@/components/forms/NewNotes";
 import { useFormContext } from "@/context/form_context";
 
 const Details = () => {
@@ -84,7 +84,10 @@ const Details = () => {
           {notesList.length >= 1 ? (
             notesList.map((note, index) => {
               return (
-                <div key={index} className="h-12 mb-4 grid items-center pl-4 bg-gray-50">
+                <div
+                  key={index}
+                  className="h-12 mb-4 grid items-center pl-4 bg-gray-50"
+                >
                   {note.note}
                 </div>
               );

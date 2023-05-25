@@ -3,7 +3,7 @@ import DetailsPage from ".";
 import { RiInformationLine } from "react-icons/ri";
 import { RxDotFilled } from "react-icons/rx";
 import { BiPlus } from "react-icons/bi";
-import NewJobCard from "@/components/NewJobCard";
+import NewJobCard from "@/components/forms/NewJobCard";
 import { useFormContext } from "@/context/form_context";
 
 const JobCard = () => {

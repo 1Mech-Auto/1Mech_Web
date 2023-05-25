@@ -3,20 +3,27 @@ import JobDetails from ".";
 import { BiPlus, BiTask } from "react-icons/bi";
 import { BsFileMedical } from "react-icons/bs";
 import { RiArrowLeftRightFill } from "react-icons/ri";
-import NewTask from "@/components/NewTask";
-import NewWorkRequestedForm from "@/components/NewWorkRequestedForm";
+import NewTask from "@/components/forms/NewTask";
+import NewWorkRequestedForm from "@/components/forms/NewWorkRequestedForm";
 import JobCardImport from "@/components/JobCardImport";
 
 const Tasks = () => {
   const [task, setTask] = useState(false);
   const [show, setShow] = useState(false);
   const [workRequested, setWorkRequested] = useState(false);
-  const [jobImport,setJobImport] = useState(false)
+  const [jobImport, setJobImport] = useState(false);
   return (
     <JobDetails>
       {task && <NewTask task={task} setTask={setTask} />}
-      {jobImport && <JobCardImport jobImport={jobImport} setJobImport={setJobImport} />}
-      {workRequested && <NewWorkRequestedForm workRequested={workRequested} setWorkRequested={setWorkRequested} />}
+      {jobImport && (
+        <JobCardImport jobImport={jobImport} setJobImport={setJobImport} />
+      )}
+      {workRequested && (
+        <NewWorkRequestedForm
+          workRequested={workRequested}
+          setWorkRequested={setWorkRequested}
+        />
+      )}
 
       <div className="px-6">
         <div className="flex items-center justify-between">

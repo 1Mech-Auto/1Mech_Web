@@ -2,7 +2,7 @@ import { useState } from "react";
 import { GiTwoCoins } from "react-icons/gi";
 import { AiOutlineHistory } from "react-icons/ai";
 import { BsPlusLg } from "react-icons/bs";
-import NewCampaignForm from "@/components/NewCampaignForm";
+import NewCampaignForm from "@/components/forms/NewCampaignForm";
 import Layout from "../../layout/Layout";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";

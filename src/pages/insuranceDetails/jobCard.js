@@ -3,12 +3,12 @@ import DetailsPage from ".";
 import { RiInformationLine } from "react-icons/ri";
 import { RxDotFilled } from "react-icons/rx";
 import { BiPlus } from "react-icons/bi";
-import NewJobCard from "@/components/NewJobCard";
+import NewJobCard from "@/components/forms/NewJobCard";
 import { useFormContext } from "@/context/form_context";
 
 const JobCard = () => {
-      const [jobCard, setJobCard] = useState(false);
-      const { jobCardList } = useFormContext();
+  const [jobCard, setJobCard] = useState(false);
+  const { jobCardList } = useFormContext();
   return (
     <DetailsPage>
       {jobCard && <NewJobCard jobCard={jobCard} setJobCard={setJobCard} />}

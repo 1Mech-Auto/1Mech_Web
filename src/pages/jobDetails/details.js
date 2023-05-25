@@ -2,7 +2,7 @@ import { useState } from "react";
 import JobDetails from ".";
 import { RiInformationLine } from "react-icons/ri";
 import { BsPlus, BsFileMedical } from "react-icons/bs";
-import NewNotes from "@/components/NewNotes";
+import NewNotes from "@/components/forms/NewNotes";
 import Link from "next/link";
 
 const Details = () => {

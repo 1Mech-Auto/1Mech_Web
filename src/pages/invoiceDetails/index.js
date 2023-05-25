@@ -20,11 +20,11 @@ import {
   HiOutlinePencil,
 } from "react-icons/hi";
 import { FiShoppingCart } from "react-icons/fi";
-import NewJobCard from "@/components/NewJobCard";
-import NewInvoiceForm from "@/components/NewInvoiceForm";
-import NewQuotesForm from "@/components/NewQuotesForm";
-import NewInfoUpdate from "@/components/NewInfoUpdate";
-import NewSMSForm from "@/components/NewSMSForm";
+import NewJobCard from "@/components/forms/NewJobCard";
+import NewInvoiceForm from "@/components/forms/NewInvoiceForm";
+import NewQuotesForm from "@/components/forms/NewQuotesForm";
+import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
+import NewSMSForm from "@/components/forms/NewSMSForm";
 import { useRouter } from "next/router";
 
 const DetailsPage = ({ children }) => {

@@ -3,8 +3,8 @@ import JobDetails from ".";
 import { BiPlus, BiTask } from "react-icons/bi";
 import { BsFileMedical } from "react-icons/bs";
 import { RiArrowLeftRightFill } from "react-icons/ri";
-import NewPartsAndExpenses from "@/components/NewPartsAndExpenses";
-import NewWorkRequestedForm from "@/components/NewWorkRequestedForm";
+import NewPartsAndExpenses from "@/components/forms/NewPartsAndExpenses";
+import NewWorkRequestedForm from "@/components/forms/NewWorkRequestedForm";
 import JobCardImport from "@/components/JobCardImport";
 
 const PartsAndExpenses = () => {

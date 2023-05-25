@@ -6,7 +6,7 @@ import { BiPlus } from "react-icons/bi";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { CgMenuRight } from "react-icons/cg";
 import Link from "next/link";
-import NewPartsForm from "@/components/NewPartsForm";
+import NewPartsForm from "@/components/forms/NewPartsForm";
 import OrderParts from "@/components/OrderParts";
 
 const BookingParts = () => {

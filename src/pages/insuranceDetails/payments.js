@@ -1,7 +1,7 @@
 import { useState } from "react";
 import DetailsPage from ".";
 import { BiPlus } from "react-icons/bi";
-import NewPaymentForm from "@/components/NewPaymentForm";
+import NewPaymentForm from "@/components/forms/NewPaymentForm";
 
 const Payments = () => {
   const [payment, setPayment] = useState(false);
