@@ -11,6 +11,8 @@ import Link from "next/link";
 import Chart from "chart.js/auto";
 import { Legend, ArcElement, Tooltip } from "chart.js";
 import { Doughnut, Line } from "react-chartjs-2";
+import SuccessPrompt from "@/components/SuccessPrompt";
+import DeletePrompt from "@/components/DeletePrompt";
 Chart.register(ArcElement, Tooltip, Legend);
 const data1 = {
   labels: ["Completed", "In Progress", "Booked In"],
