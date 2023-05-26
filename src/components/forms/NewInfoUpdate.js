@@ -121,7 +121,12 @@ const NewInfoUpdate = ({ info, setInfo }) => {
                             handleChange(e);
                             newUpdateData(e);
                           }}
-                          onBlur={handleBlur}
+                          onBlur={(e) => {
+                            handleBlur(e);
+                            if (errors.phone) {
+                              toast.error(errors.phone);
+                            }
+                          }}
                           className={`${
                             errors.phone && touched.phone
                               ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"

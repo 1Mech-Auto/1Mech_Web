@@ -74,7 +74,7 @@ export const newInsuranceSchema = yup.object().shape({
   coyName: yup.string().min(3).required("Required"),
 });
 export const newFeedbackSchema = yup.object().shape({
-  experience: yup.string().min().required("Required"),
+  experience: yup.string().required("Required"),
   comment: yup.string().min(3).required("Required"),
 });
 export const newPartsandExpSchema = yup.object().shape({

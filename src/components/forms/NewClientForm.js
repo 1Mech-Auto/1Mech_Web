@@ -126,9 +126,9 @@ export default function NewClientForm({ open, setOpen }) {
                             handleChange(e);
                             newClientForm(e);
                           }}
-                          onBlur={() => {
-                            handleBlur;
-                            if (errors.phone && touched.phone) {
+                          onBlur={(e) => {
+                            handleBlur(e);
+                            if (errors.phone) {
                               toast.error(errors.phone);
                             }
                           }}
