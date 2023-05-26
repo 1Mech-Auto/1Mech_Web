@@ -4,6 +4,10 @@ import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiPlus } from "react-icons/bi";
 import { useFormContext } from "@/context/form_context";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import { newQuoteSchema } from "@/schemas";
+import ValidateForm from "./ValidateForm";
 
 const NewQuotesForm = ({ quote, setQuote }) => {
   const cancelButtonRef = useRef(null);
@@ -12,6 +16,35 @@ const NewQuotesForm = ({ quote, setQuote }) => {
     newQuoteData,
     addNewQuote,
   } = useFormContext();
+
+  const onSubmit = async (values, actions) => {
+    toast.success("created");
+    addNewQuote();
+    setQuote(false);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    actions.resetForm();
+  };
+  const {
+    values,
+    handleBlur,
+    isSubmitting,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormik({
+    initialValues: {
+      job: job,
+      itemDesc: itemDesc,
+      quantity: quantity,
+      unitCost: unitCost,
+      tax: tax,
+      total: total,
+      notes: notes,
+    },
+    validationSchema: newQuoteSchema,
+    onSubmit,
+  });
 
   return (
     <Transition.Root show={quote} as={Fragment}>
@@ -56,39 +89,67 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                   <p className="text-xs font-semibold mt-6 normal-case px-6">
                     Create a quote for this job
                   </p>
-                  <form className="mt-3 grid gap-8 p-4 px-6 ">
-                    <div className="text-sm grid gap-2">
+                  <form
+                    className="mt-3 grid gap-8 p-4 px-6 "
+                    onSubmit={handleSubmit}
+                  >
+                    <div className="text-sm grid gap-2 relative">
                       <label>Select Job</label>
                       <select
                         name="job"
-                        value={job}
-                        onChange={newQuoteData}
-                        className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                        value={values.job}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newQuoteData(e);
+                        }}
+                        onBlur={handleBlur}
+                        className={`${
+                          errors.job && touched.job
+                            ? "border border-red-800 outline-none  text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                            : "outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                        }`}
                       >
                         <option>Select Job</option>
                         <option>All clients</option>
                       </select>
+                      {errors.job && touched.job && (
+                        <ValidateForm error={errors.job} />
+                      )}
                     </div>
                     <hr />
                     <section className="grid grid-cols-[40%,5%,15%,15%,15%] gap-4">
-                      <div className="text-sm grid gap-2">
+                      <div className="text-sm grid gap-2 relative">
                         <label>Item Description</label>
                         <input
                           name="itemDesc"
                           type="text"
-                          value={itemDesc}
-                          onChange={newQuoteData}
-                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          value={values.itemDesc}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newQuoteData(e);
+                          }}
+                          onBlur={handleBlur}
+                          className={`${
+                            errors.itemDesc && touched.itemDesc
+                              ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          }`}
                           placeholder="Item Description"
                         />
+                        {errors.itemDesc && touched.itemDesc && (
+                          <ValidateForm error={errors.itemDesc} />
+                        )}
                       </div>
                       <div className="text-sm grid gap-2">
                         <label>Qty</label>
                         <input
                           name="quantity"
                           type="text"
-                          value={quantity}
-                          onChange={newQuoteData}
+                          value={values.quantity}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newQuoteData(e);
+                          }}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="1"
                         />
@@ -98,8 +159,11 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                         <input
                           name="unitCost"
                           type="text"
-                          value={unitCost}
-                          onChange={newQuoteData}
+                          value={values.unitCost}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newQuoteData(e);
+                          }}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="0.00"
                         />
@@ -109,8 +173,11 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                         <input
                           name="tax"
                           type="text"
-                          value={tax}
-                          onChange={newQuoteData}
+                          value={values.tax}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newQuoteData(e);
+                          }}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Tax (%)"
                         />
@@ -120,8 +187,11 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                         <input
                           name="total"
                           type="text"
-                          value={total}
-                          onChange={newQuoteData}
+                          value={values.total}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newQuoteData(e);
+                          }}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="0.00"
                         />
@@ -153,8 +223,11 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                       <label>Notes</label>
                       <textarea
                         type="text"
-                        value={notes}
-                        onChange={newQuoteData}
+                        value={values.notes}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newQuoteData(e);
+                        }}
                         placeholder="Notes"
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                       />
@@ -162,26 +235,28 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                         Notes will be printed on the quote.
                       </p>
                     </div>
+                    <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
+                      <article
+                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
+                        onClick={() => setQuote(false)}
+                      >
+                        <MdOutlineCancel />
+                        <p className="text-xs">cancel</p>
+                      </article>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`${
+                          isSubmitting
+                            ? "opacity-40 flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                            : "flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                        }`}
+                      >
+                        <MdTaskAlt />
+                        <p className="text-xs">Create Quote</p>
+                      </button>
+                    </div>
                   </form>
-                  <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setQuote(false)}
-                    >
-                      <MdOutlineCancel />
-                      <p className="text-xs">cancel</p>
-                    </article>
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                      onClick={() => {
-                        addNewQuote();
-                        setQuote(false);
-                      }}
-                    >
-                      <MdTaskAlt />
-                      <p className="text-xs">Create Quote</p>
-                    </article>
-                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

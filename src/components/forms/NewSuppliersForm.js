@@ -3,6 +3,10 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { useFormContext } from "@/context/form_context";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import ValidateForm from "./ValidateForm";
+import { newSupplierSchema } from "@/schemas";
 
 const NewSuppliersForm = ({ open, setOpen }) => {
   const cancelButtonRef = useRef(null);
@@ -11,6 +15,32 @@ const NewSuppliersForm = ({ open, setOpen }) => {
     newSupplierData,
     addNewSupplier,
   } = useFormContext();
+  const onSubmit = async (values, actions) => {
+    toast.success("created");
+    addNewSupplier();
+    setOpen(false);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    actions.resetForm();
+  };
+  const {
+    values,
+    handleBlur,
+    isSubmitting,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormik({
+    initialValues: {
+      supplierName: supplierName,
+      phone: phone,
+      email: email,
+      address: address,
+      vat: vat,
+    },
+    validationSchema: newSupplierSchema,
+    onSubmit,
+  });
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -55,40 +85,76 @@ const NewSuppliersForm = ({ open, setOpen }) => {
                   <p className="text-xs font-semibold mt-6 normal-case px-4">
                     Add a Supplier
                   </p>
-                  <form className="mt-3 grid gap-8 px-4 pb-4">
-                    <div className="text-sm grid gap-2">
+                  <form
+                    className="mt-3 grid gap-8 px-4 pb-4"
+                    onSubmit={handleSubmit}
+                  >
+                    <div className="text-sm grid gap-2 relative">
                       <label>Supplier Name</label>
                       <input
                         name="supplierName"
                         type="text"
-                        value={supplierName}
-                        onChange={newSupplierData}
-                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        value={values.supplierName}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newSupplierData(e);
+                        }}
+                        onBlur={handleBlur}
+                        className={`${
+                          errors.supplierName && touched.supplierName
+                            ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                            : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        }`}
                         placeholder="Supplier Name"
                       />
+                      {errors.supplierName && touched.supplierName && (
+                        <ValidateForm error={errors.supplierName} />
+                      )}
                     </div>
                     <section className="grid grid-cols-2 gap-4">
-                      <div className="text-sm grid gap-2">
+                      <div className="text-sm grid gap-2 relative">
                         <label>Phone Number</label>
                         <input
                           name="phone"
                           type="tel"
-                          value={phone}
-                          onChange={newSupplierData}
-                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          value={values.phone}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newSupplierData(e);
+                          }}
                           placeholder="Phone Number"
+                          onBlur={handleBlur}
+                          className={`${
+                            errors.phone && touched.phone
+                              ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          }`}
                         />
+                        {errors.phone && touched.phone && (
+                          <ValidateForm error={errors.phone} />
+                        )}
                       </div>
-                      <div className="text-sm grid gap-2">
+                      <div className="text-sm grid gap-2 relative">
                         <label>Email Address</label>
                         <input
                           name="email"
                           type="email"
-                          value={email}
-                          onChange={newSupplierData}
-                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          value={values.email}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newSupplierData(e);
+                          }}
                           placeholder="Email Address"
+                          onBlur={handleBlur}
+                          className={`${
+                            errors.email && touched.email
+                              ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          }`}
                         />
+                        {errors.email && touched.email && (
+                          <ValidateForm error={errors.email} />
+                        )}
                       </div>
                     </section>
                     <div className="text-sm grid gap-2">
@@ -96,8 +162,11 @@ const NewSuppliersForm = ({ open, setOpen }) => {
                       <input
                         name="address"
                         type="text"
-                        value={address}
-                        onChange={newSupplierData}
+                        value={values.address}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newSupplierData(e);
+                        }}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Address"
                       />
@@ -107,32 +176,37 @@ const NewSuppliersForm = ({ open, setOpen }) => {
                       <input
                         name="vat"
                         type="text"
-                        value={vat}
-                        onChange={newSupplierData}
+                        value={values.vat}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newSupplierData(e);
+                        }}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="VAT PIN Number"
                       />
                     </div>
+                    <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
+                      <article
+                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
+                        onClick={() => setOpen(false)}
+                      >
+                        <MdOutlineCancel />
+                        <p className="text-xs">cancel</p>
+                      </article>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`${
+                          isSubmitting
+                            ? "opacity-40 flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                            : "flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                        }`}
+                      >
+                        <MdTaskAlt />
+                        <p className="text-xs">Add Supplier</p>
+                      </button>
+                    </div>
                   </form>
-                  <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setOpen(false)}
-                    >
-                      <MdOutlineCancel />
-                      <p className="text-xs">cancel</p>
-                    </article>
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                      onClick={() => {
-                        addNewSupplier();
-                        setOpen(false);
-                      }}
-                    >
-                      <MdTaskAlt />
-                      <p className="text-xs">Add Supplier</p>
-                    </article>
-                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

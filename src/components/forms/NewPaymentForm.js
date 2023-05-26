@@ -4,6 +4,10 @@ import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import ValidateForm from "./ValidateForm";
+import { newPaymentSchema } from "@/schemas";
 
 const NewPaymentForm = ({ payment, setPayment }) => {
   const cancelButtonRef = useRef(null);
@@ -12,6 +16,32 @@ const NewPaymentForm = ({ payment, setPayment }) => {
     newPaymentData,
     addNewPayment,
   } = useFormContext();
+  const onSubmit = async (values, actions) => {
+    toast.success("created");
+    addNewPayment();
+    setPayment(false);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    actions.resetForm();
+  };
+  const {
+    values,
+    handleBlur,
+    isSubmitting,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormik({
+    initialValues: {
+      job: job,
+      amount: amount,
+      paymentDate: paymentDate,
+      paymentMethod: paymentMethod,
+      notes: notes,
+    },
+    validationSchema: newPaymentSchema,
+    onSubmit,
+  });
 
   return (
     <Transition.Root show={payment} as={Fragment}>
@@ -56,14 +86,25 @@ const NewPaymentForm = ({ payment, setPayment }) => {
                   <p className="text-xs font-semibold mt-6 normal-case px-4">
                     Add Payment
                   </p>
-                  <form className="mt-3 grid gap-8 px-4 pb-4">
-                    <div className="text-sm grid gap-2">
+                  <form
+                    className="mt-3 grid gap-8 px-4 pb-4"
+                    onSubmit={handleSubmit}
+                  >
+                    <div className="text-sm grid gap-2 relative">
                       <label>Select Invoice</label>
                       <select
-                        className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
                         name="job"
-                        value={job}
-                        onChange={newPaymentData}
+                        value={values.job}
+                        className={`${
+                          errors.job && touched.job
+                            ? "border border-red-800 outline-none rounded-md py-2 px-2 font-medium capitalize"
+                            : "outline-none border rounded-md py-2 px-2 font-medium capitalize"
+                        }`}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newPaymentData(e);
+                        }}
+                        onBlur={handleBlur}
                       >
                         <option>Select Invoice</option>
                         <option>All clients</option>
@@ -71,17 +112,31 @@ const NewPaymentForm = ({ payment, setPayment }) => {
                       <p className="text-xs text-[#8094ae] normal-case italic">
                         The amout in brackets is the balance due.
                       </p>
+                      {errors.job && touched.job && (
+                        <ValidateForm error={errors.job} />
+                      )}
                     </div>
-                    <div className="text-sm grid gap-2">
+                    <div className="text-sm grid gap-2 relative">
                       <label>Amount</label>
                       <input
                         name="amount"
                         type="text"
-                        value={amount}
-                        onChange={newPaymentData}
-                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        value={values.amount}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newPaymentData(e);
+                        }}
+                        onBlur={handleBlur}
+                        className={`${
+                          errors.amount && touched.amount
+                            ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                            : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        }`}
                         placeholder="0.00"
                       />
+                      {errors.amount && touched.amount && (
+                        <ValidateForm error={errors.amount} />
+                      )}
                     </div>
                     <section className="grid grid-cols-2 gap-4">
                       <DatePicker
@@ -95,8 +150,11 @@ const NewPaymentForm = ({ payment, setPayment }) => {
                         <select
                           className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
                           name="paymentMethod"
-                          value={paymentMethod}
-                          onChange={newPaymentData}
+                          value={values.paymentMethod}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newPaymentData(e);
+                          }}
                         >
                           <option>Cash</option>
                           <option>Card</option>
@@ -113,32 +171,37 @@ const NewPaymentForm = ({ payment, setPayment }) => {
                       <textarea
                         name="notes"
                         type="text"
-                        value={notes}
-                        onChange={newPaymentData}
+                        value={values.notes}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newPaymentData(e);
+                        }}
                         className="w-full outline-none border rounded-md pl-3 py-1 min-h-[9em] placeholder:text-[#8094ae]"
                         placeholder="Note"
                       />
                     </div>
+                    <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
+                      <article
+                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
+                        onClick={() => setPayment(false)}
+                      >
+                        <MdOutlineCancel />
+                        <p className="text-xs">cancel</p>
+                      </article>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`${
+                          isSubmitting
+                            ? "opacity-40 flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                            : "flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                        }`}
+                      >
+                        <MdTaskAlt />
+                        <p className="text-xs">Add payment</p>
+                      </button>
+                    </div>
                   </form>
-                  <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setPayment(false)}
-                    >
-                      <MdOutlineCancel />
-                      <p className="text-xs">cancel</p>
-                    </article>
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                      onClick={() => {
-                        addNewPayment();
-                        setPayment(false);
-                      }}
-                    >
-                      <MdTaskAlt />
-                      <p className="text-xs">Add Payment</p>
-                    </article>
-                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

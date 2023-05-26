@@ -3,6 +3,10 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { useFormContext } from "@/context/form_context";
+import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import ValidateForm from "./ValidateForm";
+import { newItemSchema } from "@/schemas";
 
 const NewItemForm = ({ open, setOpen }) => {
   const cancelButtonRef = useRef(null);
@@ -20,6 +24,35 @@ const NewItemForm = ({ open, setOpen }) => {
     newInventoryData,
     addNewInventory,
   } = useFormContext();
+  const onSubmit = async (values, actions) => {
+    toast.success("created");
+    addNewInventory();
+    setOpen(false);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    actions.resetForm();
+  };
+  const {
+    values,
+    handleBlur,
+    isSubmitting,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormik({
+    initialValues: {
+      itemName: itemName,
+      quantity: quantity,
+      quantityUnit: quantityUnit,
+      restock: restock,
+      unitCost: unitCost,
+      supplier: supplier,
+      itemCode: itemCode,
+      shelfNumber: shelfNumber,
+    },
+    validationSchema: newItemSchema,
+    onSubmit,
+  });
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -64,37 +97,65 @@ const NewItemForm = ({ open, setOpen }) => {
                   <p className="text-xs font-semibold mt-6 normal-case px-4">
                     Add an item
                   </p>
-                  <form className="mt-3 grid gap-8 px-4 pb-4">
-                    <div className="text-sm grid gap-2">
+                  <form
+                    className="mt-3 grid gap-8 px-4 pb-4"
+                    onSubmit={handleSubmit}
+                  >
+                    <div className="text-sm grid gap-2 relative">
                       <label>Item Name</label>
                       <input
                         name="itemName"
                         type="text"
-                        value={itemName}
-                        onChange={newInventoryData}
-                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        value={values.itemName}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newInventoryData(e);
+                        }}
+                        onBlur={handleBlur}
+                        className={`${
+                          errors.itemName && touched.itemName
+                            ? "w-full outline-none border  border-red-800 rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                            : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        }`}
                         placeholder="Item Name"
                       />
+                      {errors.itemName && touched.itemName && (
+                        <ValidateForm error={errors.itemName} />
+                      )}
                     </div>
                     <section className="grid grid-cols-2 gap-4">
-                      <div className="text-sm grid gap-2">
+                      <div className="text-sm grid gap-2 relative">
                         <label>Quantity</label>
                         <input
                           name="quantity"
                           type="number"
-                          value={quantity}
-                          onChange={newInventoryData}
-                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          value={values.quantity}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newInventoryData(e);
+                          }}
+                          onBlur={handleBlur}
+                          className={`${
+                            errors.quantity && touched.quantity
+                              ? "w-full outline-none border  border-red-800 rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          }`}
                           placeholder="Quantity"
                         />
+                        {errors.quantity && touched.quantity && (
+                          <ValidateForm error={errors.quantity} />
+                        )}
                       </div>
                       <div className="text-sm grid gap-2">
                         <label>Quantity Unit</label>
                         <select
                           className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
                           name="quantityUnit"
-                          value={quantityUnit}
-                          onChange={newInventoryData}
+                          value={values.quantityUnit}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newInventoryData(e);
+                          }}
                         >
                           <option>Units</option>
                           <option>Litres</option>
@@ -110,8 +171,11 @@ const NewItemForm = ({ open, setOpen }) => {
                       <input
                         name="restock"
                         type="number"
-                        value={restock}
-                        onChange={newInventoryData}
+                        value={values.restock}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newInventoryData(e);
+                        }}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Restock Quantity"
                       />
@@ -126,8 +190,11 @@ const NewItemForm = ({ open, setOpen }) => {
                         <input
                           name="unitCost"
                           type="number"
-                          value={unitCost}
-                          onChange={newInventoryData}
+                          value={values.unitCost}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newInventoryData(e);
+                          }}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="0.00"
                         />
@@ -137,8 +204,11 @@ const NewItemForm = ({ open, setOpen }) => {
                         <select
                           className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
                           name="supplier"
-                          value={supplier}
-                          onChange={newInventoryData}
+                          value={values.supplier}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newInventoryData(e);
+                          }}
                         >
                           <option>Select Supplier</option>
                           <option>Litres</option>
@@ -151,8 +221,11 @@ const NewItemForm = ({ open, setOpen }) => {
                         <input
                           name="itemCode"
                           type="text"
-                          value={itemCode}
-                          onChange={newInventoryData}
+                          value={values.itemCode}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newInventoryData(e);
+                          }}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Item Code"
                         />
@@ -162,33 +235,38 @@ const NewItemForm = ({ open, setOpen }) => {
                         <input
                           name="shelfNumber"
                           type="text"
-                          value={shelfNumber}
-                          onChange={newInventoryData}
+                          value={values.shelfNumber}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newInventoryData(e);
+                          }}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Shelf Number"
                         />
                       </div>
                     </section>
+                    <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
+                      <article
+                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
+                        onClick={() => setOpen(false)}
+                      >
+                        <MdOutlineCancel />
+                        <p className="text-xs">cancel</p>
+                      </article>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`${
+                          isSubmitting
+                            ? "opacity-40 flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                            : "flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                        }`}
+                      >
+                        <MdTaskAlt />
+                        <p className="text-xs">Add Item</p>
+                      </button>
+                    </div>
                   </form>
-                  <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setOpen(false)}
-                    >
-                      <MdOutlineCancel />
-                      <p className="text-xs">cancel</p>
-                    </article>
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                      onClick={() => {
-                        addNewInventory();
-                        setOpen(false);
-                      }}
-                    >
-                      <MdTaskAlt />
-                      <p className="text-xs">Add Item</p>
-                    </article>
-                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

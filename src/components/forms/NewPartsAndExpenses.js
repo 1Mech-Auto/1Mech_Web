@@ -5,6 +5,10 @@ import { AiOutlineClose } from "react-icons/ai";
 import DatePicker from "../DatePicker";
 import ToggleInputForm from "../ToggleInputForm";
 import { useFormContext } from "@/context/form_context";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import ValidateForm from "./ValidateForm";
+import { newPartsandExpSchema } from "@/schemas";
 
 const NewPartsAndExpenses = ({ parts, setParts }) => {
   const cancelButtonRef = useRef(null);
@@ -24,6 +28,37 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
     newExpenseData,
     addNewExpense,
   } = useFormContext();
+  const onSubmit = async (values, actions) => {
+    toast.success("sent");
+    addNewExpense();
+    setParts(false);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    actions.resetForm();
+  };
+  const {
+    values,
+    handleBlur,
+    isSubmitting,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormik({
+    initialValues: {
+      source: source,
+      itemName: itemName,
+      supplier: supplier,
+      quantity: quantity,
+      quantityUnit: quantityUnit,
+      total: total,
+      expense: expense,
+      type: type,
+      status: status,
+      paymentDue: paymentDue,
+    },
+    validationSchema: newPartsandExpSchema,
+    onSubmit,
+  });
 
   return (
     <Transition.Root show={parts} as={Fragment}>
@@ -68,38 +103,64 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                   <p className="text-xs font-semibold mt-6 normal-case px-4">
                     Add a project expense
                   </p>
-                  <form className="mt-3 grid gap-8 px-4 pb-4">
+                  <form
+                    className="mt-3 grid gap-8 px-4 pb-4"
+                    onSubmit={handleSubmit}
+                  >
                     <div className="text-sm grid gap-2">
                       <label>Source</label>
                       <select
                         className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
                         name="source"
-                        value={source}
-                        onChange={newExpenseData}
+                        value={values.source}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newExpenseData(e);
+                        }}
+                        onBlur={handleBlur}
                       >
                         <option>External Suppliers</option>
                         <option>All clients</option>
                       </select>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-4">
-                      <div className="text-sm grid gap-2">
+                      <div className="text-sm grid gap-2 relative">
                         <label>Expense / Item name</label>
                         <input
                           name="itemName"
                           type="text"
-                          value={itemName}
-                          onChange={newExpenseData}
-                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          value={values.itemName}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newExpenseData(e);
+                          }}
+                          onBlur={handleBlur}
+                          className={`${
+                            errors.itemName && touched.itemName
+                              ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          }`}
                           placeholder="Expense / Item name"
                         />
+                        {errors.itemName && touched.itemName && (
+                          <ValidateForm error={errors.itemName} />
+                        )}
                       </div>
                       <div className="text-sm grid gap-2">
                         <label>Supplier</label>
                         <select
-                          className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
+                          className={`${
+                            errors.experience && touched.experience
+                              ? "border border-red-800 outline-none  rounded-md py-2 px-2 font-medium capitalize"
+                              : "outline-none border rounded-md py-2 px-2 font-medium capitalize"
+                          }`}
                           name="supplier"
-                          value={supplier}
-                          onChange={newExpenseData}
+                          value={values.supplier}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newExpenseData(e);
+                          }}
+                          onBlur={handleBlur}
                         >
                           <option>Select Supplier</option>
                           <option>All clients</option>
@@ -107,24 +168,38 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                       </div>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-4">
-                      <div className="text-sm grid gap-2">
+                      <div className="text-sm grid gap-2 relative">
                         <label>Quantity</label>
                         <input
                           name="quantity"
                           type="text"
-                          value={quantity}
-                          onChange={newExpenseData}
-                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          value={values.quantity}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newExpenseData(e);
+                          }}
+                          onBlur={handleBlur}
+                          className={`${
+                            errors.quantity && touched.quantity
+                              ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          }`}
                           placeholder="Quantity"
                         />
+                        {errors.quantity && touched.quantity && (
+                          <ValidateForm error={errors.quantity} />
+                        )}
                       </div>
                       <div className="text-sm grid gap-2">
                         <label>Quantity Unit</label>
                         <select
                           className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
                           name="quantityUnit"
-                          value={quantityUnit}
-                          onChange={newExpenseData}
+                          value={values.quantityUnit}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newExpenseData(e);
+                          }}
                         >
                           <option>Pieces</option>
                           <option>All clients</option>
@@ -132,21 +207,35 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                       </div>
                     </div>
                     <section className="grid grid-cols-2 gap-4">
-                      <div className="text-sm grid gap-2">
+                      <div className="text-sm grid gap-2 relative">
                         <label>Total Amount</label>
                         <input
                           type="text"
                           name="total"
-                          value={total}
-                          onChange={newExpenseData}
-                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          value={values.total}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newExpenseData(e);
+                          }}
+                          onBlur={handleBlur}
+                          className={`${
+                            errors.total && touched.total
+                              ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          }`}
                         />
+                        {errors.total && touched.total && (
+                          <ValidateForm error={errors.total} />
+                        )}
                       </div>
                       <DatePicker
                         label="Expense Date"
                         name={"expense"}
-                        date={expense}
-                        setDate={newExpenseData}
+                        date={values.expense}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newExpenseData(e);
+                        }}
                       />
                     </section>
                     <div className="grid sm:grid-cols-2 gap-4">
@@ -155,8 +244,11 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                         <input
                           name="type"
                           type="text"
-                          value={type}
-                          onChange={newExpenseData}
+                          value={values.type}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newExpenseData(e);
+                          }}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Type"
                         />
@@ -166,8 +258,11 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                         <select
                           className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
                           name="status"
-                          value={status}
-                          onChange={newExpenseData}
+                          value={values.status}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newExpenseData(e);
+                          }}
                         >
                           <option>Delivered</option>
                           <option>All clients</option>
@@ -178,29 +273,34 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                     <DatePicker
                       label="Payment due on"
                       name={"paymentDue"}
-                      date={paymentDue}
-                      setDate={newExpenseData}
-                    />
-                  </form>
-                  <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setParts(false)}
-                    >
-                      <MdOutlineCancel />
-                      <p className="text-xs">cancel</p>
-                    </article>
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                      onClick={() => {
-                        addNewExpense();
-                        setParts(false);
+                      date={values.paymentDue}
+                      setDate={(e) => {
+                        handleChange(e);
+                        newExpenseData(e);
                       }}
-                    >
-                      <MdTaskAlt />
-                      <p className="text-xs">Save Expense</p>
-                    </article>
-                  </div>
+                    />
+                    <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
+                      <article
+                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
+                        onClick={() => setParts(false)}
+                      >
+                        <MdOutlineCancel />
+                        <p className="text-xs">cancel</p>
+                      </article>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`${
+                          isSubmitting
+                            ? "opacity-40 flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                            : "flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                        }`}
+                      >
+                        <MdTaskAlt />
+                        <p className="text-xs">Send Feedback</p>
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

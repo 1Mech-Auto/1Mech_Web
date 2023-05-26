@@ -19,9 +19,9 @@ const Insurance = () => {
   const [show, setShow] = useState(false);
   const checkInitials = (fullName) => {
     const words = fullName;
-    const wordList = words.split(" ");
-    const firstLetters = wordList.map((word) => word[0]);
-    const joinedWord = firstLetters.join("");
+    const wordList = words?.split(" ");
+    const firstLetters = wordList?.map((word) => word[0]);
+    const joinedWord = firstLetters?.join("");
     return joinedWord;
   };
   const extraInfo = [

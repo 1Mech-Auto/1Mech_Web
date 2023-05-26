@@ -3,6 +3,10 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { useFormContext } from "@/context/form_context";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import ValidateForm from "./ValidateForm";
+import { newCampaignSchema } from "@/schemas";
 
 const NewCampaignForm = ({ open, setOpen }) => {
   const cancelButtonRef = useRef(null);
@@ -11,6 +15,30 @@ const NewCampaignForm = ({ open, setOpen }) => {
     newCampaignData,
     addNewCampaign,
   } = useFormContext();
+  const onSubmit = async (values, actions) => {
+    toast.success("created");
+    addNewCampaign();
+    setOpen(false);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    actions.resetForm();
+  };
+  const {
+    values,
+    handleBlur,
+    isSubmitting,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormik({
+    initialValues: {
+      campaignTitle: campaignTitle,
+      send: send,
+      message: message,
+    },
+    validationSchema: newCampaignSchema,
+    onSubmit,
+  });
   // MdTaskAlt IMPORTANT
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -55,28 +83,50 @@ const NewCampaignForm = ({ open, setOpen }) => {
                   <p className="text-xs font-semibold mt-6 normal-case px-4">
                     Create a Campaign
                   </p>
-                  <form className="mt-3 grid gap-8 px-4 pb-4">
-                    <div className="text-sm grid gap-2">
+                  <form
+                    className="mt-3 grid gap-8 px-4 pb-4"
+                    onSubmit={handleSubmit}
+                  >
+                    <div className="text-sm grid gap-2 relative">
                       <label>Campaign title</label>
                       <input
                         name="campaignTitle"
                         type="text"
-                        value={campaignTitle}
-                        onChange={newCampaignData}
-                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        value={values.campaignTitle}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newCampaignData(e);
+                        }}
+                        onBlur={handleBlur}
+                        className={`${
+                          errors.campaignTitle && touched.campaignTitle
+                            ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                            : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        }`}
                         placeholder="Campaign Title"
                       />
                       <p className="text-xs text-[#8094ae] normal-case italic">
                         This will not be shown to customers
                       </p>
+                      {errors.campaignTitle && touched.campaignTitle && (
+                        <ValidateForm error={errors.campaignTitle} />
+                      )}
                     </div>
-                    <div className="text-sm grid gap-2">
+                    <div className="text-sm grid gap-2 relative">
                       <label>Send to</label>
                       <select
-                        className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
+                        className={`${
+                          errors.send && touched.send
+                            ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                            : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        }`}
                         name="send"
-                        value={send}
-                        onChange={newCampaignData}
+                        value={values.send}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newCampaignData(e);
+                        }}
+                        onBlur={handleBlur}
                       >
                         <option>Select</option>
                         <option>All clients</option>
@@ -86,42 +136,58 @@ const NewCampaignForm = ({ open, setOpen }) => {
                         <option>enter number manually</option>
                         <option>filtered clients by car make / model</option>
                       </select>
+                      {errors.send && touched.send && (
+                        <ValidateForm error={errors.send} />
+                      )}
                     </div>
-                    <div className="text-sm grid gap-2">
+                    <div className="text-sm grid gap-2 relative">
                       <label>Message</label>
                       <textarea
                         name="message"
                         type="text"
-                        value={message}
-                        onChange={newCampaignData}
-                        className="w-full outline-none border rounded-md pl-3 py-1 h-28 placeholder:text-[#8094ae]"
+                        value={values.message}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newCampaignData(e);
+                        }}
+                        onBlur={handleBlur}
+                        className={`${
+                          errors.message && touched.message
+                            ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                            : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        }`}
                         placeholder="Campaign Title"
                       />
                       <p className="text-xs text-[#8094ae] normal-case italic">
                         We`ll include your company name One-Mech Limited at the
                         end of every message.
                       </p>
+                      {errors.message && touched.message && (
+                        <ValidateForm error={errors.message} />
+                      )}
+                    </div>
+                    <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
+                      <article
+                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
+                        onClick={() => setOpen(false)}
+                      >
+                        <MdOutlineCancel />
+                        <p className="text-xs">cancel</p>
+                      </article>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`${
+                          isSubmitting
+                            ? "opacity-40 flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                            : "flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                        }`}
+                      >
+                        <MdTaskAlt />
+                        <p className="text-xs">Create Campaign</p>
+                      </button>
                     </div>
                   </form>
-                  <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setOpen(false)}
-                    >
-                      <MdOutlineCancel />
-                      <p className="text-xs">cancel</p>
-                    </article>
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                      onClick={() => {
-                        addNewCampaign()
-                        setOpen(false)
-                      }}
-                    >
-                      <MdTaskAlt />
-                      <p className="text-xs">send campaign</p>
-                    </article>
-                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
