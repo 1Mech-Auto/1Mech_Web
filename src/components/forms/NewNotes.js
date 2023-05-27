@@ -5,21 +5,21 @@ import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { useFormContext } from "@/context/form_context";
 import { useFormik } from "formik";
-import { toast } from "react-toastify";
 import ValidateForm from "./ValidateForm";
 import { newNotesSchema } from "@/schemas";
+import SuccessPrompt from "../SuccessPrompt";
 
 const NewNotes = ({ notes, setNotes }) => {
   const cancelButtonRef = useRef(null);
+  const [success, setSuccess] = useState(false);
   const {
     notesForm: { note },
     newNotesData,
     addNewNotes,
   } = useFormContext();
   const onSubmit = async (values, actions) => {
-    toast.success("sent");
     addNewNotes();
-    setNotes(false);
+    setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -130,6 +130,12 @@ const NewNotes = ({ notes, setNotes }) => {
                       </button>
                     </div>
                   </form>
+                  <SuccessPrompt
+                    message="Note saved successfully"
+                    open={success}
+                    setOpen={setSuccess}
+                    setModals={setNotes}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

@@ -7,11 +7,12 @@ import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
 import { useFormik } from "formik";
 import ValidateForm from "./ValidateForm";
-import { toast } from "react-toastify";
 import { newTaskSchema } from "@/schemas";
+import SuccessPrompt from "../SuccessPrompt";
 
 const NewTask = ({ task, setTask }) => {
   const cancelButtonRef = useRef(null);
+  const [success, setSuccess] = useState(false);
   const {
     taskForm: {
       taskTitle,
@@ -27,9 +28,8 @@ const NewTask = ({ task, setTask }) => {
     addNewTask,
   } = useFormContext();
   const onSubmit = async (values, actions) => {
-    toast.success("sent");
     addNewTask;
-    setTask(false);
+    setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -266,6 +266,12 @@ const NewTask = ({ task, setTask }) => {
                       </button>
                     </div>
                   </form>
+                  <SuccessPrompt
+                    message="Task created successfully"
+                    open={success}
+                    setOpen={setSuccess}
+                    setModals={setTask}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

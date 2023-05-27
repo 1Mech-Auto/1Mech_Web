@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
@@ -6,12 +6,13 @@ import { BiPlus } from "react-icons/bi";
 import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
 import { useFormik } from "formik";
-import { toast } from "react-toastify";
 import { newInvoiceSchema } from "@/schemas";
 import ValidateForm from "./ValidateForm";
+import SuccessPrompt from "../SuccessPrompt";
 
 const NewInvoiceForm = ({ invoice, setInvoice }) => {
   const cancelButtonRef = useRef(null);
+  const [success, setSuccess] = useState(false);
   const {
     invoiceForm: {
       job,
@@ -30,9 +31,8 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
   } = useFormContext();
 
   const onSubmit = async (values, actions) => {
-    toast.success("created");
     addNewInvoice();
-    setInvoice(false);
+    setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -305,6 +305,12 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                       </button>
                     </div>
                   </form>
+                  <SuccessPrompt
+                    message="Invoice created successfully"
+                    open={success}
+                    setOpen={setSuccess}
+                    setModals={setInvoice}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

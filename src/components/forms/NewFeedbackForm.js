@@ -5,11 +5,13 @@ import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { useFormContext } from "@/context/form_context";
 import { useFormik } from "formik";
-import { toast } from "react-toastify";
 import ValidateForm from "./ValidateForm";
 import { newFeedbackSchema } from "@/schemas";
+import SuccessPrompt from "../SuccessPrompt";
 
 const NewFeedbackForm = ({ feedback, setFeedback }) => {
+  const [success, setSuccess] = useState(false);
+
   const cancelButtonRef = useRef(null);
   const {
     feedbackForm: { experience, comment },
@@ -17,9 +19,8 @@ const NewFeedbackForm = ({ feedback, setFeedback }) => {
     addNewFeedback,
   } = useFormContext();
   const onSubmit = async (values, actions) => {
-    toast.success("sent");
     addNewFeedback();
-    setFeedback(false);
+    setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -152,6 +153,12 @@ const NewFeedbackForm = ({ feedback, setFeedback }) => {
                       </button>
                     </div>
                   </form>
+                  <SuccessPrompt
+                    message="Feedback sent successfully"
+                    open={success}
+                    setOpen={setSuccess}
+                    setModals={setFeedback}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

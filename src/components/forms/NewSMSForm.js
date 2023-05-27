@@ -8,9 +8,11 @@ import { useFormik } from "formik";
 import ValidateForm from "./ValidateForm";
 import { toast } from "react-toastify";
 import { newMessageSchema } from "@/schemas";
+import SuccessPrompt from "../SuccessPrompt";
 
 const NewSMSForm = ({ sms, setSms }) => {
   const cancelButtonRef = useRef(null);
+  const [success, setSuccess] = useState(false);
   const {
     smsForm: { sendTo, phone, message },
     newSms,
@@ -18,9 +20,8 @@ const NewSMSForm = ({ sms, setSms }) => {
   } = useFormContext();
 
   const onSubmit = async (values, actions) => {
-    toast.success("sent");
     sendSms();
-    setSms(false);
+    setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -185,6 +186,12 @@ const NewSMSForm = ({ sms, setSms }) => {
                       </article>
                     </div>
                   </form>
+                  <SuccessPrompt
+                    message="message sent successfully"
+                    open={success}
+                    setOpen={setSuccess}
+                    setModals={setSms}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

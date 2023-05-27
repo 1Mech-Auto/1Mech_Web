@@ -7,9 +7,11 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import ValidateForm from "./ValidateForm";
 import { newItemSchema } from "@/schemas";
+import SuccessPrompt from "../SuccessPrompt";
 
 const NewItemForm = ({ open, setOpen }) => {
   const cancelButtonRef = useRef(null);
+  const [success, setSuccess] = useState(false);
   const {
     inventoryForm: {
       itemName,
@@ -25,9 +27,8 @@ const NewItemForm = ({ open, setOpen }) => {
     addNewInventory,
   } = useFormContext();
   const onSubmit = async (values, actions) => {
-    toast.success("created");
     addNewInventory();
-    setOpen(false);
+    setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -267,6 +268,12 @@ const NewItemForm = ({ open, setOpen }) => {
                       </button>
                     </div>
                   </form>
+                  <SuccessPrompt
+                    message="Item added successfully"
+                    open={success}
+                    setOpen={setSuccess}
+                    setModals={setOpen}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

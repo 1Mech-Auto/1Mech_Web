@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
@@ -8,9 +8,11 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { newQuoteSchema } from "@/schemas";
 import ValidateForm from "./ValidateForm";
+import SuccessPrompt from "../SuccessPrompt";
 
 const NewQuotesForm = ({ quote, setQuote }) => {
   const cancelButtonRef = useRef(null);
+  const [success, setSuccess] = useState(false);
   const {
     quoteForm: { job, itemDesc, quantity, unitCost, tax, total, notes },
     newQuoteData,
@@ -18,9 +20,8 @@ const NewQuotesForm = ({ quote, setQuote }) => {
   } = useFormContext();
 
   const onSubmit = async (values, actions) => {
-    toast.success("created");
     addNewQuote();
-    setQuote(false);
+    setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -257,6 +258,12 @@ const NewQuotesForm = ({ quote, setQuote }) => {
                       </button>
                     </div>
                   </form>
+                  <SuccessPrompt
+                    message="Quote created successfully"
+                    open={success}
+                    setOpen={setSuccess}
+                    setModals={setQuote}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

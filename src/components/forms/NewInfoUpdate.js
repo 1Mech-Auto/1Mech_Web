@@ -7,8 +7,10 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import ValidateForm from "./ValidateForm";
 import { newUpdateInfoSchema } from "@/schemas";
+import SuccessPrompt from "../SuccessPrompt";
 
 const NewInfoUpdate = ({ info, setInfo }) => {
+  const [success, setSuccess] = useState(false);
   const cancelButtonRef = useRef(null);
   const {
     updateForm: { fullName, phone, email, address },
@@ -16,9 +18,8 @@ const NewInfoUpdate = ({ info, setInfo }) => {
     addNewUpdate,
   } = useFormContext();
   const onSubmit = async (values, actions) => {
-    toast.success("sent");
     addNewUpdate;
-    setInfo(false);
+    setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -205,6 +206,12 @@ const NewInfoUpdate = ({ info, setInfo }) => {
                       </button>
                     </div>
                   </form>
+                  <SuccessPrompt
+                    message="updated successfully"
+                    open={success}
+                    setOpen={setSuccess}
+                    setModals={setInfo}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

@@ -5,21 +5,21 @@ import { AiOutlineClose } from "react-icons/ai";
 import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
 import { useFormik } from "formik";
-import { toast } from "react-toastify";
 import ValidateForm from "./ValidateForm";
 import { newPaymentSchema } from "@/schemas";
+import SuccessPrompt from "../SuccessPrompt";
 
 const NewPaymentForm = ({ payment, setPayment }) => {
   const cancelButtonRef = useRef(null);
+  const [success, setSuccess] = useState(false);
   const {
     paymentsForm: { job, amount, paymentDate, paymentMethod, notes },
     newPaymentData,
     addNewPayment,
   } = useFormContext();
   const onSubmit = async (values, actions) => {
-    toast.success("created");
     addNewPayment();
-    setPayment(false);
+    setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -202,6 +202,12 @@ const NewPaymentForm = ({ payment, setPayment }) => {
                       </button>
                     </div>
                   </form>
+                  <SuccessPrompt
+                    message="Payment added successfully "
+                    open={success}
+                    setOpen={setSuccess}
+                    setModals={setPayment}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>
