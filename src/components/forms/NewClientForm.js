@@ -7,9 +7,11 @@ import ValidateForm from "./ValidateForm";
 import { useFormik } from "formik";
 import { newClientSchema } from "@/schemas";
 import { toast } from "react-toastify";
+import SuccessPrompt from "../SuccessPrompt";
 
 export default function NewClientForm({ open, setOpen }) {
   const cancelButtonRef = useRef(null);
+  const [success, setSuccess] = useState(false);
   const {
     clientForm: { names, phone, email, address, gender },
     newClientForm,
@@ -17,10 +19,8 @@ export default function NewClientForm({ open, setOpen }) {
   } = useFormContext();
 
   const onSubmit = async (values, actions) => {
-    console.log(values);
-    console.log(actions);
     addNewClient();
-    setOpen(false);
+    setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -237,6 +237,12 @@ export default function NewClientForm({ open, setOpen }) {
                       </button>
                     </div>
                   </form>
+                  <SuccessPrompt
+                    message="Client is successfully created"
+                    open={success}
+                    setOpen={setSuccess}
+                    setModals={setOpen}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

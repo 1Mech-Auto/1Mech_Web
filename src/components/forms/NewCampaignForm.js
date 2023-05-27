@@ -4,11 +4,12 @@ import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { useFormContext } from "@/context/form_context";
 import { useFormik } from "formik";
-import { toast } from "react-toastify";
 import ValidateForm from "./ValidateForm";
 import { newCampaignSchema } from "@/schemas";
+import SuccessPrompt from "../SuccessPrompt";
 
 const NewCampaignForm = ({ open, setOpen }) => {
+  const [success, setSuccess] = useState(false);
   const cancelButtonRef = useRef(null);
   const {
     campaignForm: { campaignTitle, send, message },
@@ -16,9 +17,8 @@ const NewCampaignForm = ({ open, setOpen }) => {
     addNewCampaign,
   } = useFormContext();
   const onSubmit = async (values, actions) => {
-    toast.success("created");
     addNewCampaign();
-    setOpen(false);
+    setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -188,6 +188,12 @@ const NewCampaignForm = ({ open, setOpen }) => {
                       </button>
                     </div>
                   </form>
+                  <SuccessPrompt
+                    message="Campaign is successfully created"
+                    open={success}
+                    setOpen={setSuccess}
+                    setModals={setOpen}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

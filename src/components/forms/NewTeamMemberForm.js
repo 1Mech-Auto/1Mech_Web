@@ -7,9 +7,11 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import ValidateForm from "./ValidateForm";
 import { newTeamSchema } from "@/schemas";
+import SuccessPrompt from "../SuccessPrompt";
 
 export default function NewTeamMemberForm({ open, setOpen }) {
   const cancelButtonRef = useRef(null);
+  const [success, setSuccess] = useState(false);
   const {
     teamForm: {
       firstName,
@@ -25,9 +27,8 @@ export default function NewTeamMemberForm({ open, setOpen }) {
     addNewTeamMember,
   } = useFormContext();
   const onSubmit = async (values, actions) => {
-    toast.success("created");
     addNewTeamMember();
-    setOpen(false);
+    setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -291,6 +292,12 @@ export default function NewTeamMemberForm({ open, setOpen }) {
                       </button>
                     </div>
                   </form>
+                  <SuccessPrompt
+                    message="Member created successfully"
+                    open={success}
+                    setOpen={setSuccess}
+                    setModals={setOpen}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

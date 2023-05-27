@@ -7,18 +7,19 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import ValidateForm from "./ValidateForm";
 import { newSupplierSchema } from "@/schemas";
+import SuccessPrompt from "../SuccessPrompt";
 
 const NewSuppliersForm = ({ open, setOpen }) => {
   const cancelButtonRef = useRef(null);
+  const [success, setSuccess] = useState(false);
   const {
     supplierForm: { supplierName, phone, email, address, vat },
     newSupplierData,
     addNewSupplier,
   } = useFormContext();
   const onSubmit = async (values, actions) => {
-    toast.success("created");
     addNewSupplier();
-    setOpen(false);
+    setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -212,6 +213,12 @@ const NewSuppliersForm = ({ open, setOpen }) => {
                       </button>
                     </div>
                   </form>
+                  <SuccessPrompt
+                    message="Supplier added successfully"
+                    open={success}
+                    setOpen={setSuccess}
+                    setModals={setOpen}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

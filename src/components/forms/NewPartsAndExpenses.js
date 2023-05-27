@@ -9,9 +9,11 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import ValidateForm from "./ValidateForm";
 import { newPartsandExpSchema } from "@/schemas";
+import SuccessPrompt from "../SuccessPrompt";
 
 const NewPartsAndExpenses = ({ parts, setParts }) => {
   const cancelButtonRef = useRef(null);
+  const [success, setSuccess] = useState(false);
   const {
     expenseForm: {
       source,
@@ -29,9 +31,8 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
     addNewExpense,
   } = useFormContext();
   const onSubmit = async (values, actions) => {
-    toast.success("sent");
     addNewExpense();
-    setParts(false);
+    setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -297,7 +298,7 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                         }`}
                       >
                         <MdTaskAlt />
-                        <p className="text-xs">Send Feedback</p>
+                        <p className="text-xs">Add expense</p>
                       </button>
                     </div>
                   </form>
@@ -305,6 +306,12 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
               </Dialog.Panel>
             </Transition.Child>
           </div>
+          <SuccessPrompt
+            message="expenses added successfully"
+            open={success}
+            setOpen={setSuccess}
+            setModals={setParts}
+          />
         </div>
       </Dialog>
     </Transition.Root>

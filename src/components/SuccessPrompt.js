@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel } from "react-icons/md";
@@ -7,16 +7,19 @@ import { BsShieldCheck } from "react-icons/bs";
 import ToggleInputForm from "./ToggleInputForm";
 import { FcCheckmark } from "react-icons/fc";
 
-const SuccessPrompt = () => {
-  const [open, setOpen] = useState(true);
+const SuccessPrompt = ({ message, setOpen, open, setModals }) => {
   const cancelButtonRef = useRef(null);
+  const closeModals = () => {
+    setOpen(false);
+    setModals(false);
+  };
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-50"
         initialFocus={cancelButtonRef}
-        onClose={setOpen}
+        onClose={closeModals}
       >
         <Transition.Child
           as={Fragment}
@@ -30,7 +33,7 @@ const SuccessPrompt = () => {
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </Transition.Child>
 
-        <div className="fixed inset-0 z-60 overflow-y-auto">
+        <div className="fixed inset-0 z-70 overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <Transition.Child
               as={Fragment}
@@ -56,8 +59,11 @@ const SuccessPrompt = () => {
                   <h3 className="text-[1.8rem] text-[#364a63] font-semibold">
                     Alright!
                   </h3>
-                  <p className="text-sm">Placeholder successfully added</p>
-                  <button className="bg-[#0971fe] py-3 px-6 rounded-md text-md text-white cursor-pointer font-medium">
+                  <p className="text-sm">{message}</p>
+                  <button
+                    className="bg-[#0971fe] py-3 px-6 rounded-md text-md text-white cursor-pointer font-medium"
+                    onClick={() => setModals(false)}
+                  >
                     Okay
                   </button>
                 </div>

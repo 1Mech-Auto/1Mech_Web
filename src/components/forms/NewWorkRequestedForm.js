@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
@@ -6,12 +6,13 @@ import { BiPlus } from "react-icons/bi";
 import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
 import { useFormik } from "formik";
-import { toast } from "react-toastify";
 import ValidateForm from "./ValidateForm";
 import { newWorkRequestedSchema } from "@/schemas";
+import SuccessPrompt from "../SuccessPrompt";
 
 const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
   const cancelButtonRef = useRef(null);
+  const [success, setSuccess] = useState(false);
   const {
     workForm: {
       taskTitle,
@@ -27,9 +28,8 @@ const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
     addNewWork,
   } = useFormContext();
   const onSubmit = async (values, actions) => {
-    toast.success("sent");
     addNewWork();
-    setWorkRequested(false);
+    setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -356,10 +356,16 @@ const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
                         }`}
                       >
                         <MdTaskAlt />
-                        <p className="text-xs">Create Task</p>
+                        <p className="text-xs">Create work form</p>
                       </button>
                     </div>
                   </form>
+                  <SuccessPrompt
+                    message="work form created successfully"
+                    open={success}
+                    setOpen={setSuccess}
+                    setModals={setWorkRequested}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

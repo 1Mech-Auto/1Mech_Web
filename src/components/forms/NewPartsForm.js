@@ -1,5 +1,5 @@
 import React from "react";
-import { Fragment, useRef } from "react";
+import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
@@ -7,20 +7,20 @@ import { BsShieldCheck } from "react-icons/bs";
 import ToggleInputForm from "../ToggleInputForm";
 import { useFormContext } from "@/context/form_context";
 import { useFormik } from "formik";
-import { toast } from "react-toastify";
 import ValidateForm from "./ValidateForm";
 import { newPartsSchema } from "@/schemas";
+import SuccessPrompt from "../SuccessPrompt";
 
 const NewPartsForm = ({ parts, setParts }) => {
   const cancelButtonRef = useRef(null);
+  const [success, setSuccess] = useState(false);
   const {
     partsForm: { name, title },
     addnewParts,
     newPartsForm,
   } = useFormContext();
   const onSubmit = async (values, actions) => {
-    toast.success("sent");
-    addnewParts, setParts(false);
+    addnewParts(), setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -141,6 +141,12 @@ const NewPartsForm = ({ parts, setParts }) => {
                         <BsShieldCheck /> <p className="text-xs">Add Part</p>
                       </button>
                     </div>
+                    <SuccessPrompt
+                      message="Part added successfully"
+                      open={success}
+                      setOpen={setSuccess}
+                      setModals={setParts}
+                    />
                   </form>
                 </div>
               </Dialog.Panel>
