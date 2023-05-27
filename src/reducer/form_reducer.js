@@ -37,6 +37,7 @@ import {
   SMS_FORM,
   ADD_NEW_PARTS,
   NEW_PARTS_FORM,
+  CHANGE_TOGGLE_STATE,
 } from "@/action";
 const date = new Date();
 const options = { month: "long", day: "numeric", year: "numeric" };
@@ -53,6 +54,10 @@ const form_reducer = (state, action) => {
   if (action.type === NEW_CLIENT_FORM) {
     const { name, value } = action.payload;
     return { ...state, clientForm: { ...state.clientForm, [name]: value } };
+  }
+  if (action.type === CHANGE_TOGGLE_STATE) {
+    const { id, enabled } = action.payload;
+    return { ...state, toggleStates: { ...state.toggleStates, [id]: enabled } };
   }
   if (action.type === ADD_NEW_CLIENT) {
     const { names, phone, email, address, gender } = state.clientForm;
@@ -122,10 +127,11 @@ const form_reducer = (state, action) => {
     };
   }
   if (action.type === NEW_VEHICLE_TOGGLE) {
-    return {
-      ...state,
-      newVehicleForm: { ...state.newVehicleForm, toggle1: !state.toggle1 },
-    };
+      const { id, enabled } = action.payload;
+      return {
+        ...state,
+        newVehicleForm: { ...state.newVehicleForm, [id]: enabled },
+      };
   }
   if (action.type === NEW_QUOTE_FORM) {
     const { name, value } = action.payload;

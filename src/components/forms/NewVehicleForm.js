@@ -12,13 +12,10 @@ import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
 
 const Form1 = () => {
-  // const [enable, setEnable] = useState(true);
-  const [enable2, setEnable2] = useState(false);
   const {
-    newVehicleForm: { client,toggle1 },
+    newVehicleForm: { client, toggle1, toggle2 },
     newVehicleData,
   } = useFormContext();
-  console.log(client);
   return (
     <form className="grid gap-4 px-4 pb-4">
       <div className="text-sm grid gap-2">
@@ -40,8 +37,9 @@ const Form1 = () => {
       </div>
       <ToggleInputForm
         label={"The vehicle was brought in by the client himself/herself"}
-        enabled={toggle1}
-        setEnabled={newVehicleData}
+        id="toggle1"
+        checked={toggle1}
+        onChange={(newEnabled) => newVehicleData("toggle1", newEnabled)}
       />
       {toggle1 ? (
         ""
@@ -141,11 +139,11 @@ const Form1 = () => {
       <hr />
       <ToggleInputForm
         label={"Repair cost covered by insurance"}
-        enabled={enable2}
-        setEnabled={setEnable2}
-        name="two"
+        id="toggle2"
+        checked={toggle2}
+        onChange={(newEnabled) => newVehicleData("toggle2", newEnabled)}
       />
-      {enable2 && (
+      {toggle2 && (
         <div className="text-sm grid gap-2">
           <label>Insurance Company</label>
           <select
@@ -161,7 +159,32 @@ const Form1 = () => {
   );
 };
 const Form2 = () => {
-  const [enable, setEnable] = useState({ three: true, four: false });
+  const {
+    toggleStates: {
+      toggle1,
+      toggle2,
+      toggle3,
+      toggle4,
+      toggle5,
+      toggle6,
+      toggle7,
+      toggle8,
+      toggle9,
+      toggle10,
+      toggle11,
+      toggle12,
+      toggle13,
+      toggle14,
+      toggle15,
+      toggle16,
+      toggle17,
+      toggle18,
+      toggle19,
+      toggle20,
+    },
+    handleToggleChange,
+  } = useFormContext();
+
 
   return (
     <form className="px-4 pb-4 font-medium">
@@ -169,34 +192,124 @@ const Form2 = () => {
       <div className="grid md:grid-cols-3 my-4 gap-y-8">
         <ToggleInputForm
           label={"Wiper"}
-          enable={enable.three}
-          setEnable={setEnable}
-          name="three"
+          id="toggle1"
+          checked={toggle1}
+          onChange={(newEnabled) => handleToggleChange("toggle1", newEnabled)}
         />
         <ToggleInputForm
           label={"Ext/Mirrors P/M"}
-          enable={enable.four}
-          setEnable={setEnable}
-          name="four"
+          id="toggle2"
+          checked={toggle2}
+          onChange={(newEnabled) => handleToggleChange("toggle2", newEnabled)}
         />
-        <ToggleInputForm label={"Ext/Badge/Stickers"} />
-        <ToggleInputForm label={"Spare Wheel"} />
-        <ToggleInputForm label={"Door Locks"} />
-        <ToggleInputForm label={"Fire Extinguisher"} />
-        <ToggleInputForm label={"Fuel Tank Cap"} />
-        <ToggleInputForm label={"Fuel Tank Lid Lock"} />
-        <ToggleInputForm label={"Relay"} />
-        <ToggleInputForm label={"Horns"} />
-        <ToggleInputForm label={"Oil Filter Cap"} />
-        <ToggleInputForm label={"Radiator Cap"} />
-        <ToggleInputForm label={"Battery MK"} />
-        <ToggleInputForm label={"Arial Auto/MAN"} />
-        <ToggleInputForm label={"Seat Belts"} />
-        <ToggleInputForm label={"Radio Speaker"} />
-        <ToggleInputForm label={"Rear View Mirror"} />
-        <ToggleInputForm label={"W/Spanner"} />
-        <ToggleInputForm label={"W/Triangle"} />
-        <ToggleInputForm label={"Boot Mats"} />
+        <ToggleInputForm
+          label={"Ext/Badge/Stickers"}
+          id="toggle3"
+          checked={toggle3}
+          onChange={(newEnabled) => handleToggleChange("toggle3", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"Spare Wheel"}
+          id="toggle4"
+          checked={toggle4}
+          onChange={(newEnabled) => handleToggleChange("toggle5", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"Door Locks"}
+          id="toggle5"
+          checked={toggle5}
+          onChange={(newEnabled) => handleToggleChange("toggle5", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"Fire Extinguisher"}
+          id="toggle6"
+          checked={toggle6}
+          onChange={(newEnabled) => handleToggleChange("toggle6", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"Fuel Tank Cap"}
+          id="toggle7"
+          checked={toggle7}
+          onChange={(newEnabled) => handleToggleChange("toggle7", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"Fuel Tank Lid Lock"}
+          id="toggle8"
+          checked={toggle8}
+          onChange={(newEnabled) => handleToggleChange("toggle8", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"Relay"}
+          id="toggle9"
+          checked={toggle9}
+          onChange={(newEnabled) => handleToggleChange("toggle9", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"Horns"}
+          id="toggle10"
+          checked={toggle10}
+          onChange={(newEnabled) => handleToggleChange("toggle10", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"Oil Filter Cap"}
+          id="toggle11"
+          checked={toggle11}
+          onChange={(newEnabled) => handleToggleChange("toggle11", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"Radiator Cap"}
+          id="toggle12"
+          checked={toggle12}
+          onChange={(newEnabled) => handleToggleChange("toggle12", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"Battery MK"}
+          id="toggle13"
+          checked={toggle13}
+          onChange={(newEnabled) => handleToggleChange("toggle13", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"Arial Auto/MAN"}
+          id="toggle14"
+          checked={toggle14}
+          onChange={(newEnabled) => handleToggleChange("toggle14", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"Seat Belts"}
+          id="toggle15"
+          checked={toggle15}
+          onChange={(newEnabled) => handleToggleChange("toggle15", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"Radio Speaker"}
+          id="toggle16"
+          checked={toggle16}
+          onChange={(newEnabled) => handleToggleChange("toggle16", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"Rear View Mirror"}
+          id="toggle17"
+          checked={toggle17}
+          onChange={(newEnabled) => handleToggleChange("toggle17", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"W/Spanner"}
+          id="toggle18"
+          checked={toggle18}
+          onChange={(newEnabled) => handleToggleChange("toggle18", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"W/Triangle"}
+          id="toggle19"
+          checked={toggle19}
+          onChange={(newEnabled) => handleToggleChange("toggle19", newEnabled)}
+        />
+        <ToggleInputForm
+          label={"Boot Mats"}
+          id="toggle20"
+          checked={toggle20}
+          onChange={(newEnabled) => handleToggleChange("toggle20", newEnabled)}
+        />
       </div>
       <hr />
       <div className="grid gap-2 mt-5">

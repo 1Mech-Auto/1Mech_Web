@@ -42,8 +42,8 @@ import {
   NEW_PARTS_FORM,
 } from "@/action";
 const initialState = {
-  showModal1: true,
-  showModal2: false,
+  // showModal1: true,
+  // showModal2: false,
   clientForm: {
     names: "",
     phone: "",
@@ -53,8 +53,8 @@ const initialState = {
   },
   clientList: [],
   newVehicleForm: {
-    client: "Select Client",
     toggle1: true,
+    toggle2: false,
   },
   insuranceForm: {
     coyName: "",
@@ -200,6 +200,28 @@ const initialState = {
     title: "",
   },
   partsList: [],
+  toggleStates: {
+    toggle1: false,
+    toggle2: false,
+    toggle3: false,
+    toggle4: false,
+    toggle5: false,
+    toggle6: false,
+    toggle7: false,
+    toggle8: false,
+    toggle9: false,
+    toggle10: false,
+    toggle11: false,
+    toggle12: false,
+    toggle13: false,
+    toggle14: false,
+    toggle15: false,
+    toggle16: false,
+    toggle17: false,
+    toggle18: false,
+    toggle19: false,
+    toggle20: false,
+  },
 };
 
 const FormContext = React.createContext();
@@ -211,6 +233,13 @@ export const FormProvider = ({ children }) => {
     const name = e.target.name;
     const value = e.target.value;
     dispatch({ type: NEW_CLIENT_FORM, payload: { name, value } });
+  };
+
+  const handleToggleChange = (id, newEnabled) => {
+    dispatch({
+      type: CHANGE_TOGGLE_STATE,
+      payload: { id, enabled: newEnabled },
+    });
   };
   const addNewClient = () => {
     dispatch({ type: ADD_NEW_CLIENT });
@@ -343,15 +372,11 @@ export const FormProvider = ({ children }) => {
   const sendSms = () => {
     dispatch({ type: SEND_SMS });
   };
-  const newVehicleData = (event) => {
-    console.log(event.target);
-    if (event.target.type === "checkbox") {
-      dispatch({ type: NEW_VEHICLE_TOGGLE });
-    } else {
-      const name = event.target.name;
-      const value = event.target.value;
-      dispatch({ type: NEW_VEHICLE_FORM, payload: { name, value } });
-    }
+  const newVehicleData = (id, newEnabled) => {
+    dispatch({
+      type: NEW_VEHICLE_TOGGLE,
+      payload: { id, enabled: newEnabled },
+    });
   };
   const newPartsForm = (e) => {
     const name = e.target.name;
@@ -403,6 +428,7 @@ export const FormProvider = ({ children }) => {
         sendSms,
         newWorkData,
         addNewWork,
+        handleToggleChange,
       }}
     >
       {children}
