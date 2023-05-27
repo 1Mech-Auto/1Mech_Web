@@ -3,6 +3,10 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { useFormContext } from "@/context/form_context";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import ValidateForm from "./ValidateForm";
+import { newInsuranceSchema } from "@/schemas";
 
 const NewInsuranceForm = ({ open, setOpen }) => {
   const cancelButtonRef = useRef(null);
@@ -11,6 +15,32 @@ const NewInsuranceForm = ({ open, setOpen }) => {
     newInsuranceData,
     addNewInsurance,
   } = useFormContext();
+  const onSubmit = async (values, actions) => {
+    toast.success("created");
+    addNewInsurance();
+    setOpen(false);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    actions.resetForm();
+  };
+  const {
+    values,
+    handleBlur,
+    isSubmitting,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormik({
+    initialValues: {
+      coyName: coyName,
+      phone: phone,
+      email: email,
+      address: address,
+    },
+    validationSchema: newInsuranceSchema,
+    onSubmit,
+  });
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -54,73 +84,127 @@ const NewInsuranceForm = ({ open, setOpen }) => {
                   <p className="text-xs font-semibold mt-6 normal-case px-4">
                     Add insurance company
                   </p>
-                  <form className="mt-3 grid gap-8 px-4 pb-4">
-                    <div className="text-sm grid gap-2">
+                  <form
+                    className="mt-3 grid gap-8 px-4 pb-4"
+                    onSubmit={handleSubmit}
+                  >
+                    <div className="text-sm grid gap-2 relative">
                       <label>Company Name</label>
                       <input
                         name="coyName"
                         type="text"
-                        value={coyName}
-                        onChange={newInsuranceData}
-                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        value={values.coyName}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newInsuranceData(e);
+                        }}
+                        onBlur={handleBlur}
+                        className={`${
+                          errors.coyName && touched.coyName
+                            ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                            : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        }`}
                         placeholder="Company Name"
                       />
+                      {errors.coyName && touched.coyName && (
+                        <ValidateForm error={errors.coyName} />
+                      )}
                     </div>
                     <section className="grid sm:grid-cols-2 gap-4">
-                      <div className="text-sm grid gap-2">
+                      <div className="text-sm grid gap-2 relative">
                         <label>Phone Number</label>
                         <input
                           name="phone"
                           type="tel"
-                          value={phone}
-                          onChange={newInsuranceData}
-                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          value={values.phone}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newInsuranceData(e);
+                          }}
+                          onBlur={(e) => {
+                            handleBlur(e);
+                            if (errors.phone) {
+                              toast.error(errors.phone);
+                            }
+                          }}
+                          className={`${
+                            errors.phone && touched.phone
+                              ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          }`}
                           placeholder="Phone Number"
                         />
+                        {errors.phone && touched.phone && (
+                          <ValidateForm error={errors.phone} />
+                        )}
                       </div>
-                      <div className="text-sm grid gap-2">
+                      <div className="text-sm grid gap-2 relative">
                         <label>Email Address</label>
                         <input
                           name="email"
                           type="email"
-                          value={email}
-                          onChange={newInsuranceData}
-                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          value={values.email}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newInsuranceData(e);
+                          }}
+                          onBlur={handleBlur}
+                          className={`${
+                            errors.email && touched.email
+                              ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          }`}
                           placeholder="Email Address"
                         />
+                        {errors.email && touched.email && (
+                          <ValidateForm error={errors.email} />
+                        )}
                       </div>
                     </section>
-                    <div className="text-sm grid gap-2">
+                    <div className="text-sm grid gap-2 relative">
                       <label>Address</label>
                       <input
                         name="address"
                         type="text"
-                        value={address}
-                        onChange={newInsuranceData}
-                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        value={values.address}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newInsuranceData(e);
+                        }}
+                        onBlur={handleBlur}
+                        className={`${
+                          errors.address && touched.address
+                            ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                            : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        }`}
                         placeholder="Address"
                       />
+                      {errors.address && touched.address && (
+                        <ValidateForm error={errors.address} />
+                      )}
+                    </div>
+                    <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
+                      <article
+                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
+                        onClick={() => setOpen(false)}
+                      >
+                        <MdOutlineCancel />
+                        <p className="text-xs">cancel</p>
+                      </article>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`${
+                          isSubmitting
+                            ? "opacity-40 flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                            : "flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                        }`}
+                      >
+                        <MdTaskAlt />
+                        <p className="text-xs">Add Insurance</p>
+                      </button>
                     </div>
                   </form>
-                  <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setOpen(false)}
-                    >
-                      <MdOutlineCancel />
-                      <p className="text-xs">cancel</p>
-                    </article>
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                      onClick={() => {
-                        addNewInsurance();
-                        setOpen();
-                      }}
-                    >
-                      <MdTaskAlt />
-                      <p className="text-xs">Add Insurance</p>
-                    </article>
-                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

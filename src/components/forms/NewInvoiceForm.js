@@ -5,6 +5,10 @@ import { AiOutlineClose } from "react-icons/ai";
 import { BiPlus } from "react-icons/bi";
 import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import { newInvoiceSchema } from "@/schemas";
+import ValidateForm from "./ValidateForm";
 
 const NewInvoiceForm = ({ invoice, setInvoice }) => {
   const cancelButtonRef = useRef(null);
@@ -24,6 +28,39 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
     newInvoiceData,
     addNewInvoice,
   } = useFormContext();
+
+  const onSubmit = async (values, actions) => {
+    toast.success("created");
+    addNewInvoice();
+    setInvoice(false);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    actions.resetForm();
+  };
+
+  const {
+    values,
+    handleBlur,
+    isSubmitting,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormik({
+    initialValues: {
+      job: job,
+      itemDesc: itemDesc,
+      quantity: quantity,
+      unitCost: unitCost,
+      tax: tax,
+      total: total,
+      notes: notes,
+      invoiceDate: invoiceDate,
+      paymentDate: paymentDate,
+      paymentDetails: paymentDetails,
+    },
+    validationSchema: newInvoiceSchema,
+    onSubmit,
+  });
 
   return (
     <Transition.Root show={invoice} as={Fragment}>
@@ -68,39 +105,67 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                   <p className="text-xs font-semibold mt-6 normal-case px-6">
                     Create an invoice
                   </p>
-                  <form className="mt-3 grid gap-8 p-4 px-6 ">
-                    <div className="text-sm grid gap-2">
+                  <form
+                    className="mt-3 grid gap-8 p-4 px-6 "
+                    onSubmit={handleSubmit}
+                  >
+                    <div className="text-sm grid gap-2 relative">
                       <label>Select Job</label>
                       <select
                         name="job"
-                        value={job}
-                        onChange={newInvoiceData}
-                        className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                        value={values.job}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newInvoiceData(e);
+                        }}
+                        onBlur={handleBlur}
+                        className={`${
+                          errors.job && touched.job
+                            ? "border border-red-800 outline-none  text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                            : "outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                        }`}
                       >
                         <option>Select Job</option>
                         <option>All clients</option>
                       </select>
+                      {errors.job && touched.job && (
+                        <ValidateForm error={errors.job} />
+                      )}
                     </div>
                     <hr />
                     <section className="grid grid-cols-[40%,5%,15%,15%,15%] gap-4">
-                      <div className="text-sm grid gap-2">
+                      <div className="text-sm grid gap-2 relative">
                         <label>Item Description</label>
                         <input
                           name="itemDesc"
                           type="text"
-                          value={itemDesc}
-                          onChange={newInvoiceData}
-                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          value={values.itemDesc}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newInvoiceData(e);
+                          }}
+                          onBlur={handleBlur}
+                          className={`${
+                            errors.itemDesc && touched.itemDesc
+                              ? "border border-red-800 outline-none  text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                              : "outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                          }`}
                           placeholder="Item Description"
                         />
+                        {errors.itemDesc && touched.itemDesc && (
+                          <ValidateForm error={errors.itemDesc} />
+                        )}
                       </div>
                       <div className="text-sm grid gap-2">
                         <label>Qty</label>
                         <input
                           name="quantity"
                           type="text"
-                          value={quantity}
-                          onChange={newInvoiceData}
+                          value={values.quantity}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newInvoiceData(e);
+                          }}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="1"
                         />
@@ -110,8 +175,11 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                         <input
                           name="unitCost"
                           type="text"
-                          value={unitCost}
-                          onChange={newInvoiceData}
+                          value={values.unitCost}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newInvoiceData(e);
+                          }}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="0.00"
                         />
@@ -121,8 +189,11 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                         <input
                           name="tax"
                           type="text"
-                          value={tax}
-                          onChange={newInvoiceData}
+                          value={values.tax}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newInvoiceData(e);
+                          }}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="Tax (%)"
                         />
@@ -132,8 +203,11 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                         <input
                           name="total"
                           type="text"
-                          value={total}
-                          onChange={newInvoiceData}
+                          value={values.total}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newInvoiceData(e);
+                          }}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                           placeholder="0.00"
                         />
@@ -180,8 +254,11 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                         <label>Notes</label>
                         <textarea
                           name="notes"
-                          value={notes}
-                          onChange={newInvoiceData}
+                          value={values.notes}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newInvoiceData(e);
+                          }}
                           placeholder="Notes"
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         />
@@ -193,8 +270,11 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                         <label>Payment Details</label>
                         <textarea
                           name="paymentDetails"
-                          value={paymentDetails}
-                          onChange={newInvoiceData}
+                          value={values.paymentDetails}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newInvoiceData(e);
+                          }}
                           placeholder="Notes"
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         />
@@ -203,26 +283,28 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                         </p>
                       </div>
                     </section>
+                    <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
+                      <article
+                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
+                        onClick={() => setInvoice(false)}
+                      >
+                        <MdOutlineCancel />
+                        <p className="text-xs">cancel</p>
+                      </article>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`${
+                          isSubmitting
+                            ? "opacity-40 flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                            : "flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                        }`}
+                      >
+                        <MdTaskAlt />
+                        <p className="text-xs">Create Invoice</p>
+                      </button>
+                    </div>
                   </form>
-                  <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setInvoice(false)}
-                    >
-                      <MdOutlineCancel />
-                      <p className="text-xs">cancel</p>
-                    </article>
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                      onClick={() => {
-                        addNewInvoice();
-                        setInvoice(false);
-                      }}
-                    >
-                      <MdTaskAlt />
-                      <p className="text-xs">Create Invoice</p>
-                    </article>
-                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

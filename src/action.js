@@ -35,3 +35,5 @@ export const SMS_FORM = "SMS_FORM";
 export const SEND_SMS = "SEND_SMS";
 export const NEW_VEHICLE_FORM = "NEW_VEHICLE_FORM";
 export const NEW_VEHICLE_TOGGLE = "NEW_VEHICLE_TOGGLE";
+export const NEW_PARTS_FORM = "NEW_PARTS_FORM";
+export const ADD_NEW_PARTS = "ADD_NEW_PARTS";

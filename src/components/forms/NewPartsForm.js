@@ -5,9 +5,38 @@ import { MdOutlineCancel } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsShieldCheck } from "react-icons/bs";
 import ToggleInputForm from "../ToggleInputForm";
+import { useFormContext } from "@/context/form_context";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import ValidateForm from "./ValidateForm";
+import { newPartsSchema } from "@/schemas";
 
-const NewPartsForm = ({parts,setParts}) => {
+const NewPartsForm = ({ parts, setParts }) => {
   const cancelButtonRef = useRef(null);
+  const {
+    partsForm: { name, title },
+    addnewParts,
+    newPartsForm,
+  } = useFormContext();
+  const onSubmit = async (values, actions) => {
+    toast.success("sent");
+    addnewParts, setParts(false);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    actions.resetForm();
+  };
+  const {
+    values,
+    handleBlur,
+    isSubmitting,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormik({
+    initialValues: { name: name, title: title },
+    validationSchema: newPartsSchema,
+    onSubmit,
+  });
   return (
     <Transition.Root show={parts} as={Fragment}>
       <Dialog
@@ -48,20 +77,34 @@ const NewPartsForm = ({parts,setParts}) => {
                       onClick={() => setParts(false)}
                     />
                   </div>
-                  <form className="mt-3 grid gap-8 px-4 pb-4">
+                  <form
+                    className="mt-3 grid gap-8 px-4 pb-4"
+                    onSubmit={handleSubmit}
+                  >
                     <p className="text-sm text-gray-500">
                       Add a part to check on vehicle check in and check out
                     </p>
-                    <div className="text-sm grid gap-2">
+                    <div className="text-sm grid gap-2 relative">
                       <label>Part Name</label>
                       <input
-                        name="title"
+                        name="name"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
-                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        value={values.name}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newPartsForm(e);
+                        }}
+                        onBlur={handleBlur}
+                        className={`${
+                          errors.name && touched.name
+                            ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                            : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        }`}
                         placeholder="Part Name"
                       />
+                      {errors.name && touched.name && (
+                        <ValidateForm error={errors.name} />
+                      )}
                     </div>
                     <ToggleInputForm label={"Show input field when checked"} />
                     <div className="text-sm grid gap-2">
@@ -69,26 +112,36 @@ const NewPartsForm = ({parts,setParts}) => {
                       <input
                         name="title"
                         type="text"
-                        //   value={title}
-                        //   onChange={updateCampaignDetails}
+                        value={values.title}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newPartsForm(e);
+                        }}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Input Name"
                       />
                     </div>
+                    <div className="flex mt-auto border py-4 bg-gray-200 justify-end gap-2 px-4">
+                      <article
+                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
+                        onClick={() => setParts(false)}
+                      >
+                        <MdOutlineCancel />
+                        <p className="text-xs">cancel</p>
+                      </article>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`${
+                          isSubmitting
+                            ? "opacity-40 flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                            : "flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                        }`}
+                      >
+                        <BsShieldCheck /> <p className="text-xs">Add Part</p>
+                      </button>
+                    </div>
                   </form>
-                  <div className="flex mt-auto border py-4 bg-gray-200 justify-end gap-2 px-4">
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setParts(false)}
-                    >
-                      <MdOutlineCancel />
-                      <p className="text-xs">cancel</p>
-                    </article>
-                    <article className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer">
-                      <BsShieldCheck />
-                      <p className="text-xs">Add Part</p>
-                    </article>
-                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

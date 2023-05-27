@@ -4,7 +4,10 @@ import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiPlus } from "react-icons/bi";
 import { useFormContext } from "@/context/form_context";
-
+import { newJobSchema } from "@/schemas";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import ValidateForm from "./ValidateForm";
 const NewJobCard = ({ jobCard, setJobCard }) => {
   const cancelButtonRef = useRef(null);
   const {
@@ -12,6 +15,33 @@ const NewJobCard = ({ jobCard, setJobCard }) => {
     newJobCardData,
     addNewJobCard,
   } = useFormContext();
+
+  const onSubmit = async (values, actions) => {
+    toast.success("created");
+    addNewJobCard();
+    setJobCard(false);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    actions.resetForm();
+  };
+  const {
+    values,
+    handleBlur,
+    isSubmitting,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormik({
+    initialValues: {
+      project: project,
+      body: body,
+      mechanical: mechanical,
+      electrical: electrical,
+      approval: approval,
+    },
+    validationSchema: newJobSchema,
+    onSubmit,
+  });
 
   return (
     <Transition.Root show={jobCard} as={Fragment}>
@@ -56,20 +86,34 @@ const NewJobCard = ({ jobCard, setJobCard }) => {
                   <p className="text-sm font-semibold mt-6 normal-case px-6">
                     Create a job card.
                   </p>
-                  <form className="mt-3 grid gap-8 p-4 px-6 ">
-                    <div className="text-sm grid gap-2">
+                  <form
+                    className="mt-3 grid gap-8 p-4 px-6 "
+                    onSubmit={handleSubmit}
+                  >
+                    <div className="text-sm grid gap-2 relative">
                       <label className="text-md font-semibold">
                         Select Project
                       </label>
                       <select
-                        className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
                         name="project"
-                        value={project}
-                        onChange={newJobCardData}
+                        value={values.project}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newJobCardData(e);
+                        }}
+                        onBlur={handleBlur}
+                        className={`${
+                          errors.project && touched.project
+                            ? "outline-none border border-red-800 text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                            : "outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                        }`}
                       >
                         <option>Select Project</option>
                         <option>All clients</option>
                       </select>
+                      {errors.project && touched.project && (
+                        <ValidateForm error={errors.project} />
+                      )}
                     </div>
                     <div className="text-sm grid gap-3">
                       <label className="text-md font-semibold">
@@ -78,16 +122,22 @@ const NewJobCard = ({ jobCard, setJobCard }) => {
                       <input
                         name="body"
                         type="text"
-                        value={body}
-                        onChange={newJobCardData}
+                        value={values.body}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newJobCardData(e);
+                        }}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Body Report"
                       />
                       <input
                         name="body"
                         type="text"
-                        value={body}
-                        onChange={newJobCardData}
+                        value={values.body}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newJobCardData(e);
+                        }}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Body Report"
                       />
@@ -103,16 +153,22 @@ const NewJobCard = ({ jobCard, setJobCard }) => {
                       <input
                         name="mechanical"
                         type="text"
-                        value={mechanical}
-                        onChange={newJobCardData}
+                        value={values.mechanical}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newJobCardData(e);
+                        }}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Mechanical Report"
                       />
                       <input
                         name="mechanical"
                         type="text"
-                        value={mechanical}
-                        onChange={newJobCardData}
+                        value={values.mechanical}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newJobCardData(e);
+                        }}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Mechanical Report"
                       />
@@ -128,16 +184,22 @@ const NewJobCard = ({ jobCard, setJobCard }) => {
                       <input
                         name="electrical"
                         type="text"
-                        value={electrical}
-                        onChange={newJobCardData}
+                        value={values.electrical}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newJobCardData(e);
+                        }}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Electrical Report"
                       />
                       <input
                         name="electrical"
                         type="text"
-                        value={electrical}
-                        onChange={newJobCardData}
+                        value={values.electrical}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newJobCardData(e);
+                        }}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="Electrical Report"
                       />
@@ -153,33 +215,38 @@ const NewJobCard = ({ jobCard, setJobCard }) => {
                       <select
                         className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
                         name="approval"
-                        value={approval}
-                        onChange={newJobCardData}
+                        value={values.approval}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newJobCardData(e);
+                        }}
                       >
                         <option>Not Yet</option>
                         <option>Yes</option>
                       </select>
                     </div>
+                    <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
+                      <article
+                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
+                        onClick={() => setJobCard(false)}
+                      >
+                        <MdOutlineCancel />
+                        <p className="text-xs">cancel</p>
+                      </article>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`${
+                          isSubmitting
+                            ? "opacity-40 flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                            : "flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                        }`}
+                      >
+                        <MdTaskAlt />
+                        <p className="text-xs">Create Job Card</p>
+                      </button>
+                    </div>
                   </form>
-                  <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setJobCard(false)}
-                    >
-                      <MdOutlineCancel />
-                      <p className="text-xs">cancel</p>
-                    </article>
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                      onClick={() => {
-                        addNewJobCard();
-                        setJobCard(false);
-                      }}
-                    >
-                      <MdTaskAlt />
-                      <p className="text-xs">Create Job Card</p>
-                    </article>
-                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

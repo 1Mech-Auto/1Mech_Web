@@ -3,6 +3,10 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { useFormContext } from "@/context/form_context";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import ValidateForm from "./ValidateForm";
+import { newTeamSchema } from "@/schemas";
 
 export default function NewTeamMemberForm({ open, setOpen }) {
   const cancelButtonRef = useRef(null);
@@ -20,6 +24,35 @@ export default function NewTeamMemberForm({ open, setOpen }) {
     newTeamMemberData,
     addNewTeamMember,
   } = useFormContext();
+  const onSubmit = async (values, actions) => {
+    toast.success("created");
+    addNewTeamMember();
+    setOpen(false);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    actions.resetForm();
+  };
+  const {
+    values,
+    handleBlur,
+    isSubmitting,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormik({
+    initialValues: {
+      firstName: firstName,
+      lastName: lastName,
+      phone: phone,
+      email: email,
+      role: role,
+      type: type,
+      status: status,
+      address: address,
+    },
+    validationSchema: newTeamSchema,
+    onSubmit,
+  });
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -65,53 +98,105 @@ export default function NewTeamMemberForm({ open, setOpen }) {
                   <p className="text-xs font-semibold mt-6 normal-case px-4">
                     Create a team member account
                   </p>
-                  <form className="mt-3 grid gap-8 px-4 pb-4">
-                    <section className="grid grid-cols-2 gap-4">
+                  <form
+                    className="mt-3 grid gap-8 px-4 pb-4"
+                    onSubmit={handleSubmit}
+                  >
+                    <section className="grid grid-cols-2 gap-4 relative">
                       <div className="text-sm grid gap-2">
                         <label>First Name</label>
                         <input
                           name="firstName"
                           type="text"
-                          value={firstName}
-                          onChange={newTeamMemberData}
-                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          value={values.firstName}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newTeamMemberData(e);
+                          }}
+                          onBlur={handleBlur}
+                          className={`${
+                            errors.firstName && touched.firstName
+                              ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          }`}
                           placeholder="First Name"
                         />
+                        {errors.firstName && touched.firstName && (
+                          <ValidateForm error={errors.firstName} />
+                        )}
                       </div>
-                      <div className="text-sm grid gap-2">
+                      <div className="text-sm grid gap-2 relative">
                         <label>Last Name</label>
                         <input
                           name="lastName"
                           type="text"
-                          value={lastName}
-                          onChange={newTeamMemberData}
-                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          value={values.lastName}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newTeamMemberData(e);
+                          }}
+                          onBlur={handleBlur}
+                          className={`${
+                            errors.lastName && touched.lastName
+                              ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          }`}
                           placeholder="Last Name"
                         />
+                        {errors.lastName && touched.lastName && (
+                          <ValidateForm error={errors.lastName} />
+                        )}
                       </div>
                     </section>
-                    <section className="grid grid-cols-2 gap-4">
+                    <section className="grid grid-cols-2 gap-4 relative">
                       <div className="text-sm grid gap-2">
                         <label>Phone Number</label>
                         <input
                           name="phone"
                           type="tel"
-                          value={phone}
-                          onChange={newTeamMemberData}
-                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          value={values.phone}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newTeamMemberData(e);
+                          }}
+                          onBlur={() => {
+                            handleBlur;
+                            if (errors.phone && touched.phone) {
+                              toast.error(errors.phone);
+                            }
+                          }}
+                          className={`${
+                            errors.phone && touched.phone
+                              ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          }`}
                           placeholder="Phone Number"
                         />
+                        {errors.phone && touched.phone && (
+                          <ValidateForm error={errors.phone} />
+                        )}
                       </div>
-                      <div className="text-sm grid gap-2">
+                      <div className="text-sm grid gap-2 relative">
                         <label>Email Address</label>
                         <input
                           name="email"
                           type="email"
-                          value={email}
-                          onChange={newTeamMemberData}
-                          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          value={values.email}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newTeamMemberData(e);
+                          }}
+                          onBlur={handleBlur}
+                          className={`${
+                            errors.email && touched.email
+                              ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                          }`}
                           placeholder="Email Address"
                         />
+                        {errors.email && touched.email && (
+                          <ValidateForm error={errors.email} />
+                        )}
                       </div>
                     </section>
                     <div className="text-sm grid gap-2">
@@ -119,16 +204,14 @@ export default function NewTeamMemberForm({ open, setOpen }) {
                       <select
                         className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
                         name="role"
-                        value={role}
-                        onChange={newTeamMemberData}
+                        value={values.role}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newTeamMemberData(e);
+                        }}
                       >
                         <option>Staff</option>
-                        <option>Manager</option>
-                        <option>Booking Manager</option>
-                        <option>Inventory Manager</option>
-                        <option>Customer</option>
-                        <option>Mechanic</option>
-                        <option>Owner</option>
+                        <option>All clients</option>
                       </select>
                       <p className="text-xs text-[#8094ae] normal-case italic">
                         Owner has full access of the system. Manager have full
@@ -143,8 +226,11 @@ export default function NewTeamMemberForm({ open, setOpen }) {
                         <select
                           className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
                           name="type"
-                          value={type}
-                          onChange={newTeamMemberData}
+                          value={values.type}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newTeamMemberData(e);
+                          }}
                         >
                           <option>Full Time</option>
                           <option>All clients</option>
@@ -155,8 +241,11 @@ export default function NewTeamMemberForm({ open, setOpen }) {
                         <select
                           className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
                           name="status"
-                          value={status}
-                          onChange={newTeamMemberData}
+                          value={values.status}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newTeamMemberData(e);
+                          }}
                         >
                           <option>Active</option>
                           <option>All clients</option>
@@ -168,35 +257,40 @@ export default function NewTeamMemberForm({ open, setOpen }) {
                       <select
                         className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
                         name="address"
-                        value={address}
-                        onChange={newTeamMemberData}
+                        value={values.address}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newTeamMemberData(e);
+                        }}
                       >
                         <option>Select State</option>
                         <option>Abia</option>
                       </select>
                     </div>
+                    <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
+                      <article
+                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
+                        onClick={() => {
+                          setOpen(false);
+                        }}
+                      >
+                        <MdOutlineCancel />
+                        <p className="text-xs">cancel</p>
+                      </article>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`${
+                          isSubmitting
+                            ? "opacity-40 flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                            : "flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                        }`}
+                      >
+                        <MdTaskAlt />
+                        <p className="text-xs">Create Member</p>
+                      </button>
+                    </div>
                   </form>
-                  <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => {
-                        setOpen(false);
-                      }}
-                    >
-                      <MdOutlineCancel />
-                      <p className="text-xs">cancel</p>
-                    </article>
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                      onClick={() => {
-                        addNewTeamMember();
-                        setOpen(false);
-                      }}
-                    >
-                      <MdTaskAlt />
-                      <p className="text-xs">Create Member</p>
-                    </article>
-                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

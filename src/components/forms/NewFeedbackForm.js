@@ -4,6 +4,10 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { useFormContext } from "@/context/form_context";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import ValidateForm from "./ValidateForm";
+import { newFeedbackSchema } from "@/schemas";
 
 const NewFeedbackForm = ({ feedback, setFeedback }) => {
   const cancelButtonRef = useRef(null);
@@ -12,6 +16,29 @@ const NewFeedbackForm = ({ feedback, setFeedback }) => {
     newFeedbackData,
     addNewFeedback,
   } = useFormContext();
+  const onSubmit = async (values, actions) => {
+    toast.success("sent");
+    addNewFeedback();
+    setFeedback(false);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    actions.resetForm();
+  };
+  const {
+    values,
+    handleBlur,
+    isSubmitting,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormik({
+    initialValues: {
+      experience: experience,
+      comment: comment,
+    },
+    validationSchema: newFeedbackSchema,
+    onSubmit,
+  });
   return (
     <Transition.Root show={feedback} as={Fragment}>
       <Dialog
@@ -52,52 +79,79 @@ const NewFeedbackForm = ({ feedback, setFeedback }) => {
                       onClick={() => setFeedback(false)}
                     />
                   </div>
-                  <form className="mt-3 grid gap-8 px-4 pb-4">
-                    <div className="text-sm grid gap-2">
+                  <form
+                    className="mt-3 grid gap-8 px-4 pb-4"
+                    onSubmit={handleSubmit}
+                  >
+                    <div className="text-sm grid gap-2 relative">
                       <label>How was your experience?</label>
                       <select
-                        className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                        className={`${
+                          errors.experience && touched.experience
+                            ? "border border-red-800 outline-none  text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                            : "outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                        }`}
                         name="experience"
-                        value={experience}
-                        onChange={newFeedbackData}
+                        value={values.experience}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newFeedbackData(e);
+                        }}
+                        onBlur={handleBlur}
                       >
                         <option>Awesome</option>
                         <option>Good</option>
                         <option>Could have been better</option>
                         <option>Not pleasurable</option>
                       </select>
+                      {errors.experience && touched.experience && (
+                        <ValidateForm error={errors.experience} />
+                      )}
                     </div>
-                    <div className="text-sm grid gap-2">
+                    <div className="text-sm grid gap-2 relative">
                       <label>Comment</label>
                       <textarea
                         name="comment"
                         type="text"
-                        value={comment}
-                        onChange={newFeedbackData}
-                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae] h-32"
+                        value={values.comment}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newFeedbackData(e);
+                        }}
+                        onBlur={handleBlur}
+                        className={`${
+                          errors.comment && touched.comment
+                            ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae] h-32"
+                            : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae] h-32"
+                        }`}
                         placeholder="Address"
                       />
+                      {errors.comment && touched.comment && (
+                        <ValidateForm error={errors.comment} />
+                      )}
+                    </div>
+                    <div className="flex mt-auto border py-4 bg-gray-200 justify-end gap-2 px-4">
+                      <article
+                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
+                        onClick={() => setFeedback(false)}
+                      >
+                        <MdOutlineCancel />
+                        <p className="text-xs">cancel</p>
+                      </article>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`${
+                          isSubmitting
+                            ? "opacity-40 flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                            : "flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                        }`}
+                      >
+                        <MdTaskAlt />
+                        <p className="text-xs">Send Feedback</p>
+                      </button>
                     </div>
                   </form>
-                  <div className="flex mt-auto border py-4 bg-gray-200 justify-end gap-2 px-4">
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setFeedback(false)}
-                    >
-                      <MdOutlineCancel />
-                      <p className="text-xs">cancel</p>
-                    </article>
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                      onClick={() => {
-                        addNewFeedback();
-                        setFeedback(false);
-                      }}
-                    >
-                      <MdTaskAlt />
-                      <p className="text-xs">Send Feedback</p>
-                    </article>
-                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

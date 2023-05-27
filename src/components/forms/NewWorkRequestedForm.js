@@ -5,6 +5,10 @@ import { AiOutlineClose } from "react-icons/ai";
 import { BiPlus } from "react-icons/bi";
 import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import ValidateForm from "./ValidateForm";
+import { newWorkRequestedSchema } from "@/schemas";
 
 const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
   const cancelButtonRef = useRef(null);
@@ -22,6 +26,35 @@ const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
     newWorkData,
     addNewWork,
   } = useFormContext();
+  const onSubmit = async (values, actions) => {
+    toast.success("sent");
+    addNewWork();
+    setWorkRequested(false);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    actions.resetForm();
+  };
+  const {
+    values,
+    handleBlur,
+    isSubmitting,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormik({
+    initialValues: {
+      taskTitle: taskTitle,
+      assignTo: assignTo,
+      status: status,
+      taskCost: taskCost,
+      taskDesc: taskDesc,
+      dueDate: dueDate,
+      dueTime: dueTime,
+      requiredParts: requiredParts,
+    },
+    validationSchema: newWorkRequestedSchema,
+    onSubmit,
+  });
 
   return (
     <Transition.Root show={workRequested} as={Fragment}>
@@ -66,7 +99,10 @@ const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
                   <p className="text-xs font-semibold mt-6 normal-case px-6">
                     Create project tasks
                   </p>
-                  <form className="mt-3 grid gap-8 p-4 px-6 ">
+                  <form
+                    className="mt-3 grid gap-8 p-4 px-6 "
+                    onSubmit={handleSubmit}
+                  >
                     <section className=" border">
                       <h2 className="text-[#364a63] text-lg font-bold px-4 py-2">
                         #1 Check Vehicle Overheating.
@@ -74,69 +110,125 @@ const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
                       <hr />
                       <div className="grid gap-8 p-4">
                         <div className="grid sm:grid-cols-4 gap-4">
-                          <div className="text-sm grid gap-2">
+                          <div className="text-sm grid gap-2 relative">
                             <label>Task Title</label>
                             <input
                               type="text"
-                              placeholder="Check Vehicle Overheating"
-                              className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                               name="taskTitle"
-                              value={taskTitle}
-                              onChange={newWorkData}
+                              placeholder="Check Vehicle Overheating"
+                              className={`${
+                                errors.taskTitle && touched.taskTitle
+                                  ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                                  : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              }`}
+                              value={values.taskTitle}
+                              onChange={(e) => {
+                                handleChange(e);
+                                newWorkData(e);
+                              }}
+                              onBlur={handleBlur}
                             />
+                            {errors.taskTitle && touched.taskTitle && (
+                              <ValidateForm error={errors.taskTitle} />
+                            )}
                           </div>
-                          <div className="text-sm grid gap-2">
+                          <div className="text-sm grid gap-2 relative">
                             <label>Assign to</label>
                             <select
-                              className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
                               name="assignTo"
-                              value={assignTo}
-                              onChange={newWorkData}
+                              className={`${
+                                errors.assignTo && touched.assignTo
+                                  ? "border border-red-800 outline-none  text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                                  : "outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                              }`}
+                              value={values.assignTo}
+                              onChange={(e) => {
+                                handleChange(e);
+                                newWorkData(e);
+                              }}
+                              onBlur={handleBlur}
                             >
                               <option>Select Staff</option>
                               <option>All clients</option>
                             </select>
+                            {errors.assignTo && touched.assignTo && (
+                              <ValidateForm error={errors.assignTo} />
+                            )}
                           </div>
                           <div className="text-sm grid gap-2">
                             <label>Status</label>
                             <select
-                              className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                              className={`${
+                                errors.fullName && touched.fullName
+                                  ? "border border-red-800 outline-none  text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                                  : "outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                              }`}
                               name="status"
-                              value={status}
-                              onChange={newWorkData}
+                              value={values.status}
+                              onChange={(e) => {
+                                handleChange(e);
+                                newWorkData(e);
+                              }}
+                              onBlur={handleBlur}
                             >
                               <option>In Progress</option>
                               <option>All clients</option>
                             </select>
                           </div>
-                          <div className="text-sm grid gap-2">
+                          <div className="text-sm grid gap-2 relative">
                             <label>Task Cost</label>
                             <input
                               name="taskCost"
                               type="text"
-                              value={taskCost}
-                              onChange={newWorkData}
-                              className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                              value={values.taskCost}
+                              onChange={(e) => {
+                                handleChange(e);
+                                newWorkData(e);
+                              }}
+                              onBlur={handleBlur}
+                              className={`${
+                                errors.taskCost && touched.taskCost
+                                  ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae] "
+                                  : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae] "
+                              }`}
                               placeholder="N0.00"
                             />
+                            {errors.taskCost && touched.taskCost && (
+                              <ValidateForm error={errors.taskCost} />
+                            )}
                           </div>
                         </div>
-                        <div className="text-sm grid gap-2">
+                        <div className="text-sm grid gap-2 relative">
                           <label>Task Description</label>
                           <textarea
                             placeholder="Task Description"
-                            className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae] h-20"
+                            className={`${
+                              errors.taskDesc && touched.taskDesc
+                                ? "border border-red-800 w-full outline-none  rounded-md py-2 pl-3 placeholder:text-[#8094ae] h-20"
+                                : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae] h-20"
+                            }`}
                             name="taskDesc"
-                            value={taskDesc}
-                            onChange={newWorkData}
+                            value={values.taskDesc}
+                            onChange={(e) => {
+                              handleChange(e);
+                              newWorkData(e);
+                            }}
+                            onBlur={handleBlur}
                           />
+                          {errors.taskDesc && touched.taskDesc && (
+                            <ValidateForm error={errors.taskDesc} />
+                          )}
                         </div>
-                        <div className="grid sm:grid-cols-4 items-center gap-4">
+                        <div className="grid sm:grid-cols-4 items-center gap-4 relative">
                           <DatePicker
                             label="Due Date"
                             name={"dueDate"}
-                            date={dueDate}
-                            setDate={newWorkData}
+                            date={values.dueDate}
+                            setDate={(e) => {
+                              handleChange(e);
+                              newWorkData(e);
+                            }}
+                            onBlur={handleBlur}
                           />
                           <div className="text-sm grid gap-2">
                             <label>Due Time</label>
@@ -144,8 +236,11 @@ const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
                               type="time"
                               className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                               name="dueTime"
-                              value={dueTime}
-                              onChange={newWorkData}
+                              value={values.dueTime}
+                              onChange={(e) => {
+                                handleChange(e);
+                                newWorkData(e);
+                              }}
                             />
                           </div>
                           <div className="text-sm grid gap-2 sm:col-span-2">
@@ -153,8 +248,11 @@ const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
                             <select
                               className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
                               name="requiredParts"
-                              value={requiredParts}
-                              onChange={newWorkData}
+                              value={values.requiredParts}
+                              onChange={(e) => {
+                                handleChange(e);
+                                newWorkData(e);
+                              }}
                             >
                               <option>Select required parts</option>
                               <option>All clients</option>
@@ -240,26 +338,28 @@ const NewWorkRequestedForm = ({ workRequested, setWorkRequested }) => {
                         </div>
                       </div>
                     </section>
+                    <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
+                      <article
+                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
+                        onClick={() => setWorkRequested(false)}
+                      >
+                        <MdOutlineCancel />
+                        <p className="text-xs">cancel</p>
+                      </article>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`${
+                          isSubmitting
+                            ? "opacity-40 flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                            : "flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                        }`}
+                      >
+                        <MdTaskAlt />
+                        <p className="text-xs">Create Task</p>
+                      </button>
+                    </div>
                   </form>
-                  <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setWorkRequested(false)}
-                    >
-                      <MdOutlineCancel />
-                      <p className="text-xs">cancel</p>
-                    </article>
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                      onClick={() => {
-                        addNewWork();
-                        setWorkRequested(false);
-                      }}
-                    >
-                      <MdTaskAlt />
-                      <p className="text-xs">Create Tasks</p>
-                    </article>
-                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

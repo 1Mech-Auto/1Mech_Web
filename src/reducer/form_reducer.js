@@ -35,6 +35,8 @@ import {
   NEW_WORK_FORM,
   SEND_SMS,
   SMS_FORM,
+  ADD_NEW_PARTS,
+  NEW_PARTS_FORM,
 } from "@/action";
 const date = new Date();
 const options = { month: "long", day: "numeric", year: "numeric" };
@@ -716,6 +718,27 @@ const form_reducer = (state, action) => {
         dueDate: "",
         dueTime: "",
         requiredParts: "",
+      },
+    };
+  }
+  if (action.type === NEW_PARTS_FORM) {
+    const { name, value } = action.payload;
+    return { ...state, partsForm: { ...state.partsForm, [name]: value } };
+  }
+  if (action.type === ADD_NEW_PARTS) {
+    const { name, title } = state.clientForm;
+    let partList = {};
+    partList = {
+      partnName: name,
+      partTitle: title,
+    };
+    return {
+      ...state,
+      partsList: [...state.partsList, partList],
+      partsForm: {
+        ...state.partsForm,
+        name: "",
+        title: "",
       },
     };
   }

@@ -38,6 +38,8 @@ import {
   NEW_WORK_FORM,
   SEND_SMS,
   SMS_FORM,
+  ADD_NEW_PARTS,
+  NEW_PARTS_FORM,
 } from "@/action";
 const initialState = {
   showModal1: true,
@@ -47,7 +49,7 @@ const initialState = {
     phone: "",
     email: "",
     address: "",
-    gender: "gender",
+    gender: "",
   },
   clientList: [],
   newVehicleForm: {
@@ -62,7 +64,7 @@ const initialState = {
   },
   insuranceList: [],
   quoteForm: {
-    job: "Select Job",
+    job: "",
     itemDesc: "",
     quantity: "1",
     unitCost: "",
@@ -72,7 +74,7 @@ const initialState = {
   },
   quoteList: [],
   invoiceForm: {
-    job: "Select Job",
+    job: "",
     itemDesc: "",
     quantity: "1",
     unitCost: "",
@@ -85,7 +87,7 @@ const initialState = {
   },
   invoiceList: [],
   paymentsForm: {
-    job: "Select Job",
+    job: "",
     amount: "",
     paymentDate: "",
     paymentMethod: "Cash",
@@ -98,7 +100,7 @@ const initialState = {
     quantityUnit: "Units",
     restock: "",
     unitCost: "",
-    supplier: "Select Supplier",
+    supplier: "",
     itemCode: "",
     shelfNumber: "",
   },
@@ -124,7 +126,7 @@ const initialState = {
   teamList: [],
   campaignForm: {
     campaignTitle: "",
-    send: "Select",
+    send: "",
     message: "",
   },
   campaignList: [],
@@ -133,7 +135,7 @@ const initialState = {
   },
   notesList: [],
   jobCardForm: {
-    project: "Select Project",
+    project: "",
     body: "",
     mechanical: "",
     electrical: "",
@@ -193,6 +195,11 @@ const initialState = {
     requiredParts: "",
   },
   workList: [],
+  partsForm: {
+    name: "",
+    title: "",
+  },
+  partsList: [],
 };
 
 const FormContext = React.createContext();
@@ -346,12 +353,22 @@ export const FormProvider = ({ children }) => {
       dispatch({ type: NEW_VEHICLE_FORM, payload: { name, value } });
     }
   };
+  const newPartsForm = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    dispatch({ type: NEW_PARTS_FORM, payload: { name, value } });
+  };
+  const addnewParts = () => {
+    dispatch({ type: ADD_NEW_PARTS });
+  };
 
   return (
     <FormContext.Provider
       value={{
         ...state,
         newClientForm,
+        newPartsForm,
+        addnewParts,
         addNewClient,
         newVehicleData,
         newInsuranceData,

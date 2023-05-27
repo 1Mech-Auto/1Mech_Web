@@ -5,6 +5,10 @@ import { AiOutlineClose } from "react-icons/ai";
 import { BsShieldCheck } from "react-icons/bs";
 import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
+import { useFormik } from "formik";
+import ValidateForm from "./ValidateForm";
+import { toast } from "react-toastify";
+import { newTaskSchema } from "@/schemas";
 
 const NewTask = ({ task, setTask }) => {
   const cancelButtonRef = useRef(null);
@@ -22,6 +26,35 @@ const NewTask = ({ task, setTask }) => {
     newTaskData,
     addNewTask,
   } = useFormContext();
+  const onSubmit = async (values, actions) => {
+    toast.success("sent");
+    addNewTask;
+    setTask(false);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    actions.resetForm();
+  };
+  const {
+    values,
+    handleBlur,
+    isSubmitting,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormik({
+    initialValues: {
+      taskTitle: taskTitle,
+      assign: assign,
+      status: status,
+      taskDesc: taskDesc,
+      taskCost: taskCost,
+      dueDate: dueDate,
+      dueTime: dueTime,
+      required: required,
+    },
+    validationSchema: newTaskSchema,
+    onSubmit,
+  });
 
   return (
     <Transition.Root show={task} as={Fragment}>
@@ -66,38 +99,66 @@ const NewTask = ({ task, setTask }) => {
                   <p className="text-xs font-semibold mt-6 normal-case px-4">
                     Create a project task
                   </p>
-                  <form className="mt-3 grid gap-8 px-4 pb-4">
-                    <div className="text-sm grid gap-2">
+                  <form
+                    className="mt-3 grid gap-8 px-4 pb-4"
+                    onSubmit={handleSubmit}
+                  >
+                    <div className="text-sm grid gap-2 relative">
                       <label>Task Title</label>
                       <input
                         name="taskTitle"
                         type="text"
-                        value={taskTitle}
-                        onChange={newTaskData}
-                        className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        value={values.taskTitle}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newTaskData(e);
+                        }}
+                        onBlur={handleBlur}
                         placeholder="Task Name"
+                        className={`${
+                          errors.taskTitle && touched.taskTitle
+                            ? " border border-red-500 outline-none w-full  rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                            : "w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+                        }`}
                       />
+                      {errors.taskTitle && touched.taskTitle && (
+                        <ValidateForm error={errors.taskTitle} />
+                      )}
                     </div>
                     <div className="grid sm:grid-cols-2 gap-4">
-                      <div className="text-sm grid gap-2">
+                      <div className="text-sm grid gap-2 relative">
                         <label>Assign To</label>
                         <select
-                          className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
                           name="assign"
-                          value={assign}
-                          onChange={newTaskData}
+                          value={values.assign}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newTaskData(e);
+                          }}
+                          onBlur={handleBlur}
+                          className={`${
+                            errors.assign && touched.assign
+                              ? " border border-red-500 outline-none  rounded-md py-2 px-2 font-medium capitalize"
+                              : "outline-none border rounded-md py-2 px-2 font-medium capitalize"
+                          }`}
                         >
                           <option>Select Staff</option>
                           <option>All clients</option>
                         </select>
+                        {errors.assign && touched.assign && (
+                          <ValidateForm error={errors.assign} />
+                        )}
                       </div>
                       <div className="text-sm grid gap-2">
                         <label>Status</label>
                         <select
                           className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
                           name="status"
-                          value={status}
-                          onChange={newTaskData}
+                          value={values.status}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newTaskData(e);
+                          }}
                         >
                           <option>In Progress</option>
                           <option>All clients</option>
@@ -109,8 +170,11 @@ const NewTask = ({ task, setTask }) => {
                       <textarea
                         name="taskDesc"
                         type="text"
-                        value={taskDesc}
-                        onChange={newTaskData}
+                        value={values.taskDesc}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newTaskData(e);
+                        }}
                         className="w-full outline-none border rounded-md pl-3 py-1 min-h-[9em] placeholder:text-[#8094ae]"
                         placeholder="Task Description"
                       />
@@ -120,8 +184,11 @@ const NewTask = ({ task, setTask }) => {
                       <input
                         name="taskCost"
                         type="text"
-                        value={taskCost}
-                        onChange={newTaskData}
+                        value={values.taskCost}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newTaskData(e);
+                        }}
                         className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         placeholder="0.00"
                       />
@@ -129,20 +196,30 @@ const NewTask = ({ task, setTask }) => {
                         Task cost can`t be updated once saved.
                       </p>
                     </div>
-                    <section className="grid grid-cols-2 gap-4">
+                    <section className="grid grid-cols-2 gap-4 relative">
                       <DatePicker
                         label="Due Date"
                         name={"dueDate"}
-                        date={dueDate}
-                        setDate={newTaskData}
+                        date={values.dueDate}
+                        setDate={(e) => {
+                          handleChange(e);
+                          newTaskData(e);
+                        }}
+                        onBlur={handleBlur}
                       />
+                      {errors.dueDate && touched.dueDate && (
+                        <ValidateForm error={errors.dueDate} />
+                      )}
                       <div className="text-sm grid gap-2">
                         <label>Due Time</label>
                         <input
                           type="time"
                           name="dueTime"
-                          value={dueTime}
-                          onChange={newTaskData}
+                          value={values.dueTime}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newTaskData(e);
+                          }}
                           className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
                         />
                       </div>
@@ -152,8 +229,11 @@ const NewTask = ({ task, setTask }) => {
                       <select
                         className="outline-none border rounded-md py-2 px-2 font-medium capitalize"
                         name="required"
-                        value={required}
-                        onChange={newTaskData}
+                        value={values.required}
+                        onChange={(e) => {
+                          handleChange(e);
+                          newTaskData(e);
+                        }}
                       >
                         <option>Select parts</option>
                       </select>
@@ -164,26 +244,28 @@ const NewTask = ({ task, setTask }) => {
                         are added on Expenses Tab
                       </p>
                     </div>
+                    <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
+                      <article
+                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
+                        onClick={() => setTask(false)}
+                      >
+                        <MdOutlineCancel />
+                        <p className="text-xs">cancel</p>
+                      </article>
+                      <button
+                        disabled={isSubmitting}
+                        className={`${
+                          isSubmitting
+                            ? "opacity-40 flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                            : 'flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"'
+                        }`}
+                        type="submit"
+                      >
+                        <BsShieldCheck />
+                        <p className="text-xs">Create Task</p>
+                      </button>
+                    </div>
                   </form>
-                  <div className="flex mt-auto border py-8 bg-gray-200 justify-end gap-2 px-4">
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-white rounded-md border border-blue-400 font-bold text-blue-700 cursor-pointer"
-                      onClick={() => setTask(false)}
-                    >
-                      <MdOutlineCancel />
-                      <p className="text-xs">cancel</p>
-                    </article>
-                    <article
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                      onClick={() => {
-                        addNewTask();
-                        setTask(false);
-                      }}
-                    >
-                      <BsShieldCheck />
-                      <p className="text-xs">Create Task</p>
-                    </article>
-                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
