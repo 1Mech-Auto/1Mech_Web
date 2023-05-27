@@ -16,14 +16,19 @@ const Suppliers = () => {
   const [show, setShow] = useState(false);
   const { supplierList } = useFormContext();
   const extraInfo = [
-    { name: "Edit Details", icon: <HiOutlinePencil />, state: "setQuote" },
+    { name: "Edit Details", icon: <HiOutlinePencil /> },
     {
       name: "View Report",
       icon: <TbReportAnalytics />,
-      state: "setInvoice",
     },
-    { name: "Delete Supplier", icon: <BsTrash />, state: "none" },
+    { name: "Delete Supplier", icon: <BsTrash />},
   ];
+   const handleClick = (index) => {
+     // Perform different setState functions based on index
+     if (index === 0) {
+       setOpen(true);
+     }
+   };
 
   return (
     <Layout>
@@ -119,13 +124,9 @@ const Suppliers = () => {
               />
               {show && (
                 <MoreButton
-                  href={"/inventoryDetails"}
+                  href={""}
                   extraInfo={extraInfo}
-                  // setInvoice={setInvoice}
-                  // setJobCard={setJobCard}
-                  // setQuote={setQuote}
-                  // setSms={setSms}
-                  // setInfo={setInfo}
+                  handleClick={handleClick}
                 />
               )}
             </div>
@@ -160,13 +161,9 @@ const Suppliers = () => {
                     />
                     {show && (
                       <MoreButton
-                        href={"/inventoryDetails"}
+                        href={""}
                         extraInfo={extraInfo}
-                        // setInvoice={setInvoice}
-                        // setJobCard={setJobCard}
-                        // setQuote={setQuote}
-                        // setSms={setSms}
-                        // setInfo={setInfo}
+                        handleClick={handleClick}
                       />
                     )}
                   </div>

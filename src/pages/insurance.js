@@ -11,10 +11,18 @@ import { HiOutlinePencil } from "react-icons/hi";
 import { TbMessageCircle } from "react-icons/tb";
 import { BsTrash, BsEye } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import NewJobCard from "@/components/forms/NewJobCard";
+import NewInvoiceForm from "@/components/forms/NewInvoiceForm";
+import NewQuotesForm from "@/components/forms/NewQuotesForm";
+import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
 
 const Insurance = () => {
   const [open, setOpen] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
+  const [invoice, setInvoice] = useState(false);
+  const [jobCard, setJobCard] = useState(false);
+  const [quote, setQuote] = useState(false);
+  const [info, setInfo] = useState(false);
   const { insuranceList } = useFormContext();
   const [show, setShow] = useState(false);
   const checkInitials = (fullName) => {
@@ -39,11 +47,32 @@ const Insurance = () => {
     },
     { name: "Delete", icon: <BsTrash />, state: "none" },
   ];
+  const handleClick = (index) => {
+    // Perform different setState functions based on index
+    if (index === 0) {
+      setInfo(true);
+    } else if (index === 1) {
+      setJobCard(true);
+    } else if (index === 2) {
+      setQuote(true);
+    } else if (index === 3) {
+      setInvoice(true);
+    } else {
+      return "none";
+    }
+  };
+
 
   return (
     <Layout>
       <section className="flex justify-between items-center mb-6 px-6 sm:px-0">
         {open && <NewInsuranceForm open={open} setOpen={setOpen} />}
+        {invoice && (
+          <NewInvoiceForm invoice={invoice} setInvoice={setInvoice} />
+        )}
+        {jobCard && <NewJobCard jobCard={jobCard} setJobCard={setJobCard} />}
+        {quote && <NewQuotesForm quote={quote} setQuote={setQuote} />}
+        {info && <NewInfoUpdate info={info} setInfo={setInfo} />}
         <div>
           <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
             Insurance Companies
@@ -142,11 +171,7 @@ const Insurance = () => {
                 <MoreButton
                   href={"/insuranceDetails/details"}
                   extraInfo={extraInfo}
-                  // setInvoice={setInvoice}
-                  // setJobCard={setJobCard}
-                  // setQuote={setQuote}
-                  // setSms={setSms}
-                  // setInfo={setInfo}
+                  handleClick={handleClick}
                 />
               )}
             </div>
@@ -195,11 +220,7 @@ const Insurance = () => {
                       <MoreButton
                         href={"/insuranceDetails/details"}
                         extraInfo={extraInfo}
-                        // setInvoice={setInvoice}
-                        // setJobCard={setJobCard}
-                        // setQuote={setQuote}
-                        // setSms={setSms}
-                        // setInfo={setInfo}
+                        handleClick={handleClick}
                       />
                     )}
                   </div>

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Layout from "../../layout/Layout";
 import { BsThreeDots } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
-import NewQuotesForm from "@/components/forms/NewQuotesForm";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";
 import MoreButton from "@/components/MoreButton";
@@ -11,6 +10,7 @@ import { HiOutlinePencil } from "react-icons/hi";
 import { TbMessageCircle } from "react-icons/tb";
 import { BsTrash, BsEye } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import NewQuotesForm from "@/components/forms/NewQuotesForm";
 
 const Quotes = () => {
   const [quote, setQuote] = useState(false);
@@ -18,21 +18,25 @@ const Quotes = () => {
   const { quoteList } = useFormContext();
   const [show, setShow] = useState(false);
   const extraInfo = [
-    { name: "Download", icon: <FiDownloadCloud />, state: "setInfo" },
+    { name: "Download", icon: <FiDownloadCloud /> },
     {
       name: "Send Via Email",
       icon: <FiMail />,
-      state: "setJobCard",
     },
-    { name: "Edit Quote", icon: <HiOutlinePencil />, state: "setQuote" },
+    { name: "Edit Quote", icon: <HiOutlinePencil /> },
     {
       name: "Convert to Invoice",
       icon: <HiOutlineMenuAlt2 />,
-      state: "setInvoice",
     },
-    { name: "Delete Quote", icon: <BsTrash />, state: "none" },
+    { name: "Delete Quote", icon: <BsTrash /> },
   ];
 
+  const handleClick = (index) => {
+    // Perform different setState functions based on index
+    if (index === 2) {
+      setQuote(true);
+    }
+  };
   return (
     <Layout>
       {quote && <NewQuotesForm quote={quote} setQuote={setQuote} />}
@@ -127,11 +131,7 @@ const Quotes = () => {
                 <MoreButton
                   href={"/quoteDetails"}
                   extraInfo={extraInfo}
-                  // setInvoice={setInvoice}
-                  // setJobCard={setJobCard}
-                  // setQuote={setQuote}
-                  // setSms={setSms}
-                  // setInfo={setInfo}
+                  handleClick={handleClick}
                 />
               )}
             </div>
@@ -170,11 +170,7 @@ const Quotes = () => {
                       <MoreButton
                         href={"/quoteDetails"}
                         extraInfo={extraInfo}
-                        // setInvoice={setInvoice}
-                        // setJobCard={setJobCard}
-                        // setQuote={setQuote}
-                        // setSms={setSms}
-                        // setInfo={setInfo}
+                        handleClick={handleClick}
                       />
                     )}
                   </div>

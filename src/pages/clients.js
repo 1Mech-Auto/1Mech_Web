@@ -35,21 +35,37 @@ const Clients = () => {
     return joinedWord;
   };
   const extraInfo = [
-    { name: "Edit Details", icon: <HiOutlinePencil />, state: "setInfo" },
-    { name: "Send SMS", icon: <TbMessageCircle />, state: "setSms" },
+    { name: "Edit Details", icon: <HiOutlinePencil /> },
+    { name: "Send SMS", icon: <TbMessageCircle /> },
     {
       name: "Create Job Card",
       icon: <HiOutlineMenuAlt2 />,
       state: "setJobCard",
     },
-    { name: "Create Quote", icon: <HiOutlineMenuAlt2 />, state: "setQuote" },
+    { name: "Create Quote", icon: <HiOutlineMenuAlt2 /> },
     {
       name: "Create Invoice",
       icon: <HiOutlineMenuAlt2 />,
       state: "setInvoice",
     },
-    { name: "Delete", icon: <BsTrash />, state: "none" },
+    { name: "Delete", icon: <BsTrash /> },
   ];
+  const handleClick = (index) => {
+    // Perform different setState functions based on index
+    if (index === 0) {
+      setInfo(true);
+    } else if (index === 1) {
+      setSms(true);
+    } else if (index === 2) {
+      setJobCard(true);
+    } else if (index === 3) {
+      setQuote(true);
+    } else if (index === 4) {
+      setInvoice(true);
+    } else {
+      return "none";
+    }
+  };
   return (
     <Layout>
       {open && <NewClientForm open={open} setOpen={setOpen} />}
@@ -159,11 +175,7 @@ const Clients = () => {
                 <MoreButton
                   href={"/clientsDetails/details"}
                   extraInfo={extraInfo}
-                  setInvoice={setInvoice}
-                  setJobCard={setJobCard}
-                  setQuote={setQuote}
-                  setSms={setSms}
-                  setInfo={setInfo}
+                  handleClick={handleClick}
                 />
               )}
             </div>
@@ -210,11 +222,7 @@ const Clients = () => {
                       <MoreButton
                         href={"/clientsDetails/details"}
                         extraInfo={extraInfo}
-                        // setInvoice={setInvoice}
-                        // setJobCard={setJobCard}
-                        // setQuote={setQuote}
-                        // setSms={setSms}
-                        setInfo={setInfo}
+                        handleClick={handleClick}
                       />
                     )}
                   </div>

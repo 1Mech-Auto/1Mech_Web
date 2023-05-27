@@ -11,10 +11,19 @@ import { TbMessageCircle } from "react-icons/tb";
 import { BsTrash } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { TiCancel } from "react-icons/ti";
+import NewJobCard from "@/components/forms/NewJobCard";
+import NewInvoiceForm from "@/components/forms/NewInvoiceForm";
+import NewQuotesForm from "@/components/forms/NewQuotesForm";
+import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
 
 const Jobs = () => {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
+  const [invoice, setInvoice] = useState(false);
+  const [jobCard, setJobCard] = useState(false);
+  const [quote, setQuote] = useState(false);
+  const [info, setInfo] = useState(false);
+  
   const [moreInfo, setMoreInfo] = useState(false);
   const checkInitials = (fullName) => {
     const words = fullName;
@@ -24,29 +33,45 @@ const Jobs = () => {
     return joinedWord;
   };
   const extraInfo = [
-    { name: "Edit Details", icon: <HiOutlinePencil />, state: "setInfo" },
+    { name: "Edit Details", icon: <HiOutlinePencil /> },
     {
       name: "Create Job Card",
       icon: <HiOutlineMenuAlt2 />,
       state: "setJobCard",
     },
-    { name: "Create Quote", icon: <HiOutlineMenuAlt2 />, state: "setQuote" },
+    { name: "Create Quote", icon: <HiOutlineMenuAlt2 /> },
     {
       name: "Create Invoice",
       icon: <HiOutlineMenuAlt2 />,
-      state: "setInvoice",
     },
     {
       name: "Cancel Project",
       icon: <TiCancel />,
-      state: "setInvoice",
     },
-    { name: "Delete", icon: <BsTrash />, state: "none" },
+    { name: "Delete", icon: <BsTrash /> },
   ];
+  const handleClick = (index) => {
+    // Perform different setState functions based on index
+    if (index === 0) {
+      setInfo(true);
+    } else if (index === 1) {
+      setJobCard(true);
+    } else if (index === 2) {
+      setQuote(true);
+    } else if (index === 3) {
+      setInvoice(true);
+    } else {
+      return "none";
+    }
+  };
 
   return (
     <Layout>
       {open ? <NewVehicleForm open={open} setOpen={setOpen} /> : null}
+      {invoice && <NewInvoiceForm invoice={invoice} setInvoice={setInvoice} />}
+      {jobCard && <NewJobCard jobCard={jobCard} setJobCard={setJobCard} />}
+      {quote && <NewQuotesForm quote={quote} setQuote={setQuote} />}
+      {info && <NewInfoUpdate info={info} setInfo={setInfo} />}
       <section className="flex justify-between items-center mb-6 px-6 sm:px-0">
         <div>
           <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
@@ -149,11 +174,7 @@ const Jobs = () => {
                 <MoreButton
                   href={"/jobDetails/details"}
                   extraInfo={extraInfo}
-                  // setInvoice={setInvoice}
-                  // setJobCard={setJobCard}
-                  // setQuote={setQuote}
-                  // setSms={setSms}
-                  // setInfo={setInfo}
+                  handleClick={handleClick}
                 />
               )}
             </div>

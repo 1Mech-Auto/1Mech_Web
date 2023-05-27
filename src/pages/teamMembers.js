@@ -10,11 +10,14 @@ import MoreButton from "@/components/MoreButton";
 import { HiOutlinePencil } from "react-icons/hi";
 import { TbMessageCircle, TbReportAnalytics } from "react-icons/tb";
 import { BsTrash } from "react-icons/bs";
+import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
+import NewSMSForm from "@/components/forms/NewSMSForm";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 
 const TeamMembers = () => {
   const [open, setOpen] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
+  const [sms, setSms] = useState(false);
   const { teamList } = useFormContext();
   const [show, setShow] = useState(false);
   const checkInitials = (fullName) => {
@@ -25,19 +28,35 @@ const TeamMembers = () => {
     return joinedWord;
   };
   const extraInfo = [
-    { name: "Edit Details", icon: <HiOutlinePencil />, state: "setInfo" },
-    { name: "Send SMS", icon: <TbMessageCircle />, state: "setSms" },
+    { name: "Edit Details", icon: <HiOutlinePencil /> },
+    { name: "Send SMS", icon: <TbMessageCircle /> },
     {
       name: "View Report",
       icon: <TbReportAnalytics />,
-      state: "setInvoice",
     },
-    { name: "Delete", icon: <BsTrash />, state: "none" },
+    { name: "Delete", icon: <BsTrash />},
   ];
+  const handleClick = (index) => {
+    // Perform different setState functions based on index
+    if (index === 0) {
+      setOpen(true);
+    } else if (index === 1) {
+      setSms(true);
+    } else if (index === 2) {
+      setJobCard(true);
+    } else if (index === 3) {
+      setQuote(true);
+    } else if (index === 4) {
+      setInvoice(true);
+    } else {
+      return "none";
+    }
+  };
 
   return (
     <Layout>
       {open && <NewTeamMemberForm open={open} setOpen={setOpen} />}
+      {sms && <NewSMSForm sms={sms} setSms={setSms} />}
       <section className="flex justify-between items-center mb-6 px-6 sm:px-0">
         <div>
           <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
@@ -133,11 +152,7 @@ const TeamMembers = () => {
                 <MoreButton
                   href={"/teamDetails/details"}
                   extraInfo={extraInfo}
-                  // setInvoice={setInvoice}
-                  // setJobCard={setJobCard}
-                  // setQuote={setQuote}
-                  // setSms={setSms}
-                  // setInfo={setInfo}
+                  handleClick={handleClick}
                 />
               )}
             </div>
@@ -182,11 +197,7 @@ const TeamMembers = () => {
                       <MoreButton
                         href={"/teamDetails/details"}
                         extraInfo={extraInfo}
-                        // setInvoice={setInvoice}
-                        // setJobCard={setJobCard}
-                        // setQuote={setQuote}
-                        // setSms={setSms}
-                        // setInfo={setInfo}
+                        handleClick={handleClick}
                       />
                     )}
                   </div>

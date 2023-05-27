@@ -26,15 +26,20 @@ const Invoices = () => {
     return joinedWord;
   };
   const extraInfo = [
-    { name: "Download", icon: <FiDownloadCloud />, state: "setInfo" },
+    { name: "Download", icon: <FiDownloadCloud /> },
     {
       name: "Send Via Email",
       icon: <FiMail />,
-      state: "setJobCard",
     },
-    { name: "Edit Invoice", icon: <HiOutlinePencil />, state: "setQuote" },
-    { name: "Delete Quote", icon: <BsTrash />, state: "none" },
+    { name: "Edit Invoice", icon: <HiOutlinePencil /> },
+    { name: "Delete Quote", icon: <BsTrash /> },
   ];
+  const handleClick = (index) => {
+    // Perform different setState functions based on index
+    if (index === 2) {
+      setInvoice(true);
+    }
+  };
 
   return (
     <Layout>
@@ -142,11 +147,7 @@ const Invoices = () => {
                 <MoreButton
                   href={"/invoiceDetails"}
                   extraInfo={extraInfo}
-                  // setInvoice={setInvoice}
-                  // setJobCard={setJobCard}
-                  // setQuote={setQuote}
-                  // setSms={setSms}
-                  // setInfo={setInfo}
+                  handleClick={handleClick}
                 />
               )}
             </div>
@@ -196,11 +197,7 @@ const Invoices = () => {
                       <MoreButton
                         href={"/invoiceDetails"}
                         extraInfo={extraInfo}
-                        // setInvoice={setInvoice}
-                        // setJobCard={setJobCard}
-                        // setQuote={setQuote}
-                        // setSms={setSms}
-                        // setInfo={setInfo}
+                        handleClick={handleClick}
                       />
                     )}
                   </div>

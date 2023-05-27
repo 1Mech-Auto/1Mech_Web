@@ -223,17 +223,17 @@ const Overview = () => {
           </article>
           <article className="bg-white border border-t-teal-400 rounded-md p-5 h-[22rem] w-full">
             <h2 className="font-bold capitalize text-md">job statistics</h2>
-            {/* <div className="pb-5 h-[18.5rem] flex justify-center text-xl">
+            <div className="pb-5 h-[18.5rem] flex justify-center text-xl">
               <Doughnut data={data1} options={options1} />
-            </div> */}
+            </div>
           </article>
         </div>
         <div className="grid md:grid-cols-2 gap-6 ">
           <article className="bg-white border border-t-indigo-400 rounded-md p-5">
             <h2 className="font-bold capitalize text-md">Task statistics</h2>
-            {/* <div className="pb-5 h-[18.5rem] flex justify-center text-xl">
+            <div className="pb-5 h-[18.5rem] flex justify-center text-xl">
               <Doughnut data={data2} options={options1} />
-            </div> */}
+            </div>
           </article>
           <article className="grid md:grid-cols-2 grid-rows-2 gap-6">
             <div className="border border-t-indigo-400 bg-white rounded-md min-h-[10em] px-5 md:px-2 lg:px-5 py-3 grid items-between">
@@ -282,9 +282,9 @@ const Overview = () => {
         </div>
         <div className="p-5 bg-white rounded-md h-[22em]">
           <h2 className="font-bold text-sm">Payments last 12 months</h2>
-          {/* <div className="grid max-w-full w-full h-[18.5rem]">
+          <div className="grid max-w-full w-full h-[18.5rem]">
             <Line data={data3} options={options2} />
-          </div> */}
+          </div>
         </div>
       </div>
     </Layout>

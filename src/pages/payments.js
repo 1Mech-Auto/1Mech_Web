@@ -24,9 +24,15 @@ const Payments = () => {
     return joinedWord;
   };
   const extraInfo = [
-    { name: "Edit Payment", icon: <HiOutlinePencil />, state: "setQuote" },
-    { name: "Delete Quote", icon: <BsTrash />, state: "none" },
+    { name: "Edit Payment", icon: <HiOutlinePencil /> },
+    { name: "Delete Quote", icon: <BsTrash /> },
   ];
+  const handleClick = (index) => {
+    // Perform different setState functions based on index
+    if (index === 0) {
+      setPayment(true);
+    }
+  };
 
   return (
     <Layout>
@@ -134,11 +140,7 @@ const Payments = () => {
                 <MoreButton
                   href={"/quoteDetails"}
                   extraInfo={extraInfo}
-                  // setInvoice={setInvoice}
-                  // setJobCard={setJobCard}
-                  // setQuote={setQuote}
-                  // setSms={setSms}
-                  // setInfo={setInfo}
+                  handleClick={handleClick}
                 />
               )}
             </div>
@@ -190,11 +192,7 @@ const Payments = () => {
                       <MoreButton
                         href={"/quoteDetails"}
                         extraInfo={extraInfo}
-                        // setInvoice={setInvoice}
-                        // setJobCard={setJobCard}
-                        // setQuote={setQuote}
-                        // setSms={setSms}
-                        // setInfo={setInfo}
+                        handleClick={handleClick}
                       />
                     )}
                   </div>

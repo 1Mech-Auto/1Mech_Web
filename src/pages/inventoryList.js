@@ -20,16 +20,21 @@ const InventoryList = () => {
   const { inventoryList } = useFormContext();
   const [show, setShow] = useState(false);
   const extraInfo = [
-    { name: "Edit Details", icon: <HiOutlinePencil />, state: "setQuote" },
-    { name: "Issue", icon: <MdTaskAlt />, state: "setInfo" },
-    { name: "Add Stock", icon: <RiAddCircleLine />, state: "setInfo" },
+    { name: "Edit Details", icon: <HiOutlinePencil /> },
+    { name: "Issue", icon: <MdTaskAlt /> },
+    { name: "Add Stock", icon: <RiAddCircleLine /> },
     {
       name: "View Report",
       icon: <TbReportAnalytics />,
-      state: "setInvoice",
     },
-    { name: "Delete Item", icon: <BsTrash />, state: "none" },
+    { name: "Delete Item", icon: <BsTrash /> },
   ];
+  const handleClick = (index) => {
+    // Perform different setState functions based on index
+    if (index === 0) {
+      setOpen(true);
+    }
+  };
 
   return (
     <Layout>
@@ -129,13 +134,9 @@ const InventoryList = () => {
               />
               {show && (
                 <MoreButton
-                  href={"/inventoryDetails"}
+                  href={""}
                   extraInfo={extraInfo}
-                  // setInvoice={setInvoice}
-                  // setJobCard={setJobCard}
-                  // setQuote={setQuote}
-                  // setSms={setSms}
-                  // setInfo={setInfo}
+                  handleClick={handleClick}
                 />
               )}
             </div>
@@ -177,13 +178,9 @@ const InventoryList = () => {
                     />
                     {show && (
                       <MoreButton
-                        href={"/inventoryDetails"}
+                        href={""}
                         extraInfo={extraInfo}
-                        // setInvoice={setInvoice}
-                        // setJobCard={setJobCard}
-                        // setQuote={setQuote}
-                        // setSms={setSms}
-                        // setInfo={setInfo}
+                        handleClick={handleClick}
                       />
                     )}
                   </div>
