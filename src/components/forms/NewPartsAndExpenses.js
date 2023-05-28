@@ -7,7 +7,7 @@ import ToggleInputForm from "../ToggleInputForm";
 import { useFormContext } from "@/context/form_context";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
-import ValidateForm from "./ValidateForm";
+import ValidateForm from "../ValidateForm";
 import { newPartsandExpSchema } from "@/schemas";
 import SuccessPrompt from "../SuccessPrompt";
 

@@ -10,6 +10,7 @@ import VehicleInput from "../VehicleInput";
 import ToggleInputForm from "../ToggleInputForm";
 import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
+import VehicleRequiredPrompt from "../VehicleRequiredPrompt";
 
 const Form1 = () => {
   const {
@@ -103,7 +104,8 @@ const Form1 = () => {
           <VehicleInput label={"Engine No"} />
           <VehicleInput label={"Milleage In"} />
           <DropDownSelect label={"Milleage Unit"} option={"Kilometers"} />
-          <div className="text-sm grid gap-2">
+          <div className="text-sm grid gap-2 relative">
+            <VehicleRequiredPrompt />
             <label>Color</label>
             <input
               type="color"

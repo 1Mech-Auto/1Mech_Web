@@ -5,7 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
 import { useFormik } from "formik";
-import ValidateForm from "./ValidateForm";
+import ValidateForm from "../ValidateForm";
 import { newPaymentSchema } from "@/schemas";
 import SuccessPrompt from "../SuccessPrompt";
 

@@ -6,7 +6,7 @@ import { BiPlus } from "react-icons/bi";
 import { useFormContext } from "@/context/form_context";
 import { newJobSchema } from "@/schemas";
 import { useFormik } from "formik";
-import ValidateForm from "./ValidateForm";
+import ValidateForm from "../ValidateForm";
 import SuccessPrompt from "../SuccessPrompt";
 
 const NewJobCard = ({ jobCard, setJobCard }) => {

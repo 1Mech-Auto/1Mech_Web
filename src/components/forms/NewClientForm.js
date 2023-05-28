@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { useFormContext } from "@/context/form_context";
-import ValidateForm from "./ValidateForm";
+import ValidateForm from "../ValidateForm";
 import { useFormik } from "formik";
 import { newClientSchema } from "@/schemas";
 import { toast } from "react-toastify";

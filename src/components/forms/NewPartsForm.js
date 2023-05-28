@@ -7,7 +7,7 @@ import { BsShieldCheck } from "react-icons/bs";
 import ToggleInputForm from "../ToggleInputForm";
 import { useFormContext } from "@/context/form_context";
 import { useFormik } from "formik";
-import ValidateForm from "./ValidateForm";
+import ValidateForm from "../ValidateForm";
 import { newPartsSchema } from "@/schemas";
 import SuccessPrompt from "../SuccessPrompt";
 

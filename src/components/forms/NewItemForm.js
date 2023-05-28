@@ -5,7 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useFormContext } from "@/context/form_context";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
-import ValidateForm from "./ValidateForm";
+import ValidateForm from "../ValidateForm";
 import { newItemSchema } from "@/schemas";
 import SuccessPrompt from "../SuccessPrompt";
 

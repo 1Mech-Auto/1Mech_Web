@@ -6,7 +6,7 @@ import { BsShieldCheck } from "react-icons/bs";
 import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
 import { useFormik } from "formik";
-import ValidateForm from "./ValidateForm";
+import ValidateForm from "../ValidateForm";
 import { newTaskSchema } from "@/schemas";
 import SuccessPrompt from "../SuccessPrompt";
 

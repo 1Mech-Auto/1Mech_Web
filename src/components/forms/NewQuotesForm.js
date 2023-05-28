@@ -7,7 +7,7 @@ import { useFormContext } from "@/context/form_context";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { newQuoteSchema } from "@/schemas";
-import ValidateForm from "./ValidateForm";
+import ValidateForm from "../ValidateForm";
 import SuccessPrompt from "../SuccessPrompt";
 
 const NewQuotesForm = ({ quote, setQuote }) => {
