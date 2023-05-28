@@ -185,7 +185,6 @@ const Form2 = () => {
     handleToggleChange,
   } = useFormContext();
 
-
   return (
     <form className="px-4 pb-4 font-medium">
       <h2 className="text-sm">Vehicle parts check.</h2>
@@ -422,32 +421,38 @@ const NewVehicleForm = ({ open, setOpen }) => {
                   </p>
                   <div className="px-4 pb-2 my-2">
                     <ul className="grid grid-cols-4 items-center justify-between text-blue-500 text-sm">
-                      <li className="border-4 border-transparent border-b-blue-500">
-                        1. CLIENT & VEHICLE DETAIL
+                      <li className="relative cursor-pointer">
+                        <p>1. CLIENT & VEHICLE DETAIL</p>
+                        <div
+                          className={`h-[2px] bg-[#0971fe] -bottom-[0.7em] absolute block w-full`}
+                        ></div>
                       </li>
-                      <li
-                        className={`${
-                          nextPage === 1 &&
-                          "border-4 border-transparent border-b-blue-500 "
-                        } `}
-                      >
-                        2. VEHICLE CHECK IN
+                      <li className="relative cursor-pointer">
+                        <p>2. VEHICLE CHECK IN</p>
+                        <div
+                          className={`${
+                            nextPage === 1 &&
+                            `h-[2px] bg-[#0971fe] -bottom-[0.7em] absolute block w-full`
+                          } `}
+                        ></div>
                       </li>
-                      <li
-                        className={`${
-                          nextPage === 2 &&
-                          "border-4 border-transparent border-b-blue-500 "
-                        }`}
-                      >
-                        3. DENTS AND SCRATCHES
+                      <li className="relative cursor-pointer">
+                        <p>3. DENTS AND SCRATCHES</p>
+                        <div
+                          className={`${
+                            nextPage === 2 &&
+                            `h-[2px] bg-[#0971fe] -bottom-[0.7em] absolute block w-full`
+                          } `}
+                        ></div>
                       </li>
-                      <li
-                        className={`${
-                          nextPage === 3 &&
-                          "border-4 border-transparent border-b-blue-500 "
-                        }`}
-                      >
-                        4. DEFECTS & FUEL LEVEL
+                      <li className="relative cursor-pointer">
+                        <p>4. DEFECTS & FUEL LEVEL</p>
+                        <div
+                          className={`${
+                            nextPage === 3 &&
+                            `h-[2px] bg-[#0971fe] -bottom-[0.7em] absolute block w-full`
+                          } `}
+                        ></div>
                       </li>
                     </ul>
                   </div>
