@@ -325,6 +325,27 @@ const Form2 = () => {
 };
 const Form3 = () => {
   return (
+    <div className="min-h-[50vh] px-4 border-2 border-transparent border-b-gray-300 mb-2">
+      <hr />
+      <div className="text-xs text-center font-normal my-3">
+        Mark for dents and scratches. Use{" "}
+        <div className="w-[10px] h-[10px] rounded-full bg-[#ff0000] inline-block"></div>{" "}
+        Red color for dents and{" "}
+        <div className="w-[10px] h-[10px] rounded-full bg-[#1418FF] inline-block"></div>{" "}
+        Blue color for scratches. This can not be updated once saved.
+      </div>
+      <div className="grid min-h-[35vh]">
+        <div className="w-4/6 min-h-[25vh] mx-auto border-2 rounded-lg border-gray-300"></div>
+      </div>
+      <hr className="mt-4" />
+      <div className="text-xs italic font-normal text-center my-4">
+        Dents marking selected
+      </div>
+    </div>
+  );
+};
+const Form4 = () => {
+  return (
     <form className="px-4 grid grid-cols-[1.7fr,1fr] gap-8 font-medium">
       <div>
         <div className="grid gap-2">
@@ -358,6 +379,7 @@ const stages = [
   },
   { component: <Form2 /> },
   { component: <Form3 /> },
+  { component: <Form4 /> },
 ];
 
 const NewVehicleForm = ({ open, setOpen }) => {
