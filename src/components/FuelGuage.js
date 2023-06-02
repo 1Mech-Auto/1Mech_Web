@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import Image from "next/image";
-import fuel from '../../public/fuel.svg' 
-import {ReactComponent as Fuel} from '../../public/fuel.svg'
+import MySvg from "./MySvg";
 
-const Test = () => {
+const Fuel = () => {
   const [range, setRange] = useState("82");
 
-  console.log(range);
   return (
     <div>
-      <Image src={fuel} alt="fuel" />
-      
+      <MySvg range={range} />
+
       <input
         type="range"
         min="-36"
@@ -27,4 +24,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Fuel;

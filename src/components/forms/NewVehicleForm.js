@@ -4,13 +4,14 @@ import { MdOutlineCancel } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsShieldCheck } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
-import Test from "../Test";
+import Test from "../FuelGuage";
 import DropDownSelect from "../DropDownSelect";
 import VehicleInput from "../VehicleInput";
 import ToggleInputForm from "../ToggleInputForm";
 import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
 import VehicleRequiredPrompt from "../VehicleRequiredPrompt";
+import Canvas from "../MotorCanvas";
 
 const Form1 = () => {
   const {
@@ -335,7 +336,9 @@ const Form3 = () => {
         Blue color for scratches. This can not be updated once saved.
       </div>
       <div className="grid min-h-[35vh]">
-        <div className="w-4/6 min-h-[25vh] mx-auto border-2 rounded-lg border-gray-300"></div>
+        <div className="w-4/6 min-h-[25vh] mx-auto ">
+          <Canvas />
+        </div>
       </div>
       <hr className="mt-4" />
       <div className="text-xs italic font-normal text-center my-4">
