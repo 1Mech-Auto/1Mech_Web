@@ -11,384 +11,712 @@ import ToggleInputForm from "../ToggleInputForm";
 import DatePicker from "../DatePicker";
 import { useFormContext } from "@/context/form_context";
 import VehicleRequiredPrompt from "../VehicleRequiredPrompt";
+import * as yup from "yup";
 import Canvas from "../MotorCanvas";
+import { useFormik } from "formik";
+import SuccessPrompt from "../SuccessPrompt";
 
-const Form1 = () => {
+const Form1 = ({ handleChangeNext }) => {
+  const [clicked, setClicked] = useState(false);
   const {
-    newVehicleForm: { client, toggle1, toggle2 },
+    newVehicleForm: { toggle1, toggle2 },
+    projectForm: {
+      client,
+      make,
+      model,
+      regNo,
+      vin,
+      engNo,
+      milleageIn,
+      milleageUnit,
+      color,
+      carYear,
+      insurance,
+      dateIn,
+      timeIn,
+      status,
+      startDate,
+      expectedDate,
+      roadTest,
+      towingDetails,
+      insuranceCovered,
+      valetFullName,
+      valetPhone,
+      valetEmail,
+      valetId,
+    },
     newVehicleData,
+    newProjectForm,
   } = useFormContext();
+
+  // validationSchema for file1
+  const newVehicleSchema = yup.object().shape({
+    client: yup.string().required("This field is required"),
+    valetFullName: clicked && yup.string().required("This field is required"),
+    valetPhone: clicked
+      ? yup
+          .string()
+          .matches(/^\+?[0-9]{7,15}$/, "enter a valid number")
+          .required("This field is required")
+      : yup.string(),
+    valetEmail: clicked
+      ? yup.string().email("please enter a valid email")
+      : yup.string(),
+    make: yup.string().required("This field is required"),
+    model: yup.string().required("This field is required"),
+    engNo: yup.string().required("This field is required"),
+    insurance: yup.string().required("This field is required"),
+  });
+
+  const onSubmit = async (values) => {
+    handleChangeNext();
+  };
+  const {
+    values,
+    handleBlur,
+    isSubmitting,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormik({
+    initialValues: {
+      client: client,
+      valetFullName: valetFullName,
+      valetEmail: valetEmail,
+      valetPhone: valetPhone,
+      make: make,
+      model: model,
+      insurance: insurance,
+      engNo: engNo,
+    },
+    validationSchema: newVehicleSchema,
+    onSubmit,
+  });
   return (
-    <form className="grid gap-4 px-4 pb-4">
-      <div className="text-sm grid gap-2">
-        <label>Client</label>
-        <select
-          name="client"
-          className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-          value={client}
-          onChange={newVehicleData}
-        >
-          <option>Select Client</option>
-          <option>All clients</option>
-          <option>selected clients</option>
-          <option>All team members</option>
-          <option>selected team members</option>
-          <option>enter number manually</option>
-          <option>filtered clients by car make / model</option>
-        </select>
-      </div>
-      <ToggleInputForm
-        label={"The vehicle was brought in by the client himself/herself"}
-        id="toggle1"
-        checked={toggle1}
-        onChange={(newEnabled) => newVehicleData("toggle1", newEnabled)}
-      />
-      {toggle1 ? (
-        ""
-      ) : (
-        <div className="block">
-          <p className="text-xs text-[#8094ae] font-normal mb-2">
-            Enter the details of the person who brought the car on behalf of the
-            client.
-          </p>
-          <div className="grid sm:grid-cols-4 gap-4">
-            <div className="text-sm grid gap-2">
-              <label>Full Name</label>
-              <input
-                type="text"
-                className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                placeholder="Full Name"
-              />
-            </div>
-            <div className="text-sm grid gap-2">
-              <label>Phone Number</label>
-              <input
-                type="tel"
-                className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                placeholder="Phone Number"
-              />
-            </div>
-            <div className="text-sm grid gap-2">
-              <label>Email Address</label>
-              <input
-                type="email"
-                className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                placeholder="Email Address"
-              />
-            </div>
-            <div className="text-sm grid gap-2">
-              <label>ID Number</label>
-              <input
-                type="text"
-                className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                placeholder="ID Number"
-              />
-            </div>
-          </div>
-        </div>
-      )}
-      <hr />
-      <div className="text-sm grid gap-2">
-        <div className="grid md:grid-cols-4 gap-6 py-4">
-          <DropDownSelect
-            label={"Make"}
-            select={"Select Make"}
-            option={"Toyota"}
-          />
-          <DropDownSelect
-            label={"Model"}
-            select={"Select Model"}
-            option={"Model S"}
-          />
-          <VehicleInput label={"Registration Number"} />
-          <VehicleInput label={"VIN / Chasis No"} />
-          <VehicleInput label={"Engine No"} />
-          <VehicleInput label={"Milleage In"} />
-          <DropDownSelect label={"Milleage Unit"} option={"Kilometers"} />
-          <div className="text-sm grid gap-2 relative">
-            <VehicleRequiredPrompt />
-            <label>Color</label>
-            <input
-              type="color"
-              placeholder="Color"
-              className="outline-none border w-full rounded-md h-10 py-1.5 px-2 font-medium capitalize"
-            />
-          </div>
-          <DropDownSelect label={"Car Year"} option={"1973"} />
-          <VehicleInput label={"Insurance Company"} />
-          <DatePicker label={"Date IN"} />
-          <div className="text-sm grid gap-2">
-            <label>Time IN</label>
-            <input
-              type="time"
-              className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-            />
-          </div>
-          <DropDownSelect label={"Status"} option={"In Progress"} />
-          <DatePicker label={"Start Date"} />
-          <DatePicker label={"Expected Completion Date"} />
-          <DatePicker label={"Road Test"} option={"None"} />
-        </div>
-        <label>Towing Details / Notes</label>
-        <input
-          name="title"
-          type="text"
-          // value={title}
-          //   onChange={updateCampaignDetails}
-          className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
-          placeholder="Towing Details / Notes"
-        />
-      </div>
-      <hr />
-      <ToggleInputForm
-        label={"Repair cost covered by insurance"}
-        id="toggle2"
-        checked={toggle2}
-        onChange={(newEnabled) => newVehicleData("toggle2", newEnabled)}
-      />
-      {toggle2 && (
-        <div className="text-sm grid gap-2">
-          <label>Insurance Company</label>
+    <form onSubmit={handleSubmit}>
+      <div className="grid gap-4 px-4 pb-4">
+        <div className="text-sm grid gap-2 relative">
+          <label>Client</label>
           <select
+            name="client"
+            value={values.client}
+            onChange={(e) => {
+              handleChange(e);
+              newProjectForm(e);
+            }}
+            onBlur={handleBlur}
             className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-            // value={user}
           >
-            <option>Select Insurance Company</option>
+            <option>Select Client</option>
             <option>All clients</option>
+            <option>selected clients</option>
+            <option>All team members</option>
+            <option>selected team members</option>
+            <option>enter number manually</option>
+            <option>filtered clients by car make / model</option>
           </select>
+          {errors.client && touched.client && (
+            <VehicleRequiredPrompt message={errors.client} />
+          )}
         </div>
-      )}
+        <ToggleInputForm
+          label={"The vehicle was brought in by the client himself/herself"}
+          id="toggle1"
+          checked={toggle1}
+          onChange={(newEnabled) => {
+            newVehicleData("toggle1", newEnabled);
+            setClicked(!clicked);
+          }}
+        />
+        {toggle1 ? (
+          ""
+        ) : (
+          <div className="block">
+            <p className="text-xs text-[#8094ae] font-normal mb-2">
+              Enter the details of the person who brought the car on behalf of
+              the client.
+            </p>
+            <div className="grid sm:grid-cols-4 gap-4">
+              <div className="text-sm grid gap-2 relative">
+                <label>Full Name</label>
+                <input
+                  type="text"
+                  name="valetFullName"
+                  value={values.valetFullName}
+                  onChange={(e) => {
+                    handleChange(e);
+                    newProjectForm(e);
+                  }}
+                  onBlur={handleBlur}
+                  className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                  placeholder="Full Name"
+                />
+                {errors.valetFullName && touched.valetFullName && (
+                  <VehicleRequiredPrompt message={errors.valetFullName} />
+                )}
+              </div>
+              <div className="text-sm grid gap-2 relative">
+                <label>Phone Number</label>
+                <input
+                  type="tel"
+                  name="valetPhone"
+                  value={values.valetPhone}
+                  onChange={(e) => {
+                    handleChange(e);
+                    newProjectForm(e);
+                  }}
+                  onBlur={handleBlur}
+                  className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                  placeholder="Phone Number"
+                />
+                {errors.valetPhone && touched.valetPhone && (
+                  <VehicleRequiredPrompt message={errors.valetPhone} />
+                )}
+              </div>
+              <div className="text-sm grid gap-2 relative">
+                <label>Email Address</label>
+                <input
+                  type="email"
+                  name="valetEmail"
+                  value={values.valetEmail}
+                  onChange={(e) => {
+                    handleChange(e);
+                    newProjectForm(e);
+                  }}
+                  onBlur={handleBlur}
+                  className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                  placeholder="Email Address"
+                />
+                {errors.valetEmail && touched.valetEmail && (
+                  <VehicleRequiredPrompt message={errors.valetEmail} />
+                )}
+              </div>
+              <div className="text-sm grid gap-2">
+                <label>ID Number</label>
+                <input
+                  type="text"
+                  name="valetId"
+                  value={valetId}
+                  onChange={newProjectForm}
+                  className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                  placeholder="ID Number"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+        <hr />
+        <div className="text-sm grid gap-2">
+          <div className="grid md:grid-cols-4 gap-6 py-4 ">
+            <DropDownSelect
+              label={"Make"}
+              select={"Select Make"}
+              option={"Toyota"}
+              name="make"
+              value={values.make}
+              onChange={(e) => {
+                handleChange(e);
+                newProjectForm(e);
+              }}
+              onBlur={handleBlur}
+              error={errors.make}
+              touched={touched.make}
+            />
+
+            <DropDownSelect
+              label={"Model"}
+              select={"Select Model"}
+              option={"Model S"}
+              name="model"
+              value={values.model}
+              onChange={(e) => {
+                handleChange(e);
+                newProjectForm(e);
+              }}
+              onBlur={handleBlur}
+              error={errors.model}
+              touched={touched.model}
+            />
+            <VehicleInput
+              label={"Registration Number"}
+              name="regNo"
+              onChange={newProjectForm}
+              value={regNo}
+            />
+
+            <VehicleInput
+              label={"VIN / Chasis No"}
+              name="vin"
+              onChange={newProjectForm}
+              value={vin}
+            />
+            <VehicleInput
+              label={"Engine No"}
+              name="engNo"
+              value={values.engNo}
+              onChange={(e) => {
+                handleChange(e);
+                newProjectForm(e);
+              }}
+              onBlur={handleBlur}
+              error={errors.engNo}
+              touched={touched.engNo}
+            />
+
+            <VehicleInput
+              label={"Milleage In"}
+              name="milleageIn"
+              onChange={newProjectForm}
+              value={milleageIn}
+            />
+            <DropDownSelect
+              label={"Milleage Unit"}
+              option={"Kilometers"}
+              name="milleageUnit"
+              onChange={newProjectForm}
+              value={milleageUnit}
+            />
+            <div className="text-sm grid gap-2 relative">
+              <label>Color</label>
+              <input
+                type="color"
+                name="color"
+                onChange={newProjectForm}
+                value={color}
+                placeholder="Color"
+                className="outline-none border w-full rounded-md h-10 py-1.5 px-2 font-medium capitalize"
+              />
+            </div>
+            <DropDownSelect
+              label={"Car Year"}
+              name="carYear"
+              onChange={newProjectForm}
+              value={carYear}
+              select={"1972"}
+              option={"1973"}
+            />
+            <VehicleInput
+              label={"Insurance Company"}
+              name="insurance"
+              value={values.insurance}
+              onChange={(e) => {
+                handleChange(e);
+                newProjectForm(e);
+              }}
+              onBlur={handleBlur}
+              error={errors.insurance}
+              touched={touched.insurance}
+            />
+            <DatePicker
+              label={"Date IN"}
+              name="dateIn"
+              setDate={newProjectForm}
+              date={dateIn}
+            />
+            <div className="text-sm grid gap-2">
+              <label>Time IN</label>
+              <input
+                type="time"
+                name="timeIn"
+                value={timeIn}
+                onChange={newProjectForm}
+                className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+              />
+            </div>
+            <DropDownSelect
+              label={"Status"}
+              name="status"
+              onChange={newProjectForm}
+              value={status}
+              option={"In Progress"}
+            />
+            <DatePicker
+              label={"Start Date"}
+              name="startDate"
+              setDate={newProjectForm}
+              date={startDate}
+            />
+            <DatePicker
+              label={"Expected Completion Date"}
+              name="expectedDate"
+              setDate={newProjectForm}
+              date={expectedDate}
+            />
+            <DatePicker
+              label={"Road Test"}
+              option={"None"}
+              name="roadTest"
+              setDate={newProjectForm}
+              date={roadTest}
+            />
+          </div>
+          <label>Towing Details / Notes</label>
+          <input
+            // name="title"
+            type="text"
+            name="towingDetails"
+            onChange={newProjectForm}
+            value={towingDetails}
+            // value={title}
+            //   onChange={updateCampaignDetails}
+            className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+            placeholder="Towing Details / Notes"
+          />
+        </div>
+        <hr />
+        <ToggleInputForm
+          label={"Repair cost covered by insurance"}
+          id="toggle2"
+          checked={toggle2}
+          onChange={(newEnabled) => newVehicleData("toggle2", newEnabled)}
+        />
+        {toggle2 && (
+          <div className="text-sm grid gap-2">
+            <label>Insurance Company</label>
+            <select
+              name="insuranceCovered"
+              onChange={newProjectForm}
+              value={insuranceCovered}
+              className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+              // value={user}
+            >
+              <option>Select Insurance Company</option>
+              <option>All clients</option>
+            </select>
+          </div>
+        )}
+      </div>
+      <div className="flex items-center mt-auto border py-4 bg-gray-200 justify-start gap-4 px-4">
+        <button
+          disabled={isSubmitting}
+          type="submit"
+          className="flex items-center gap-2 px-4 py-3 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+          onClick={() => console.log(values)}
+        >
+          <p className="text-xs">Next</p>
+        </button>
+      </div>
     </form>
   );
 };
-const Form2 = () => {
+const Form2 = ({ handleChangeNext, handleChangePrev }) => {
   const {
-    toggleStates: {
-      toggle1,
-      toggle2,
-      toggle3,
-      toggle4,
-      toggle5,
-      toggle6,
-      toggle7,
-      toggle8,
-      toggle9,
-      toggle10,
-      toggle11,
-      toggle12,
-      toggle13,
-      toggle14,
-      toggle15,
-      toggle16,
-      toggle17,
-      toggle18,
-      toggle19,
-      toggle20,
+    projectForm: {
+      toggleStates: {
+        wiper,
+        mirrors,
+        badge,
+        spareWheel,
+        doorLocks,
+        fireExt,
+        tankCap,
+        tankLid,
+        relay,
+        horns,
+        oilFilter,
+        radcap,
+        battMk,
+        arielAuto,
+        seatBelts,
+        radioSpeaker,
+        rearMirror,
+        wSpanner,
+        wTriangle,
+        bootMats,
+      },
+      bookNotes,
     },
+    newProjectForm,
     handleToggleChange,
   } = useFormContext();
 
   return (
-    <form className="px-4 pb-4 font-medium">
-      <h2 className="text-sm">Vehicle parts check.</h2>
-      <div className="grid md:grid-cols-3 my-4 gap-y-8">
-        <ToggleInputForm
-          label={"Wiper"}
-          id="toggle1"
-          checked={toggle1}
-          onChange={(newEnabled) => handleToggleChange("toggle1", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Ext/Mirrors P/M"}
-          id="toggle2"
-          checked={toggle2}
-          onChange={(newEnabled) => handleToggleChange("toggle2", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Ext/Badge/Stickers"}
-          id="toggle3"
-          checked={toggle3}
-          onChange={(newEnabled) => handleToggleChange("toggle3", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Spare Wheel"}
-          id="toggle4"
-          checked={toggle4}
-          onChange={(newEnabled) => handleToggleChange("toggle5", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Door Locks"}
-          id="toggle5"
-          checked={toggle5}
-          onChange={(newEnabled) => handleToggleChange("toggle5", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Fire Extinguisher"}
-          id="toggle6"
-          checked={toggle6}
-          onChange={(newEnabled) => handleToggleChange("toggle6", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Fuel Tank Cap"}
-          id="toggle7"
-          checked={toggle7}
-          onChange={(newEnabled) => handleToggleChange("toggle7", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Fuel Tank Lid Lock"}
-          id="toggle8"
-          checked={toggle8}
-          onChange={(newEnabled) => handleToggleChange("toggle8", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Relay"}
-          id="toggle9"
-          checked={toggle9}
-          onChange={(newEnabled) => handleToggleChange("toggle9", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Horns"}
-          id="toggle10"
-          checked={toggle10}
-          onChange={(newEnabled) => handleToggleChange("toggle10", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Oil Filter Cap"}
-          id="toggle11"
-          checked={toggle11}
-          onChange={(newEnabled) => handleToggleChange("toggle11", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Radiator Cap"}
-          id="toggle12"
-          checked={toggle12}
-          onChange={(newEnabled) => handleToggleChange("toggle12", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Battery MK"}
-          id="toggle13"
-          checked={toggle13}
-          onChange={(newEnabled) => handleToggleChange("toggle13", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Arial Auto/MAN"}
-          id="toggle14"
-          checked={toggle14}
-          onChange={(newEnabled) => handleToggleChange("toggle14", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Seat Belts"}
-          id="toggle15"
-          checked={toggle15}
-          onChange={(newEnabled) => handleToggleChange("toggle15", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Radio Speaker"}
-          id="toggle16"
-          checked={toggle16}
-          onChange={(newEnabled) => handleToggleChange("toggle16", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Rear View Mirror"}
-          id="toggle17"
-          checked={toggle17}
-          onChange={(newEnabled) => handleToggleChange("toggle17", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"W/Spanner"}
-          id="toggle18"
-          checked={toggle18}
-          onChange={(newEnabled) => handleToggleChange("toggle18", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"W/Triangle"}
-          id="toggle19"
-          checked={toggle19}
-          onChange={(newEnabled) => handleToggleChange("toggle19", newEnabled)}
-        />
-        <ToggleInputForm
-          label={"Boot Mats"}
-          id="toggle20"
-          checked={toggle20}
-          onChange={(newEnabled) => handleToggleChange("toggle20", newEnabled)}
-        />
-      </div>
-      <hr />
-      <div className="grid gap-2 mt-5">
-        <label>Bookings In Notes</label>
-        <textarea className="outline-none border relative text-[#8094ae]  min-h-[8em] px-2 rounded-md font-medium" />
-        <small className="text-[#8094ae] italic">
-          Serial numbers, part description/condition, additional parts etc
-        </small>
+    <form>
+      <article className="px-4 pb-4 font-medium">
+        <h2 className="text-sm">Vehicle parts check.</h2>
+        <div className="grid md:grid-cols-3 my-4 gap-y-8">
+          <ToggleInputForm
+            label={"Wiper"}
+            id="wiper"
+            checked={wiper}
+            onChange={(newEnabled) => handleToggleChange("wiper", newEnabled)}
+          />
+          <ToggleInputForm
+            label={"Ext/Mirrors P/M"}
+            id="mirrors"
+            checked={mirrors}
+            onChange={(newEnabled) => handleToggleChange("mirrors", newEnabled)}
+          />
+          <ToggleInputForm
+            label={"Ext/Badge/Stickers"}
+            id="badge"
+            checked={badge}
+            onChange={(newEnabled) => handleToggleChange("badge", newEnabled)}
+          />
+          <ToggleInputForm
+            label={"Spare Wheel"}
+            id="spareWheel"
+            checked={spareWheel}
+            onChange={(newEnabled) =>
+              handleToggleChange("spareWheel", newEnabled)
+            }
+          />
+          <ToggleInputForm
+            label={"Door Locks"}
+            id="doorLocks"
+            checked={doorLocks}
+            onChange={(newEnabled) =>
+              handleToggleChange("doorLocks", newEnabled)
+            }
+          />
+          <ToggleInputForm
+            label={"Fire Extinguisher"}
+            id="fireExt"
+            checked={fireExt}
+            onChange={(newEnabled) => handleToggleChange("fireExt", newEnabled)}
+          />
+          <ToggleInputForm
+            label={"Fuel Tank Cap"}
+            id="tankCap"
+            checked={tankCap}
+            onChange={(newEnabled) => handleToggleChange("tankCap", newEnabled)}
+          />
+          <ToggleInputForm
+            label={"Fuel Tank Lid Lock"}
+            id="tankLid"
+            checked={tankLid}
+            onChange={(newEnabled) => handleToggleChange("tankLid", newEnabled)}
+          />
+          <ToggleInputForm
+            label={"Relay"}
+            id="relay"
+            checked={relay}
+            onChange={(newEnabled) => handleToggleChange("relay", newEnabled)}
+          />
+          <ToggleInputForm
+            label={"Horns"}
+            id="horns"
+            checked={horns}
+            onChange={(newEnabled) => handleToggleChange("horns", newEnabled)}
+          />
+          <ToggleInputForm
+            label={"Oil Filter Cap"}
+            id="oilFilter"
+            checked={oilFilter}
+            onChange={(newEnabled) =>
+              handleToggleChange("oilFilter", newEnabled)
+            }
+          />
+          <ToggleInputForm
+            label={"Radiator Cap"}
+            id="radCap"
+            checked={radcap}
+            onChange={(newEnabled) => handleToggleChange("radCap", newEnabled)}
+          />
+          <ToggleInputForm
+            label={"Battery MK"}
+            id="battMk"
+            checked={battMk}
+            onChange={(newEnabled) => handleToggleChange("battMk", newEnabled)}
+          />
+          <ToggleInputForm
+            label={"Arial Auto/MAN"}
+            id="arielAuto"
+            checked={arielAuto}
+            onChange={(newEnabled) =>
+              handleToggleChange("arielAuto", newEnabled)
+            }
+          />
+          <ToggleInputForm
+            label={"Seat Belts"}
+            id="seatBelts"
+            checked={seatBelts}
+            onChange={(newEnabled) =>
+              handleToggleChange("seatBelts", newEnabled)
+            }
+          />
+          <ToggleInputForm
+            label={"Radio Speaker"}
+            id="radioSpeaker"
+            checked={radioSpeaker}
+            onChange={(newEnabled) =>
+              handleToggleChange("radioSpeaker", newEnabled)
+            }
+          />
+          <ToggleInputForm
+            label={"Rear View Mirror"}
+            id="rearMirror"
+            checked={rearMirror}
+            onChange={(newEnabled) =>
+              handleToggleChange("rearMirror", newEnabled)
+            }
+          />
+          <ToggleInputForm
+            label={"W/Spanner"}
+            id="wSpanner"
+            checked={wSpanner}
+            onChange={(newEnabled) =>
+              handleToggleChange("wSpanner", newEnabled)
+            }
+          />
+          <ToggleInputForm
+            label={"W/Triangle"}
+            id="wTriangle"
+            checked={wTriangle}
+            onChange={(newEnabled) =>
+              handleToggleChange("wTriangle", newEnabled)
+            }
+          />
+          <ToggleInputForm
+            label={"Boot Mats"}
+            id="bootMats"
+            checked={bootMats}
+            onChange={(newEnabled) =>
+              handleToggleChange("bootMats", newEnabled)
+            }
+          />
+        </div>
+        <hr />
+        <div className="grid gap-2 mt-5">
+          <label>Bookings In Notes</label>
+          <textarea
+            name="bookNotes"
+            value={bookNotes}
+            onChange={newProjectForm}
+            className="outline-none border relative text-[#8094ae]  min-h-[8em] px-2 rounded-md font-medium"
+          />
+          <small className="text-[#8094ae] italic">
+            Serial numbers, part description/condition, additional parts etc
+          </small>
+        </div>
+      </article>
+      <div className="flex items-center mt-auto border py-4 bg-gray-200 justify-start gap-4 px-4">
+        <button
+          className="flex items-center gap-2 px-4 py-3 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+          onClick={handleChangeNext}
+        >
+          <p className="text-xs">Next</p>
+        </button>
+        <article
+          className="flex items-center gap-2 px-4 py-3 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+          onClick={handleChangePrev}
+        >
+          <p className="text-xs">Prev</p>
+        </article>
       </div>
     </form>
   );
 };
-const Form3 = () => {
+const Form3 = ({ handleChangeNext, handleChangePrev }) => {
   return (
-    <div className="min-h-[50vh] px-4 border-2 border-transparent border-b-gray-300 mb-2">
-      <hr />
-      <div className="text-xs text-center font-normal my-3">
-        Mark for dents and scratches. Use{" "}
-        <div className="w-[10px] h-[10px] rounded-full bg-[#ff0000] inline-block"></div>{" "}
-        Red color for dents and{" "}
-        <div className="w-[10px] h-[10px] rounded-full bg-[#1418FF] inline-block"></div>{" "}
-        Blue color for scratches. This can not be updated once saved.
-      </div>
-      <div className="grid min-h-[35vh]">
-        <div className="w-4/6 min-h-[25vh] mx-auto ">
-          <Canvas />
+    <main>
+      <div className="min-h-[50vh] px-4 border-2 border-transparent border-b-gray-300 mb-2">
+        <hr />
+        <div className="text-xs text-center font-normal my-3">
+          Mark for dents and scratches. Use{" "}
+          <div className="w-[10px] h-[10px] rounded-full bg-[#ff0000] inline-block"></div>{" "}
+          Red color for dents and{" "}
+          <div className="w-[10px] h-[10px] rounded-full bg-[#1418FF] inline-block"></div>{" "}
+          Blue color for scratches. This can not be updated once saved.
         </div>
-      </div>
-      <hr className="mt-4" />
-      <div className="text-xs italic font-normal text-center my-4">
-        Dents marking selected
-      </div>
-    </div>
-  );
-};
-const Form4 = () => {
-  return (
-    <form className="px-4 grid grid-cols-[1.7fr,1fr] gap-8 font-medium">
-      <div>
-        <div className="grid gap-2">
-          <label>Pre Accident / Other Defects</label>
-          <textarea className="outline-none border relative text-[#8094ae]  min-h-[8em] px-2 rounded-md font-medium" />
-        </div>
-        <div className="flex flex-col gap-3 my-4">
-          <label>Work Requested / Owners Instructions</label>
-          <input
-            className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
-            placeholder="Work Requested / Owners Instructions"
-          />
-          <input
-            className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
-            placeholder="Work Requested / Owners Instructions"
-          />
-          <div className="flex p-2 bg-blue-100 rounded-md text-blue-500 items-center gap-3 mr-auto">
-            <BiPlus />
-            <span>Add Item</span>
+        <div className="grid min-h-[35vh]">
+          <div className="w-4/6 min-h-[25vh] mx-auto ">
+            <Canvas />
           </div>
         </div>
+        <hr className="mt-4" />
+        <div className="text-xs italic font-normal text-center my-4">
+          Dents marking selected
+        </div>
       </div>
-      <Test />
+      <div className="flex items-center mt-auto border py-4 bg-gray-200 justify-start gap-4 px-4">
+        <button
+          className="flex items-center gap-2 px-4 py-3 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+          onClick={handleChangeNext}
+        >
+          <p className="text-xs">Next</p>
+        </button>
+        <article
+          className="flex items-center gap-2 px-4 py-3 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+          onClick={handleChangePrev}
+        >
+          <p className="text-xs">Prev</p>
+        </article>
+      </div>
+    </main>
+  );
+};
+const Form4 = ({ handleChangePrev, setOpen }) => {
+  const [success, setSuccess] = useState(false);
+  const {
+    projectForm: { workRequest, accident },
+    newProjectForm,
+    addProjectForm,
+  } = useFormContext();
+  const handleSubmit = () => {
+    setSuccess(true);
+    addProjectForm();
+  };
+  return (
+    <form>
+      <div className="px-4 grid grid-cols-[1.7fr,1fr] gap-8 font-medium">
+        <div>
+          <div className="grid gap-2">
+            <label>Pre Accident / Other Defects</label>
+            <textarea
+              name="accident"
+              value={accident}
+              onChange={newProjectForm}
+              className="outline-none border relative text-[#8094ae]  min-h-[8em] px-2 rounded-md font-medium"
+            />
+          </div>
+          <div className="flex flex-col gap-3 my-4">
+            <label>Work Requested / Owners Instructions</label>
+            <input
+              name="workRequest"
+              value={workRequest}
+              onChange={newProjectForm}
+              className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+              placeholder="Work Requested / Owners Instructions"
+            />
+            <input
+              className="w-full outline-none border rounded-md py-2 pl-3 placeholder:text-[#8094ae]"
+              placeholder="Work Requested / Owners Instructions"
+            />
+            <div className="flex p-2 bg-blue-100 rounded-md text-blue-500 items-center gap-3 mr-auto">
+              <BiPlus />
+              <span>Add Item</span>
+            </div>
+          </div>
+        </div>
+        <Test />
+      </div>
+      <div className="flex items-center mt-auto border py-4 bg-gray-200 justify-start gap-4 px-4 w-full">
+        <article
+          className="flex items-center gap-2 px-4 py-3 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+          onClick={handleChangePrev}
+        >
+          <p className="text-xs">Prev</p>
+        </article>
+        <article
+          className="flex  items-center gap-2 px-4 py-3 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+          onClick={() => handleSubmit()}
+        >
+          <p className="text-xs">Submit</p>
+        </article>
+      </div>
+      <SuccessPrompt
+        message="project created successfully"
+        open={success}
+        setOpen={setSuccess}
+        setModals={setOpen}
+      />
     </form>
   );
 };
 
-const stages = [
-  {
-    component: <Form1 />,
-  },
-  { component: <Form2 /> },
-  { component: <Form3 /> },
-  { component: <Form4 /> },
-];
-
 const NewVehicleForm = ({ open, setOpen }) => {
-  const [nextPage, setNextPage] = useState(0);
-  const currentPage = stages[nextPage];
-
   const handleChangeNext = () => {
     if (nextPage === stages.length - 1) {
       return;
@@ -401,6 +729,35 @@ const NewVehicleForm = ({ open, setOpen }) => {
     }
     setNextPage(nextPage - 1);
   };
+  const stages = [
+    {
+      component: <Form1 handleChangeNext={handleChangeNext} />,
+    },
+    {
+      component: (
+        <Form2
+          handleChangeNext={handleChangeNext}
+          handleChangePrev={handleChangePrev}
+        />
+      ),
+    },
+    {
+      component: (
+        <Form3
+          handleChangeNext={handleChangeNext}
+          handleChangePrev={handleChangePrev}
+        />
+      ),
+    },
+    {
+      component: (
+        <Form4 handleChangePrev={handleChangePrev} setOpen={setOpen} />
+      ),
+    },
+  ];
+  const [nextPage, setNextPage] = useState(0);
+  const currentPage = stages[nextPage];
+
   const cancelButtonRef = useRef(null);
 
   return (
@@ -458,7 +815,9 @@ const NewVehicleForm = ({ open, setOpen }) => {
                         <p>2. VEHICLE CHECK IN</p>
                         <div
                           className={`${
-                            nextPage === 1 &&
+                            (nextPage === 1) |
+                              (nextPage === 2) |
+                              (nextPage === 3) &&
                             `h-[2px] bg-[#0971fe] -bottom-[0.7em] absolute block w-full`
                           } `}
                         ></div>
@@ -467,7 +826,7 @@ const NewVehicleForm = ({ open, setOpen }) => {
                         <p>3. DENTS AND SCRATCHES</p>
                         <div
                           className={`${
-                            nextPage === 2 &&
+                            (nextPage === 2) | (nextPage === 3) &&
                             `h-[2px] bg-[#0971fe] -bottom-[0.7em] absolute block w-full`
                           } `}
                         ></div>
@@ -484,7 +843,7 @@ const NewVehicleForm = ({ open, setOpen }) => {
                     </ul>
                   </div>
                   {currentPage.component}
-                  <div className="flex items-center mt-auto border py-4 bg-gray-200 justify-start gap-4 px-4">
+                  {/* <form className="flex items-center mt-auto border py-4 bg-gray-200 justify-start gap-4 px-4">
                     {nextPage > 0 && (
                       <article
                         className="flex items-center gap-2 px-4 py-3 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
@@ -495,14 +854,25 @@ const NewVehicleForm = ({ open, setOpen }) => {
                     )}
 
                     {nextPage !== stages.length - 1 && (
-                      <article
+                      <button
+                        disabled={isSubmitting}
+                        type="submit"
                         className="flex items-center gap-2 px-4 py-3 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                        onClick={handleChangeNext}
+                        onClick={() => console.log(errors, values)}
                       >
                         <p className="text-xs">Next</p>
-                      </article>
+                      </button>
                     )}
-                  </div>
+                    {nextPage === stages.length - 1 && (
+                      <button
+                        type="submit"
+                        className="flex items-center gap-2 px-4 py-3 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
+                        onClick={addProjectForm}
+                      >
+                        <p className="text-xs">Submit</p>
+                      </button>
+                    )}
+                  </form> */}
                 </div>
               </Dialog.Panel>
             </Transition.Child>

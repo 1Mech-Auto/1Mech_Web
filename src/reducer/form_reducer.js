@@ -38,6 +38,10 @@ import {
   ADD_NEW_PARTS,
   NEW_PARTS_FORM,
   CHANGE_TOGGLE_STATE,
+  NEW_PROJECT_FORM,
+  ADD_PROJECT_FORM,
+  FUEL_RANGE,
+  CANVAS_URL,
 } from "@/action";
 const date = new Date();
 const options = { month: "long", day: "numeric", year: "numeric" };
@@ -51,13 +55,156 @@ const dateConvert = (date) => {
 };
 
 const form_reducer = (state, action) => {
+  if (action.type === CANVAS_URL) {
+    return {
+      ...state,
+      canvasUrl: action.payload,
+    };
+  }
+  if (action.type === FUEL_RANGE) {
+    return {
+      ...state,
+      fRange: action.payload,
+    };
+  }
+  if (action.type === NEW_PROJECT_FORM) {
+    const { name, value } = action.payload;
+    return {
+      ...state,
+      projectForm: {
+        ...state.projectForm,
+        [name]: value,
+      },
+    };
+  }
+  if (action.type === ADD_PROJECT_FORM) {
+    let project = {};
+    project = {
+      client: state.projectForm.client,
+      valetFullName: state.projectForm.valetFullName,
+      valetPhone: state.projectForm.valetPhone,
+      valetEmail: state.projectForm.valetEmail,
+      valetId: state.projectForm.valetId,
+      make: state.projectForm.make,
+      model: state.projectForm.make,
+      regNo: state.projectForm.regNo,
+      vin: state.projectForm.vin,
+      engNo: state.projectForm.engNo,
+      milleageIn: state.projectForm.milleageIn,
+      milleageUnit: state.projectForm.milleageUnit,
+      color: state.projectForm.color,
+      carYear: state.projectForm.carYear,
+      insurance: state.projectForm.insurance,
+      dateIn: state.projectForm.dateIn,
+      timeIn: state.projectForm.timeIn,
+      status: state.projectForm.status,
+      startDate: state.projectForm.startDate,
+      expectedDate: state.projectForm.expectedDate,
+      roadTest: state.projectForm.roadTest,
+      towingDetails: state.projectForm.towingDetails,
+      insuranceCovered: state.projectForm.insuranceCovered,
+      bookNotes: state.projectForm.bookNotes,
+      accident: state.projectForm.accident,
+      workRequest: state.projectForm.workRequest,
+      fuelRange: state.projectForm.fuelRange,
+      toggleStates: {
+        wiper: state.projectForm.toggleStates.wiper,
+        mirrors: state.projectForm.toggleStates.mirrors,
+        badge: state.projectForm.toggleStates.badge,
+        spareWheel: state.projectForm.toggleStates.spareWheel,
+        doorLocks: state.projectForm.toggleStates.doorLocks,
+        fireExt: state.projectForm.toggleStates.fireExt,
+        tankCap: state.projectForm.toggleStates.tankCap,
+        tankLid: state.projectForm.toggleStates.tankLid,
+        relay: state.projectForm.toggleStates.relay,
+        horns: state.projectForm.toggleStates.horns,
+        oilFilter: state.projectForm.toggleStates.oilFilter,
+        radCap: state.projectForm.toggleStates.radCap,
+        battMk: state.projectForm.toggleStates.battMk,
+        arielAuto: state.projectForm.toggleStates.arielAuto,
+        seatBelts: state.projectForm.toggleStates.seatBelts,
+        radioSpeaker: state.projectForm.toggleStates.radioSpeaker,
+        rearMirror: state.projectForm.toggleStates.rearMirror,
+        wSpanner: state.projectForm.toggleStates.wSpanner,
+        wTriangle: state.projectForm.toggleStates.wTriangle,
+        bootMats: state.projectForm.toggleStates.bootMats,
+        image: state.canvasUrl,
+        fuelRange: state.fRange,
+      },
+    };
+
+    return {
+      ...state,
+      projectList: [...state.projectList, project],
+      projectForm: {
+        client: "",
+        valetFullName: "",
+        valetPhone: "",
+        valetEmail: "",
+        valetId: "",
+        make: "",
+        model: "",
+        regNo: "",
+        vin: "",
+        engNo: "",
+        milleageIn: "",
+        milleageUnit: "",
+        color: "",
+        carYear: "",
+        insurance: "",
+        dateIn: "",
+        timeIn: "",
+        status: "in Progress",
+        startDate: "",
+        expectedDate: "",
+        roadTest: "",
+        towingDetails: "",
+        insuranceCovered: "",
+        bookNotes: "",
+        accident: "",
+        workRequest: "",
+        fuelRange: "",
+        toggleStates: {
+          wiper: false,
+          mirrors: false,
+          badge: false,
+          spareWheel: false,
+          doorLocks: false,
+          fireExt: false,
+          tankCap: false,
+          tankLid: false,
+          relay: false,
+          horns: false,
+          oilFilter: false,
+          radCap: false,
+          battMk: false,
+          arielAuto: false,
+          seatBelts: false,
+          radioSpeaker: false,
+          rearMirror: false,
+          wSpanner: false,
+          wTriangle: false,
+          bootMats: false,
+        },
+      },
+    };
+  }
   if (action.type === NEW_CLIENT_FORM) {
     const { name, value } = action.payload;
     return { ...state, clientForm: { ...state.clientForm, [name]: value } };
   }
   if (action.type === CHANGE_TOGGLE_STATE) {
     const { id, enabled } = action.payload;
-    return { ...state, toggleStates: { ...state.toggleStates, [id]: enabled } };
+    return {
+      ...state,
+      projectForm: {
+        ...state.projectForm,
+        toggleStates: {
+          ...state.projectForm.toggleStates,
+          [id]: enabled,
+        },
+      },
+    };
   }
   if (action.type === ADD_NEW_CLIENT) {
     const { names, phone, email, address, gender } = state.clientForm;
@@ -127,11 +274,11 @@ const form_reducer = (state, action) => {
     };
   }
   if (action.type === NEW_VEHICLE_TOGGLE) {
-      const { id, enabled } = action.payload;
-      return {
-        ...state,
-        newVehicleForm: { ...state.newVehicleForm, [id]: enabled },
-      };
+    const { id, enabled } = action.payload;
+    return {
+      ...state,
+      newVehicleForm: { ...state.newVehicleForm, [id]: enabled },
+    };
   }
   if (action.type === NEW_QUOTE_FORM) {
     const { name, value } = action.payload;

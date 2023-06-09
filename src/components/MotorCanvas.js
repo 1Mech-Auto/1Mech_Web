@@ -2,9 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import demo from "../../public/download.png";
 import { GoPrimitiveDot } from "react-icons/go";
 import { CiUndo } from "react-icons/ci";
+import { useFormContext } from "@/context/form_context";
 
 const Canvas = () => {
   const canvasRef = useRef(null);
+  const { saveImage } = useFormContext();
   const [isDrawing, setIsDrawing] = useState(false);
   const [lines, setLines] = useState([]);
   const [brushWidth, setBrushWidth] = useState(5);
@@ -12,6 +14,13 @@ const Canvas = () => {
   const [active, setActive] = useState({ red: true, blue: false });
   const [ctx, setCtx] = useState(null);
   const image = useRef(null);
+
+  const saveCanvas = () => {
+    const can = canvasRef.current;
+    const img = can.toDataURL("image/png");
+    saveImage(img);
+    console.log(img);
+  };
 
   const handleMouseDown = (event) => {
     const { offsetX, offsetY } = event.nativeEvent;
@@ -75,6 +84,8 @@ const Canvas = () => {
       });
       context.stroke();
     });
+    saveCanvas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lines]);
 
   return (

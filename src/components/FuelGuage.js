@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 import MySvg from "./MySvg";
+import { useFormContext } from "@/context/form_context";
 
 const Fuel = () => {
-  const [range, setRange] = useState("82");
+  const { fRange, fuelRange } = useFormContext();
 
   return (
     <div>
-      <MySvg range={range} />
+      <MySvg range={fRange} />
 
       <input
         type="range"
         min="-36"
         max="82"
-        value={range}
-        onChange={(e) => {
-          setRange(e.target.value);
-        }}
+        value={fRange}
+        onChange={(e) => fuelRange(e)}
         name="fuel_level"
         className="w-full"
         aria-invalid="false"

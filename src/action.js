@@ -37,3 +37,7 @@ export const NEW_VEHICLE_FORM = "NEW_VEHICLE_FORM";
 export const NEW_VEHICLE_TOGGLE = "NEW_VEHICLE_TOGGLE";
 export const NEW_PARTS_FORM = "NEW_PARTS_FORM";
 export const ADD_NEW_PARTS = "ADD_NEW_PARTS";
+export const NEW_PROJECT_FORM = "NEW_PROJECT_FORM";
+export const ADD_PROJECT_FORM = "ADD_PROJECT_FORM";
+export const FUEL_RANGE = "FUEL_RANGE";
+export const CANVAS_URL = "CANVAS_URL";
