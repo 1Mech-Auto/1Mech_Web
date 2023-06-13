@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Layout from "../../layout/Layout";
+import Layout from "../../../layout/Layout";
 import { RxDotFilled } from "react-icons/rx";
 import { BsThreeDots } from "react-icons/bs";
 import NewVehicleForm from "@/components/forms/NewVehicleForm";
@@ -23,7 +23,7 @@ const Jobs = () => {
   const [jobCard, setJobCard] = useState(false);
   const [quote, setQuote] = useState(false);
   const [info, setInfo] = useState(false);
-  
+
   const [moreInfo, setMoreInfo] = useState(false);
   const checkInitials = (fullName) => {
     const words = fullName;
@@ -172,7 +172,7 @@ const Jobs = () => {
               />
               {show && (
                 <MoreButton
-                  href={"/jobDetails/details"}
+                  href={"/jobs/99/details"}
                   extraInfo={extraInfo}
                   handleClick={handleClick}
                 />

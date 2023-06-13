@@ -128,9 +128,9 @@ const form_reducer = (state, action) => {
         wSpanner: state.projectForm.toggleStates.wSpanner,
         wTriangle: state.projectForm.toggleStates.wTriangle,
         bootMats: state.projectForm.toggleStates.bootMats,
-        image: state.canvasUrl,
-        fuelRange: state.fRange,
       },
+      image: state.canvasUrl,
+      fuelRange: state.fRange,
     };
 
     return {

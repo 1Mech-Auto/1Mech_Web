@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Layout from "../../../layout/Layout";
+import Layout from "../../../../layout/Layout";
 import { BsThreeDots, BsArrowLeft } from "react-icons/bs";
 import { TbMessageCircle } from "react-icons/tb";
 import { CgMenuRight } from "react-icons/cg";
@@ -11,7 +11,6 @@ import {
 } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { HiOutlinePencil } from "react-icons/hi";
-import { FiShoppingCart } from "react-icons/fi";
 import NewJobCard from "@/components/forms/NewJobCard";
 import NewInvoiceForm from "@/components/forms/NewInvoiceForm";
 import NewQuotesForm from "@/components/forms/NewQuotesForm";
@@ -19,7 +18,7 @@ import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
 import NewSMSForm from "@/components/forms/NewSMSForm";
 import { useRouter } from "next/router";
 
-const JobDetails = ({ children }) => {
+const DetailsPage = ({ children }) => {
   const [invoice, setInvoice] = useState(false);
   const [show, setShow] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
@@ -28,6 +27,9 @@ const JobDetails = ({ children }) => {
   const [info, setInfo] = useState(false);
   const [sms, setSms] = useState(false);
   const router = useRouter();
+  const query = router.query;
+  const id = query.clientId;
+  console.log(router.pathname);
   return (
     <Layout>
       {invoice && <NewInvoiceForm invoice={invoice} setInvoice={setInvoice} />}
@@ -39,16 +41,16 @@ const JobDetails = ({ children }) => {
       <section className="flex justify-between mb-6 px-6 sm:px-0">
         <div className="mb-6">
           <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
-            Project / Placeholder
+            Clients / Placeholder
           </h1>
           <div className="text-sm text-[#8094ae] mt-2 flex gap-4 ">
-            <p>Project ID: AP0336</p>
+            <p>Client ID: AC0268</p>
             <p> Created On: May 2, 2023 10:13am</p>
           </div>
         </div>
         <div className="flex items-center gap-4 relative">
           <Link
-            href={"/jobs"}
+            href={"/clients"}
             className="sm:flex hidden items-center gap-2 bg-white py-2 px-4 border rounded-sm text-sm text-[#364a63] cursor-pointer font-bold ml-auto"
           >
             <BsArrowLeft />
@@ -73,26 +75,19 @@ const JobDetails = ({ children }) => {
                 <p className="text-[0.84rem]">Edit Details</p>
               </div>
               <div
+                className="flex items-center gap-2 pl-6 pr-8 cursor-pointer text-[#364a63]"
+                onClick={() => setSms(true)}
+              >
+                <TbMessageCircle />
+                <p className="text-[0.84rem]">Send SMS</p>
+              </div>
+              <hr />
+              <div
                 className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
                 onClick={() => setJobCard(true)}
               >
                 <HiOutlineMenuAlt2 />
                 <p className="text-[0.84rem]">Create Job Card</p>
-              </div>
-              <div
-                className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
-                // onClick={() => setJobCard(true)}
-              >
-                <HiOutlineMenuAlt2 />
-                <p className="text-[0.84rem]">Create Task</p>
-              </div>
-              <hr />
-              <div
-                className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
-                // onClick={() => setQuote(true)}
-              >
-                <HiOutlineMenuAlt2 />
-                <p className="text-[0.84rem]">Add Expense</p>
               </div>
               <div
                 className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
@@ -108,19 +103,13 @@ const JobDetails = ({ children }) => {
                 <HiOutlineMenuAlt2 />
                 <p className="text-[0.84rem]">Create Invoice</p>
               </div>
-              <div
-                className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
-                // onClick={() => setInvoice(true)}
-              >
-                <HiOutlineMenuAlt2 />
-                <p className="text-[0.84rem]">Cancel Project</p>
-              </div>
+              <hr />
               <div
                 className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
                 // onClick={() => setOrderPart(true)}
               >
                 <BsTrash />
-                <p className="text-[0.84rem]">Delete Project</p>
+                <p className="text-[0.84rem]">Delete</p>
               </div>
             </div>
           )}
@@ -167,26 +156,19 @@ const JobDetails = ({ children }) => {
                     <p className="text-[0.84rem]">Edit Details</p>
                   </div>
                   <div
+                    className="flex items-center gap-2 pl-6 pr-8 cursor-pointer text-[#364a63]"
+                    onClick={() => setSms(true)}
+                  >
+                    <TbMessageCircle />
+                    <p className="text-[0.84rem]">Send SMS</p>
+                  </div>
+                  <hr />
+                  <div
                     className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
                     onClick={() => setJobCard(true)}
                   >
                     <HiOutlineMenuAlt2 />
                     <p className="text-[0.84rem]">Create Job Card</p>
-                  </div>
-                  <div
-                    className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
-                    // onClick={() => setJobCard(true)}
-                  >
-                    <HiOutlineMenuAlt2 />
-                    <p className="text-[0.84rem]">Create Task</p>
-                  </div>
-                  <hr />
-                  <div
-                    className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
-                    // onClick={() => setQuote(true)}
-                  >
-                    <HiOutlineMenuAlt2 />
-                    <p className="text-[0.84rem]">Add Expense</p>
                   </div>
                   <div
                     className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
@@ -202,19 +184,13 @@ const JobDetails = ({ children }) => {
                     <HiOutlineMenuAlt2 />
                     <p className="text-[0.84rem]">Create Invoice</p>
                   </div>
-                  <div
-                    className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
-                    // onClick={() => setInvoice(true)}
-                  >
-                    <HiOutlineMenuAlt2 />
-                    <p className="text-[0.84rem]">Cancel Project</p>
-                  </div>
+                  <hr />
                   <div
                     className="flex items-center pl-6 pr-8 gap-2 cursor-pointer text-[#364a63]"
                     // onClick={() => setOrderPart(true)}
                   >
                     <BsTrash />
-                    <p className="text-[0.84rem]">Delete Project</p>
+                    <p className="text-[0.84rem]">Delete</p>
                   </div>
                 </div>
               )}
@@ -223,120 +199,104 @@ const JobDetails = ({ children }) => {
         </div>
 
         <div>
-          <div className="h-12 border border-transparent border-b-[#dee2e6] text-[#526484] flex items-center gap-8 md:gap-4 lg:gap-8 text-sm font-bold px-6">
+          <div className="h-12 border border-transparent border-b-[#dee2e6] text-[#526484] flex items-center gap-8 md:gap-4 lg:gap-8 text-sm font-bold px-6 relative">
             <Link
-              href={"details"}
+              href={`/clients/${id}/details`}
               className={`${
-                router.pathname === `${"/jobDetails/details"}` &&
-                "text-[#0971fe]"
-              } flex items-center gap-2 cursor-pointer relative`}
+                router.pathname === `${"/clients/[clientId]/details"}` &&
+                "text-[#0971fe] relative"
+              } flex items-center  gap-1 cursor-pointer`}
             >
               <BsFillFileEarmarkPersonFill className="text-lg md:text-md" />
               <p className="hidden md:block">Details</p>
               <div
                 className={`${
-                  router.pathname === `${"/jobDetails/details"}`
+                  router.pathname === `${"/clients/[clientId]/details"}`
                     ? "opacity-100"
                     : "opacity-0"
                 } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
               ></div>
             </Link>
             <Link
-              href={"jobCard"}
+              href={`/clients/${id}/projects`}
               className={`${
-                router.pathname === `${"/jobDetails/jobCard"}` &&
+                router.pathname === `${"/clients/[clientId]/projects"}` &&
                 "text-[#0971fe]"
-              } flex items-center gap-2 cursor-pointer relative`}
+              } flex items-center gap-1 cursor-pointer relative`}
+            >
+              <BsFileMedical className="text-lg md:text-md" />
+              <p className="hidden md:block">Projects</p>
+              <div
+                className={`${
+                  router.pathname === `${"/clients/[clientId]/projects"}`
+                    ? "opacity-100"
+                    : "opacity-0"
+                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
+              ></div>
+            </Link>
+            <Link
+              href={`/clients/${id}/jobCard`}
+              className={`${
+                router.pathname === `${"/clients/[clientId]/jobCard"}` &&
+                "text-[#0971fe]"
+              } flex items-center gap-1 cursor-pointer relative`}
             >
               <HiOutlineMenuAlt2 className="text-lg md:text-md" />
               <p className="hidden md:block">Job Card</p>
               <div
                 className={`${
-                  router.pathname === `${"/jobDetails/jobCard"}`
+                  router.pathname === `${"/clients/[clientId]/jobCard"}`
                     ? "opacity-100"
                     : "opacity-0"
                 } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
               ></div>
             </Link>
             <Link
-              href={"tasks"}
+              href={`/clients/${id}/invoices`}
               className={`${
-                router.pathname === `${"/jobDetails/tasks"}` && "text-[#0971fe]"
-              } flex items-center gap-2 cursor-pointer relative`}
-            >
-              <BsFileMedical className="text-lg md:text-md" />
-              <p className="hidden md:block">Tasks</p>
-              <div
-                className={`${
-                  router.pathname === `${"/jobDetails/tasks"}`
-                    ? "opacity-100"
-                    : "opacity-0"
-                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
-              ></div>
-            </Link>
-            <Link
-              href={"partsAndExpenses"}
-              className={`${
-                router.pathname === `${"/jobDetails/partsAndExpenses"}` &&
+                router.pathname === `${"/clients/[clientId]/invoices"}` &&
                 "text-[#0971fe]"
-              } flex items-center gap-2 cursor-pointer relative`}
-            >
-              <FiShoppingCart className="text-lg md:text-md" />
-              <p className="hidden md:block">Parts & Expenses</p>
-              <div
-                className={`${
-                  router.pathname === `${"/jobDetails/partsAndExpenses"}`
-                    ? "opacity-100"
-                    : "opacity-0"
-                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
-              ></div>
-            </Link>
-            <Link
-              href={"invoices"}
-              className={`${
-                router.pathname === `${"/jobDetails/invoices"}` &&
-                "text-[#0971fe]"
-              } flex items-center gap-2 cursor-pointer relative`}
+              } flex items-center gap-1 cursor-pointer relative`}
             >
               <HiOutlineMenuAlt2 className="text-lg md:text-md" />
               <p className="hidden md:block">Invoices</p>
               <div
                 className={`${
-                  router.pathname === `${"/jobDetails/invoices"}`
+                  router.pathname === `${"/clients/[clientId]/invoices"}`
                     ? "opacity-100"
                     : "opacity-0"
                 } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
               ></div>
             </Link>
             <Link
-              href={"quotes"}
+              href={`/clients/${id}/quotes`}
               className={`${
-                router.pathname === `${"/jobDetails/quotes"}` &&
+                router.pathname === `${"/clients/[clientId]/quotes"}` &&
                 "text-[#0971fe]"
-              } flex items-center gap-2 cursor-pointer relative`}
+              } flex items-center gap-1 cursor-pointer relative`}
             >
               <HiOutlineMenuAlt2 className="text-lg md:text-md" />
               <p className="hidden md:block">Quotes</p>
               <div
                 className={`${
-                  router.pathname === `${"/jobDetails/quotes"}`
+                  router.pathname === `${"/clients/[clientId]/quotes"}`
                     ? "opacity-100"
                     : "opacity-0"
                 } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
               ></div>
             </Link>
             <Link
-              href={"payments"}
+              href={`/clients/${id}/payments`}
               className={`${
-                router.pathname === `${"/jobDetails/payments"}` &&
+                router.pathname === `${"/clients/[clientId]/payments"}` &&
                 "text-[#0971fe]"
-              } flex items-center gap-2 cursor-pointer relative`}
+              } flex items-center gap-1 cursor-pointer relative`}
             >
               <HiOutlineMenuAlt2 className="text-lg md:text-md" />
               <p className="hidden md:block">Payments</p>
               <div
                 className={`${
-                  router.pathname === `${"/jobDetails/payments"}`
+                  router.pathname === `${"/clients/[clientId]/payments"}`
                     ? "opacity-100"
                     : "opacity-0"
                 } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
@@ -350,4 +310,4 @@ const JobDetails = ({ children }) => {
   );
 };
 
-export default JobDetails;
+export default DetailsPage;

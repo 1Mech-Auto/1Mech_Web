@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import Layout from "../../../layout/Layout";
+import Layout from "../../../../layout/Layout";
 import { BsThreeDots, BsArrowLeft } from "react-icons/bs";
-import { TbMessageCircle } from "react-icons/tb";
+import {
+  TbMessageCircle,
+  TbCircleChevronLeft,
+  TbCircleChevronRight,
+} from "react-icons/tb";
+import { RiAddCircleLine } from "react-icons/ri";
 import { CgMenuRight } from "react-icons/cg";
 import Link from "next/link";
 import {
@@ -9,8 +14,11 @@ import {
   BsFileMedical,
   BsTrash,
 } from "react-icons/bs";
-import { HiOutlineMenuAlt2 } from "react-icons/hi";
-import { HiOutlinePencil } from "react-icons/hi";
+import {
+  HiOutlineMenuAlt2,
+  HiOutlineMinusCircle,
+  HiOutlinePencil,
+} from "react-icons/hi";
 import { FiShoppingCart } from "react-icons/fi";
 import NewJobCard from "@/components/forms/NewJobCard";
 import NewInvoiceForm from "@/components/forms/NewInvoiceForm";
@@ -39,16 +47,15 @@ const DetailsPage = ({ children }) => {
       <section className="flex justify-between mb-6 px-6 sm:px-0">
         <div className="mb-6">
           <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
-            Insurance / Placeholder
+            Invoice #134
           </h1>
           <div className="text-sm text-[#8094ae] mt-2 flex gap-4 ">
-            <p>Client ID: AC0268</p>
-            <p> Created On: May 2, 2023 10:13am</p>
+            <p>You are viewing invoice #134.</p>
           </div>
         </div>
         <div className="flex items-center gap-4 relative">
           <Link
-            href={"/insurance"}
+            href={"/invoices"}
             className="sm:flex hidden items-center gap-2 bg-white py-2 px-4 border rounded-sm text-sm text-[#364a63] cursor-pointer font-bold ml-auto"
           >
             <BsArrowLeft />
@@ -196,112 +203,23 @@ const DetailsPage = ({ children }) => {
           )}
         </div>
 
-        <div>
-          <div className="h-12 border border-transparent border-b-[#dee2e6] text-[#526484] flex items-center gap-8 md:gap-4 lg:gap-8 text-sm font-bold px-6 relative">
-            <Link
-              href={"details"}
-              className={`${
-                router.pathname === `${"/insuranceDetails/details"}` &&
-                "text-[#0971fe] relative"
-              } flex items-center gap-1 cursor-pointer`}
-            >
-              <BsFillFileEarmarkPersonFill className="text-lg md:text-md" />
-              <p className="hidden md:block">Details</p>
-              <div
-                className={`${
-                  router.pathname === `${"/insuranceDetails/details"}`
-                    ? "opacity-100"
-                    : "opacity-0"
-                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
-              ></div>
-            </Link>
-            <Link
-              href={"projects"}
-              className={`${
-                router.pathname === `${"/insuranceDetails/projects"}` &&
-                "text-[#0971fe]"
-              } flex items-center gap-1 cursor-pointer relative`}
-            >
-              <BsFileMedical className="text-lg md:text-md" />
-              <p className="hidden md:block">Projects</p>
-              <div
-                className={`${
-                  router.pathname === `${"/insuranceDetails/projects"}`
-                    ? "opacity-100"
-                    : "opacity-0"
-                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
-              ></div>
-            </Link>
-            <Link
-              href={"jobCard"}
-              className={`${
-                router.pathname === `${"/insuranceDetails/jobCard"}` &&
-                "text-[#0971fe]"
-              } flex items-center gap-1 cursor-pointer relative`}
-            >
-              <HiOutlineMenuAlt2 className="text-lg md:text-md" />
-              <p className="hidden md:block">Job Cards</p>
-              <div
-                className={`${
-                  router.pathname === `${"/insuranceDetails/jobCard"}`
-                    ? "opacity-100"
-                    : "opacity-0"
-                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
-              ></div>
-            </Link>
-            <Link
-              href={"invoices"}
-              className={`${
-                router.pathname === `${"/insuranceDetails/invoices"}` &&
-                "text-[#0971fe]"
-              } flex items-center gap-1 cursor-pointer relative`}
-            >
-              <HiOutlineMenuAlt2 className="text-lg md:text-md" />
-              <p className="hidden md:block">Invoices</p>
-              <div
-                className={`${
-                  router.pathname === `${"/insuranceDetails/invoices"}`
-                    ? "opacity-100"
-                    : "opacity-0"
-                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
-              ></div>
-            </Link>
-            <Link
-              href={"quotes"}
-              className={`${
-                router.pathname === `${"/insuranceDetails/quotes"}` &&
-                "text-[#0971fe]"
-              } flex items-center gap-1 cursor-pointer relative`}
-            >
-              <HiOutlineMenuAlt2 className="text-lg md:text-md" />
-              <p className="hidden md:block">Quotes</p>
-              <div
-                className={`${
-                  router.pathname === `${"/insuranceDetails/quotes"}`
-                    ? "opacity-100"
-                    : "opacity-0"
-                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
-              ></div>
-            </Link>
-            <Link
-              href={"payments"}
-              className={`${
-                router.pathname === `${"/insuranceDetails/payments"}` &&
-                "text-[#0971fe]"
-              } flex items-center gap-1 cursor-pointer relative`}
-            >
-              <HiOutlineMenuAlt2 className="text-lg md:text-md" />
-              <p className="hidden md:block">Payments</p>
-              <div
-                className={`${
-                  router.pathname === `${"/insuranceDetails/payments"}`
-                    ? "opacity-100"
-                    : "opacity-0"
-                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
-              ></div>
-            </Link>
+        <div className="p-6 min-h-[75vh]">
+          <div className="text-[#8091a7] flex justify-between">
+            <div className="flex items-center gap-1.5">
+              <TbCircleChevronLeft className="text-3xl bg-[#f1f3f5] p-1.5 rounded-full cursor-pointer hover:bg-[#8091a7] hover:text-[#f1f3f5]" />
+              <TbCircleChevronRight className="text-3xl bg-[#f1f3f5] p-1.5 rounded-full cursor-pointer hover:bg-[#8091a7] hover:text-[#f1f3f5]" />
+              <p className="text-md">Page 0/0</p>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <HiOutlineMinusCircle className="text-3xl bg-[#f1f3f5] p-1.5 rounded-full cursor-pointer hover:bg-[#8091a7] hover:text-[#f1f3f5]" />
+              <RiAddCircleLine className="text-3xl bg-[#f1f3f5] p-1.5 rounded-full cursor-pointer hover:bg-[#8091a7] hover:text-[#f1f3f5]" />
+            </div>
           </div>
-          <div>{children}</div>
+          <div className="grid items-center min-h-[60vh]">
+            <p className="text-[#8091a7] text-center">
+              Oops! Invalid PDF structure
+            </p>
+          </div>
         </div>
       </div>
     </Layout>

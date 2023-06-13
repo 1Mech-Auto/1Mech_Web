@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Layout from "../../layout/Layout";
+import Layout from "../../../layout/Layout";
 import { RxDotFilled } from "react-icons/rx";
 import { BsThreeDots } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
@@ -61,7 +61,6 @@ const Insurance = () => {
       return "none";
     }
   };
-
 
   return (
     <Layout>
@@ -169,7 +168,7 @@ const Insurance = () => {
               />
               {show && (
                 <MoreButton
-                  href={"/insuranceDetails/details"}
+                  href={"/insurance/99/details"}
                   extraInfo={extraInfo}
                   handleClick={handleClick}
                 />
@@ -218,7 +217,7 @@ const Insurance = () => {
                     />
                     {show && (
                       <MoreButton
-                        href={"/insuranceDetails/details"}
+                        href={"/insurance/99/details"}
                         extraInfo={extraInfo}
                         handleClick={handleClick}
                       />

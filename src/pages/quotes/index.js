@@ -1,55 +1,59 @@
 import React, { useState } from "react";
-import Layout from "../../layout/Layout";
+import Layout from "../../../layout/Layout";
 import { BsThreeDots } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
-import { RxDotFilled } from "react-icons/rx";
-import NewPaymentForm from "@/components/forms/NewPaymentForm";
 import { CgMenuRight } from "react-icons/cg";
 import { useFormContext } from "@/context/form_context";
 import MoreButton from "@/components/MoreButton";
+import { FiDownloadCloud, FiMail } from "react-icons/fi";
 import { HiOutlinePencil } from "react-icons/hi";
+import { TbMessageCircle } from "react-icons/tb";
 import { BsTrash, BsEye } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import NewQuotesForm from "@/components/forms/NewQuotesForm";
 
-const Payments = () => {
-  const [payment, setPayment] = useState(false);
+const Quotes = () => {
+  const [quote, setQuote] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
-  const { paymentsList } = useFormContext();
+  const { quoteList } = useFormContext();
   const [show, setShow] = useState(false);
-  const checkInitials = (fullName) => {
-    const words = fullName;
-    const wordList = words.split(" ");
-    const firstLetters = wordList.map((word) => word[0]);
-    const joinedWord = firstLetters.join("");
-    return joinedWord;
-  };
   const extraInfo = [
-    { name: "Edit Payment", icon: <HiOutlinePencil /> },
+    { name: "Download", icon: <FiDownloadCloud /> },
+    {
+      name: "Send Via Email",
+      icon: <FiMail />,
+    },
+    { name: "Edit Quote", icon: <HiOutlinePencil /> },
+    {
+      name: "Convert to Invoice",
+      icon: <HiOutlineMenuAlt2 />,
+    },
     { name: "Delete Quote", icon: <BsTrash /> },
   ];
+
   const handleClick = (index) => {
     // Perform different setState functions based on index
-    if (index === 0) {
-      setPayment(true);
+    if (index === 2) {
+      setQuote(true);
     }
   };
-
   return (
     <Layout>
-      {payment && <NewPaymentForm payment={payment} setPayment={setPayment} />}
+      {quote && <NewQuotesForm quote={quote} setQuote={setQuote} />}
+
       <section className="flex justify-between items-center mb-6 px-6 sm:px-0">
         <div>
           <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
-            Payments
+            Quotes
           </h1>
-          <p className="text-sm text-[#8094ae] ">A total of 2 payments.</p>
+          <p className="text-sm text-[#8094ae] ">A total of 3 quotes.</p>
         </div>
         <button
           className="sm:flex hidden items-center gap-2 bg-blue-500 p-2.5 rounded-md text-sm text-white cursor-pointer font-bold ml-auto"
-          onClick={() => setPayment(true)}
+          onClick={() => setQuote(true)}
         >
           <BiPlus />
-          <span>Add Payment</span>
+          <span>Create a Quote</span>
         </button>
         <div
           className="sm:hidden text-2xl cursor-pointer"
@@ -68,11 +72,11 @@ const Payments = () => {
             <button
               className="flex sm:hidden items-center gap-2 bg-blue-500 p-2.5 rounded-md text-sm text-white cursor-pointer font-bold"
               onClick={() => {
-                setPayment(true);
+                setQuote(true);
               }}
             >
               <BiPlus />
-              <span>Add Payment</span>
+              <span>Create a Quote</span>
             </button>
           )}
         </div>
@@ -92,44 +96,31 @@ const Payments = () => {
           </div>
         </div>
         <div className="border rounded-md min-h-[30vh] overflow-x-auto ">
-          <main className="font-semibold text-[#8094ae] text-sm grid grid-cols-[6%,80%,5%] md:grid-cols-[3em,15em,7em,4em,7em,9em,7em,3em] lg:grid-cols-[3%,25%,15%,10%,12%,14%,10%,5%] p-2.5 border border-transparent border-b-gray-200 gap-2">
+          <main className="font-semibold text-[#8094ae] text-sm grid grid-cols-[7%,75%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[4%,22%,17%,10%,15%,20%,5%] p-2.5 border border-transparent border-b-gray-200 gap-2">
             <div>#</div>
-            <div>Client</div>
             <div className="hidden md:block">Project</div>
+            <div>Registration</div>
             <div className="hidden md:block">Items</div>
             <div className="hidden md:block">Date</div>
-            <div className="hidden md:block">Total/Balance</div>
-            <div className="hidden md:block">Status</div>
+            <div className="hidden md:block">Total</div>
             <div></div>
           </main>
-          <div className="font-medium text-[#364a63] text-sm grid grid-cols-[6%,80%,5%] md:grid-cols-[3em,15em,7em,4em,7em,9em,7em,3em] lg:grid-cols-[3%,25%,15%,10%,12%,14%,10%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
+          <div className="font-medium text-[#364a63] text-sm grid grid-cols-[7%,75%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[4%,22%,17%,10%,15%,20%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
             <div>1</div>
             <div className="flex items-center gap-2">
-              <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
-                ME
-              </p>
-              <div>
-                <h2 className="font-medium">Mr. Emmanuel Afolabi</h2>
-                <p className="text-xs text-[#8094ae]">+2348167821219</p>
-              </div>
+              <p>TOYOTA Camry</p>
             </div>
             <div className="hidden md:block">
-              <h3 className="font-medium">TOYOTA Sienna</h3>
-              <p className="text-xs text-[#8094ae]">AAA808EJ</p>
+              <h3 className="font-medium text-black">KSF-178-HX</h3>
             </div>
             <div className="hidden md:block">
-              <p className="font-medium">Invoice #117</p>
+              <p className="font-medium text-black">22</p>
             </div>
             <div className="hidden md:block text-[#8094ae]">
-              <p>Apr 20, 2023</p>
+              <p>May 2, 2023</p>
             </div>
-            <div className="font-medium hidden md:block">
-              <p>N64,000.00</p>
-              <p className="text-[#8094ae] text-xs">Online Payment</p>
-            </div>
-            <div className="py-1.5 px-2.5 text-[#1ee0ac] bg-[#1ee0ac26] rounded-2xl mr-auto items-center gap-1 hidden md:flex">
-              <RxDotFilled className="text-lg" />
-              <p className="text-xs font-bold">Paid</p>
+            <div className="font-medium text-black hidden md:block">
+              N538,075.00
             </div>
             <div>
               <BsThreeDots
@@ -138,50 +129,37 @@ const Payments = () => {
               />
               {show && (
                 <MoreButton
-                  href={"/quoteDetails"}
+                  href={"/quotes/id"}
                   extraInfo={extraInfo}
                   handleClick={handleClick}
                 />
               )}
             </div>
           </div>
-          {paymentsList &&
-            paymentsList.map((payment, index) => {
+          {quoteList &&
+            quoteList.map((quote, index) => {
               return (
                 <div
                   key={index}
-                  className="font-medium text-[#364a63] text-sm grid grid-cols-[6%,80%,5%] md:grid-cols-[3em,15em,7em,4em,7em,9em,7em,3em] lg:grid-cols-[3%,25%,15%,10%,12%,14%,10%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
+                  className="font-medium text-[#364a63] text-sm grid grid-cols-[7%,75%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[4%,22%,17%,10%,15%,20%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
                 >
                   <div>{index + 1}</div>
                   <div className="flex items-center gap-2">
-                    <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
-                      {/* {checkInitials(payment.job)} */}
-                      ME
-                    </p>
-                    <div>
-                      <h2 className="font-medium">{payment.job}</h2>
-                      <p className="text-xs text-[#8094ae]">+2348167821219</p>
-                    </div>
+                    <p>{quote.job}</p>
                   </div>
                   <div className="hidden md:block">
-                    <h3 className="font-medium">TOYOTA Sienna</h3>
-                    <p className="text-xs text-[#8094ae]">AAA808EJ</p>
+                    <h3 className="font-medium text-black">
+                      {quote.itemDescription}
+                    </h3>
                   </div>
                   <div className="hidden md:block">
-                    <p className="font-medium">Invoice #117</p>
+                    <p className="font-medium text-black">{quote.quantity}</p>
                   </div>
                   <div className="hidden md:block text-[#8094ae]">
-                    <p>{payment.paymentDate}</p>
+                    <p>{quote.date}</p>
                   </div>
-                  <div className="font-medium hidden md:block">
-                    <p>N{payment.amount}</p>
-                    <p className="text-[#8094ae] text-xs">
-                      {payment.paymentMethod}
-                    </p>
-                  </div>
-                  <div className="py-1.5 px-2.5 text-[#1ee0ac] bg-[#1ee0ac26] rounded-2xl mr-auto items-center gap-1 hidden md:flex">
-                    <RxDotFilled className="text-lg" />
-                    <p className="text-xs font-bold">Paid</p>
+                  <div className="font-medium text-black hidden md:block">
+                    N538,075.00
                   </div>
                   <div>
                     <BsThreeDots
@@ -190,7 +168,7 @@ const Payments = () => {
                     />
                     {show && (
                       <MoreButton
-                        href={"/quoteDetails"}
+                        href={"/quotes/id"}
                         extraInfo={extraInfo}
                         handleClick={handleClick}
                       />
@@ -205,4 +183,4 @@ const Payments = () => {
   );
 };
 
-export default Payments;
+export default Quotes;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Layout from "../../../layout/Layout";
+import Layout from "../../../../layout/Layout";
 import { BsThreeDots, BsArrowLeft } from "react-icons/bs";
 import { TbMessageCircle } from "react-icons/tb";
 import { CgMenuRight } from "react-icons/cg";
@@ -27,6 +27,8 @@ const DetailsPage = ({ children }) => {
   const [info, setInfo] = useState(false);
   const [sms, setSms] = useState(false);
   const router = useRouter();
+  const query = router.query;
+  const id = query.teamId;
 
   return (
     <Layout>
@@ -39,16 +41,16 @@ const DetailsPage = ({ children }) => {
       <section className="flex justify-between mb-6 px-6 sm:px-0">
         <div className="mb-6">
           <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
-            Clients / Placeholder
+            Team / Placeholder
           </h1>
           <div className="text-sm text-[#8094ae] mt-2 flex gap-4 ">
-            <p>Client ID: AC0268</p>
-            <p> Created On: May 2, 2023 10:13am</p>
+            <p>Team ID: AT0175</p>
+            <p>Created On: May 17, 2023 01:03pm</p>
           </div>
         </div>
         <div className="flex items-center gap-4 relative">
           <Link
-            href={"/clients"}
+            href={"/teamMembers"}
             className="sm:flex hidden items-center gap-2 bg-white py-2 px-4 border rounded-sm text-sm text-[#364a63] cursor-pointer font-bold ml-auto"
           >
             <BsArrowLeft />
@@ -129,7 +131,7 @@ const DetailsPage = ({ children }) => {
           {moreInfo && (
             <div className="flex items-center gap-4 relative">
               <Link
-                href={"/clients"}
+                href={"/teamMembers"}
                 className="flex sm:hidden items-center gap-2 bg-white py-2 px-4 border rounded-sm text-sm text-[#364a63] cursor-pointer font-bold ml-auto"
               >
                 <BsArrowLeft />
@@ -197,11 +199,11 @@ const DetailsPage = ({ children }) => {
         </div>
 
         <div>
-          <div className="h-12 border border-transparent border-b-[#dee2e6] text-[#526484] flex items-center gap-8 md:gap-4 lg:gap-8 text-sm font-bold px-6 relative">
+          <div className="h-12 border border-transparent border-b-[#dee2e6] text-[#526484] flex items-center gap-8 md:gap-4 lg:gap-8 text-md font-bold px-6 relative">
             <Link
-              href={"details"}
+              href={`/teamMembers/${id}/details`}
               className={`${
-                router.pathname === `${"/clientsDetails/details"}` &&
+                router.pathname === `${"/teamMembers/[teamId]/details"}` &&
                 "text-[#0971fe] relative"
               } flex items-center gap-1 cursor-pointer`}
             >
@@ -209,84 +211,33 @@ const DetailsPage = ({ children }) => {
               <p className="hidden md:block">Details</p>
               <div
                 className={`${
-                  router.pathname === `${"/clientsDetails/details"}`
+                  router.pathname === `${"/teamMembers/[teamId]/details"}`
                     ? "opacity-100"
                     : "opacity-0"
-                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
+                } h-1 bg-[#0971fe] -bottom-[0.75em] absolute block w-full`}
               ></div>
             </Link>
             <Link
-              href={"projects"}
+              href={`/teamMembers/${id}/tasks`}
               className={`${
-                router.pathname === `${"/clientsDetails/projects"}` &&
+                router.pathname === `${"/teamMembers/[teamId]/tasks"}` &&
                 "text-[#0971fe]"
               } flex items-center gap-1 cursor-pointer relative`}
             >
               <BsFileMedical className="text-lg md:text-md" />
-              <p className="hidden md:block">Projects</p>
+              <p className="hidden md:block">Tasks</p>
               <div
                 className={`${
-                  router.pathname === `${"/clientsDetails/projects"}`
+                  router.pathname === `${"/teamMembers/[teamId]/tasks"}`
                     ? "opacity-100"
                     : "opacity-0"
-                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
+                } h-1 bg-[#0971fe] -bottom-[0.75em] absolute block w-full`}
               ></div>
             </Link>
             <Link
-              href={"jobCard"}
+              href={`/teamMembers/${id}/payments`}
               className={`${
-                router.pathname === `${"/clientsDetails/jobCard"}` &&
-                "text-[#0971fe]"
-              } flex items-center gap-1 cursor-pointer relative`}
-            >
-              <HiOutlineMenuAlt2 className="text-lg md:text-md" />
-              <p className="hidden md:block">Job Card</p>
-              <div
-                className={`${
-                  router.pathname === `${"/clientsDetails/jobCard"}`
-                    ? "opacity-100"
-                    : "opacity-0"
-                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
-              ></div>
-            </Link>
-            <Link
-              href={"invoices"}
-              className={`${
-                router.pathname === `${"/clientsDetails/invoices"}` &&
-                "text-[#0971fe]"
-              } flex items-center gap-1 cursor-pointer relative`}
-            >
-              <HiOutlineMenuAlt2 className="text-lg md:text-md" />
-              <p className="hidden md:block">Invoices</p>
-              <div
-                className={`${
-                  router.pathname === `${"/clientsDetails/invoices"}`
-                    ? "opacity-100"
-                    : "opacity-0"
-                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
-              ></div>
-            </Link>
-            <Link
-              href={"quotes"}
-              className={`${
-                router.pathname === `${"/clientsDetails/quotes"}` &&
-                "text-[#0971fe]"
-              } flex items-center gap-1 cursor-pointer relative`}
-            >
-              <HiOutlineMenuAlt2 className="text-lg md:text-md" />
-              <p className="hidden md:block">Quotes</p>
-              <div
-                className={`${
-                  router.pathname === `${"/clientsDetails/quotes"}`
-                    ? "opacity-100"
-                    : "opacity-0"
-                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
-              ></div>
-            </Link>
-            <Link
-              href={"payments"}
-              className={`${
-                router.pathname === `${"/clientsDetails/payments"}` &&
+                router.pathname === `${"/teamMembers/[teamId]/payments"}` &&
                 "text-[#0971fe]"
               } flex items-center gap-1 cursor-pointer relative`}
             >
@@ -294,10 +245,10 @@ const DetailsPage = ({ children }) => {
               <p className="hidden md:block">Payments</p>
               <div
                 className={`${
-                  router.pathname === `${"/clientsDetails/payments"}`
+                  router.pathname === `${"/teamMembers/[teamId]/payments"}`
                     ? "opacity-100"
                     : "opacity-0"
-                } h-1 bg-[#0971fe] -bottom-[1em] absolute block w-full`}
+                } h-1 bg-[#0971fe] -bottom-[0.75em] absolute block w-full`}
               ></div>
             </Link>
           </div>
