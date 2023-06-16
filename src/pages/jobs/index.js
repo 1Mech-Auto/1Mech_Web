@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../../layout/Layout";
 import { RxDotFilled } from "react-icons/rx";
 import { BsThreeDots } from "react-icons/bs";
@@ -15,6 +15,8 @@ import NewJobCard from "@/components/forms/NewJobCard";
 import NewInvoiceForm from "@/components/forms/NewInvoiceForm";
 import NewQuotesForm from "@/components/forms/NewQuotesForm";
 import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
+import { useFormContext } from "@/context/form_context";
+import JobsList from "@/components/JobsList";
 
 const Jobs = () => {
   const [open, setOpen] = useState(false);
@@ -23,6 +25,13 @@ const Jobs = () => {
   const [jobCard, setJobCard] = useState(false);
   const [quote, setQuote] = useState(false);
   const [info, setInfo] = useState(false);
+  const { fetchJobs, jobList, fetchSingleJob } = useFormContext();
+
+  useEffect(() => {
+    fetchJobs();
+    fetchSingleJob(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [moreInfo, setMoreInfo] = useState(false);
   const checkInitials = (fullName) => {
@@ -179,6 +188,18 @@ const Jobs = () => {
               )}
             </div>
           </div>
+          {jobList &&
+            jobList.map((jobs, index) => {
+              return (
+                <JobsList
+                  key={index}
+                  jobs={jobs}
+                  index={index}
+                  handleClick={handleClick}
+                  extraInfo={extraInfo}
+                />
+              );
+            })}
         </div>
       </div>
     </Layout>

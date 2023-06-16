@@ -4,9 +4,29 @@ import { RiInformationLine } from "react-icons/ri";
 import { BsPlus, BsFileMedical } from "react-icons/bs";
 import NewNotes from "@/components/forms/NewNotes";
 import Link from "next/link";
+import { useFormContext } from "@/context/form_context";
 
 const Details = () => {
   const [notes, setNotes] = useState(false);
+  const { singleJob } = useFormContext();
+  const { fullName, phone, address, email } = singleJob.jobForm.client;
+  const {
+    make,
+    model,
+    startDate,
+    expectedDate,
+    status,
+    insuranceCovered,
+    regNo,
+    insurance,
+    vin,
+    color,
+    carYear,
+    dateIn,
+    timeIn,
+    milleageIn,
+    valetFullName,
+  } = singleJob.jobForm;
 
   return (
     <JobDetails>
@@ -38,47 +58,54 @@ const Details = () => {
         </div>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Project</p>
-          <p className="font-medium text-[#364a63]">TOYOTA Camry</p>
+          <p className="font-medium text-[#364a63]">{make}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Registration</p>
-          <p className="font-medium text-[#364a63]">KSF-178-HX</p>
+          <p className="font-medium text-[#364a63]">{regNo}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">VIN</p>
-          <p className="font-medium text-[#364a63]">4T1BF1FK4CU055954.</p>
+          <p className="font-medium text-[#364a63]">{vin}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Color</p>
-          <p className="font-medium text-[#364a63]">#000000</p>
+          <p className="font-medium text-[#364a63]">{color}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Car Year</p>
-          <p className="font-medium text-[#364a63]">2012</p>
+          <p className="font-medium text-[#364a63]">{carYear}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Insurance Company</p>
-          <p className="font-medium text-[#364a63]">Nil</p>
+          {insurance ? (
+            <p className="font-medium text-[#364a63]">{insurance}</p>
+          ) : (
+            <p className="font-medium text-[#364a63]">nil</p>
+          )}
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Booking Date & Time</p>
-          <p className="font-medium text-[#364a63]">May 2, 2023 02:14pm</p>
+          <p className="font-medium text-[#364a63]">
+            {dateIn}
+            {timeIn}
+          </p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Client Name</p>
-          <p className="font-medium text-[#364a63]">Autogirl Nig Ltd</p>
+          <p className="font-medium text-[#364a63]">{fullName}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Start Date</p>
-          <p className="font-medium text-[#364a63]">May 2, 2023</p>
+          <p className="font-medium text-[#364a63]">{startDate}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Completion</p>
-          <p className="font-medium text-[#364a63]">May 9, 2023</p>
+          <p className="font-medium text-[#364a63]">{expectedDate}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Mileage In</p>
-          <p className="font-medium text-[#364a63]"></p>
+          <p className="font-medium text-[#364a63]">{milleageIn | ""}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Road Test In</p>
@@ -95,7 +122,7 @@ const Details = () => {
         <article className="flex items-center justify-between ">
           <p className="text-[#8094ae]">Insurance Covered Repairs</p>
           <p className="py-1.5 px-3 font-semibold text-[#e85347] bg-[#e8534726] rounded-2xl flex items-center text-xs gap-2 ">
-            Not Covered
+            {insuranceCovered | "not covered"}
           </p>
         </article>
         <article className="flex items-center justify-between">
@@ -111,7 +138,7 @@ const Details = () => {
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Client Phone</p>
-          <p className="font-medium text-[#364a63]">+2347088172629</p>
+          <p className="font-medium text-[#364a63]">{phone}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Profit</p>
@@ -120,12 +147,16 @@ const Details = () => {
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Status</p>
           <div className="font-semibold bg-[#f4bd0e26] text-[#f4bd0e] py-1.5 px-4 text-xs rounded-xl">
-            In Progress
+            {status}
           </div>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Brought In By</p>
-          <p className="font-medium text-[#364a63]">Client</p>
+          {valetFullName.length > 1 ? (
+            <p className="font-medium text-[#364a63]">{valetFullName}</p>
+          ) : (
+            <p className="font-medium text-[#364a63]">client</p>
+          )}
         </article>
         <hr className="md:col-span-2" />
         <div className="md:col-span-2">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../../../layout/Layout";
 import { BsThreeDots, BsArrowLeft } from "react-icons/bs";
 import { TbMessageCircle } from "react-icons/tb";
@@ -17,6 +17,7 @@ import NewQuotesForm from "@/components/forms/NewQuotesForm";
 import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
 import NewSMSForm from "@/components/forms/NewSMSForm";
 import { useRouter } from "next/router";
+import { useFormContext } from "@/context/form_context";
 
 const DetailsPage = ({ children }) => {
   const [invoice, setInvoice] = useState(false);
@@ -26,9 +27,15 @@ const DetailsPage = ({ children }) => {
   const [quote, setQuote] = useState(false);
   const [info, setInfo] = useState(false);
   const [sms, setSms] = useState(false);
+  const { fetchSingleMember, singleTeam } = useFormContext();
   const router = useRouter();
   const query = router.query;
   const id = query.teamId;
+
+  useEffect(() => {
+    fetchSingleMember(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Layout>
@@ -44,7 +51,7 @@ const DetailsPage = ({ children }) => {
             Team / Placeholder
           </h1>
           <div className="text-sm text-[#8094ae] mt-2 flex gap-4 ">
-            <p>Team ID: AT0175</p>
+            <p>Team ID: {singleTeam.id}</p>
             <p>Created On: May 17, 2023 01:03pm</p>
           </div>
         </div>

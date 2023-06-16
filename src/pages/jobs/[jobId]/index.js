@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../../../layout/Layout";
 import { BsThreeDots, BsArrowLeft } from "react-icons/bs";
 import { TbMessageCircle } from "react-icons/tb";
@@ -18,6 +18,7 @@ import NewQuotesForm from "@/components/forms/NewQuotesForm";
 import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
 import NewSMSForm from "@/components/forms/NewSMSForm";
 import { useRouter } from "next/router";
+import { useFormContext } from "@/context/form_context";
 
 const JobDetails = ({ children }) => {
   const [invoice, setInvoice] = useState(false);
@@ -30,8 +31,27 @@ const JobDetails = ({ children }) => {
   const router = useRouter();
   const query = router.query;
   const id = query.jobId;
-  console.log(id);
-  console.log(query, "fuck u");
+  const {
+    fetchSingleJob,
+    singleJob,
+    singleClient_loading: loading,
+  } = useFormContext();
+
+  const { startDate } = singleJob.jobForm;
+
+  useEffect(() => {
+    fetchSingleJob(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="text-center text-2xl mx-auto">
+        <p>loading...</p>
+      </main>
+    );
+  }
+
   return (
     <Layout>
       {invoice && <NewInvoiceForm invoice={invoice} setInvoice={setInvoice} />}
@@ -46,8 +66,8 @@ const JobDetails = ({ children }) => {
             Project / Placeholder
           </h1>
           <div className="text-sm text-[#8094ae] mt-2 flex gap-4 ">
-            <p>Project ID: AP0336</p>
-            <p> Created On: May 2, 2023 10:13am</p>
+            <p>Project ID: {singleJob.id}</p>
+            <p> Created On: {startDate}</p>
           </div>
         </div>
         <div className="flex items-center gap-4 relative">

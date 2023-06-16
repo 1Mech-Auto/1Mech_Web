@@ -18,6 +18,7 @@ import SuccessPrompt from "../SuccessPrompt";
 
 const Form1 = ({ handleChangeNext }) => {
   const [clicked, setClicked] = useState(false);
+  const [clientHolder, setClientHolder] = useState("");
   const {
     newVehicleForm: { toggle1, toggle2 },
     projectForm: {
@@ -47,6 +48,9 @@ const Form1 = ({ handleChangeNext }) => {
     },
     newVehicleData,
     newProjectForm,
+    clientList,
+    handleSelectClient,
+    projectForm,
   } = useFormContext();
 
   // validationSchema for file1
@@ -81,7 +85,7 @@ const Form1 = ({ handleChangeNext }) => {
     errors,
   } = useFormik({
     initialValues: {
-      client: client,
+      client: clientHolder,
       valetFullName: valetFullName,
       valetEmail: valetEmail,
       valetPhone: valetPhone,
@@ -103,18 +107,49 @@ const Form1 = ({ handleChangeNext }) => {
             value={values.client}
             onChange={(e) => {
               handleChange(e);
-              newProjectForm(e);
+              handleSelectClient(e);
+              console.log(JSON.parse(e.target.value), projectForm);
+              // newProjectForm(e);
             }}
             onBlur={handleBlur}
-            className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+            className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize  "
           >
             <option>Select Client</option>
-            <option>All clients</option>
-            <option>selected clients</option>
+            <optgroup label="New Client">
+              <option>create new client</option>
+            </optgroup>
+            <optgroup label="select client">
+              {clientList &&
+                clientList.map((client, i) => {
+                  const { names, phone, address, gender, email } =
+                    client.clientDetails;
+                  const id = client.id;
+                  return (
+                    <option
+                      value={JSON.stringify({
+                        id: id,
+                        fullName: names,
+                        phone: phone,
+                        email: email,
+                        address: address,
+                        gender: gender,
+                      })}
+                      // onClick={() =>
+                      // handleSelectClient(id, client.clientDetails)
+                      // }
+                      className="h-4 p-5"
+                      key={i}
+                    >
+                      {names} - {phone}
+                    </option>
+                  );
+                })}
+            </optgroup>
+            {/* <option>All clients</option>
             <option>All team members</option>
             <option>selected team members</option>
             <option>enter number manually</option>
-            <option>filtered clients by car make / model</option>
+            <option>filtered clients by car make / model</option> */}
           </select>
           {errors.client && touched.client && (
             <VehicleRequiredPrompt message={errors.client} />

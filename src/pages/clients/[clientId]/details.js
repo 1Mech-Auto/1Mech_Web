@@ -7,7 +7,8 @@ import { useFormContext } from "@/context/form_context";
 
 const Details = () => {
   const [notes, setNotes] = useState(false);
-  const { notesList } = useFormContext();
+  const { notesList, singleClient } = useFormContext();
+  const { email, names: fullName, gender, phone } = singleClient.clientDetails;
   return (
     <DetailsPage>
       {notes && <NewNotes notes={notes} setNotes={setNotes} />}
@@ -20,17 +21,15 @@ const Details = () => {
         </div>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Client Name</p>
-          <p className="font-medium text-[#364a63]">Autogirl Nig Ltd</p>
+          <p className="font-medium text-[#364a63]">{fullName}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Phone Number</p>
-          <p className="font-medium text-[#364a63]">+2347088172629</p>
+          <p className="font-medium text-[#364a63]">{phone}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Email</p>
-          <p className="font-medium text-[#364a63]">
-            chichi.arinze@autogirl.ng
-          </p>
+          <p className="font-medium text-[#364a63]">{email}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Active Jobs</p>
@@ -38,11 +37,11 @@ const Details = () => {
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Address</p>
-          <p className="font-medium text-[#364a63]">Isolo</p>
+          {/* <p className="font-medium text-[#364a63]">{address}</p> */}
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Gender</p>
-          <p className="font-medium text-[#364a63]">Female</p>
+          <p className="font-medium text-[#364a63]">{gender}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Balance</p>

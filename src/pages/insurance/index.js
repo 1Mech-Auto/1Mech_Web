@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../../layout/Layout";
 import { RxDotFilled } from "react-icons/rx";
 import { BsThreeDots } from "react-icons/bs";
@@ -15,6 +15,7 @@ import NewJobCard from "@/components/forms/NewJobCard";
 import NewInvoiceForm from "@/components/forms/NewInvoiceForm";
 import NewQuotesForm from "@/components/forms/NewQuotesForm";
 import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
+import InsuranceList from "@/components/InsuranceList";
 
 const Insurance = () => {
   const [open, setOpen] = useState(false);
@@ -23,7 +24,8 @@ const Insurance = () => {
   const [jobCard, setJobCard] = useState(false);
   const [quote, setQuote] = useState(false);
   const [info, setInfo] = useState(false);
-  const { insuranceList } = useFormContext();
+  const { insuranceList, fetchInsurance, fetchSingleInsurance } =
+    useFormContext();
   const [show, setShow] = useState(false);
   const checkInitials = (fullName) => {
     const words = fullName;
@@ -61,6 +63,12 @@ const Insurance = () => {
       return "none";
     }
   };
+
+  useEffect(() => {
+    fetchInsurance();
+    fetchSingleInsurance(1000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Layout>
@@ -178,52 +186,13 @@ const Insurance = () => {
           {insuranceList &&
             insuranceList.map((insurance, index) => {
               return (
-                <div
+                <InsuranceList
                   key={index}
-                  className="font-medium text-[#364a63] text-sm grid grid-cols-[4%,50%,35%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[3%,25%,20%,14%,6%,12%,10%,4%] items-center p-2.5 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
-                >
-                  <div>{index + 1}</div>
-                  <div className="flex items-center gap-2">
-                    <p className="p-2.5 bg-blue-500 rounded-full text-white">
-                      {checkInitials(insurance.companyName)}
-                    </p>
-                    <div>
-                      <h2 className="font-medium text-[#364a63]">
-                        {insurance.companyName}
-                      </h2>
-                      <p className="text-xs text-[#8094ae]">
-                        {insurance.phone}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="hidden md:block text-[#8094ae]">
-                    {insurance.email}
-                  </div>
-                  <div>N390,000.00</div>
-                  <div className="hidden md:block text-[#8094ae] text-center">
-                    1/1
-                  </div>
-                  <div className="hidden md:block text-[#8094ae]">
-                    {insurance.date}
-                  </div>
-                  <div className="py-1.5 px-2.5 text-[#1ee0ac] bg-[#1ee0ac26] rounded-2xl items-center gap-1 hidden md:flex">
-                    <RxDotFilled className="text-xl" />
-                    <p className="text-xs font-bold">Active</p>
-                  </div>
-                  <div>
-                    <BsThreeDots
-                      className="cursor-pointer text-xl"
-                      onClick={() => setShow(!show)}
-                    />
-                    {show && (
-                      <MoreButton
-                        href={"/insurance/99/details"}
-                        extraInfo={extraInfo}
-                        handleClick={handleClick}
-                      />
-                    )}
-                  </div>
-                </div>
+                  insurance={insurance}
+                  index={index}
+                  handleClick={handleClick}
+                  extraInfo={extraInfo}
+                />
               );
             })}
         </div>

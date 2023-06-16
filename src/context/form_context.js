@@ -1,4 +1,4 @@
-import React, { useState, useContext, useReducer } from "react";
+import React, { useState, useContext, useReducer, useEffect } from "react";
 import reducer from "../reducer/form_reducer";
 import {
   ADD_NEW_CAMPAIGN,
@@ -44,6 +44,17 @@ import {
   ADD_PROJECT_FORM,
   FUEL_RANGE,
   CANVAS_URL,
+  ADD_T0_CLIENT_LIST,
+  ADD_SINGLE_CLIENT,
+  ADD_T0_JOB_LIST,
+  ADD_SINGLE_JOB,
+  ADD_CLIENT_BEGIN,
+  SINGLE_CLIENT_BEGIN,
+  ADD_INSURANCE_LIST,
+  ADD_SINGLE_INSURANCE,
+  ADD_SINGLE_TEAM,
+  ADD_TEAM_LIST,
+  SELECT_JOB_CLIENT,
 } from "@/action";
 const initialState = {
   // showModal1: true,
@@ -205,7 +216,14 @@ const initialState = {
   },
   partsList: [],
   projectForm: {
-    client: "",
+    client: {
+      id: 300,
+      fullName: "",
+      phone: "",
+      email: "",
+      address: "",
+      gender: "",
+    },
     valetFullName: "",
     valetPhone: "",
     valetEmail: "",
@@ -258,6 +276,15 @@ const initialState = {
   projectList: [],
   fRange: "82",
   canvasUrl: "",
+  singleClient: {},
+  client_loading: false,
+  client_error: false,
+  singleClient_loading: false,
+  singleClient_error: false,
+  jobList: [],
+  singleJob: {},
+  singleInsurance: {},
+  singleTeam: {},
 };
 
 const FormContext = React.createContext();
@@ -265,6 +292,85 @@ const FormContext = React.createContext();
 export const FormProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const fetchClients = async () => {
+    dispatch({ type: ADD_CLIENT_BEGIN });
+    try {
+      const res = await fetch("api/client");
+      const data = await res.json();
+      dispatch({ type: ADD_T0_CLIENT_LIST, payload: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchSingleClient = async (id) => {
+    dispatch({ type: SINGLE_CLIENT_BEGIN });
+    try {
+      const response = await fetch(`/api/client/page?id=${id}`);
+      const data = await response.json();
+      dispatch({ type: ADD_SINGLE_CLIENT, payload: data });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const fetchJobs = async () => {
+    dispatch({ type: SINGLE_CLIENT_BEGIN });
+    try {
+      const res = await fetch("api/jobs");
+      const data = await res.json();
+      dispatch({ type: ADD_T0_JOB_LIST, payload: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchSingleJob = async (id) => {
+    try {
+      const response = await fetch(`/api/jobs/page?id=${id}`);
+      const data = await response.json();
+      dispatch({ type: ADD_SINGLE_JOB, payload: data });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const fetchInsurance = async () => {
+    try {
+      const res = await fetch("api/insurance");
+      const data = await res.json();
+      dispatch({ type: ADD_INSURANCE_LIST, payload: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchSingleInsurance = async (id) => {
+    try {
+      const response = await fetch(`/api/insurance/page?id=${id}`);
+      const data = await response.json();
+      dispatch({ type: ADD_SINGLE_INSURANCE, payload: data });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const fetchTeamMembers = async () => {
+    try {
+      const res = await fetch("api/team");
+      const data = await res.json();
+      dispatch({ type: ADD_TEAM_LIST, payload: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchSingleMember = async (id) => {
+    try {
+      const response = await fetch(`/api/team/page?id=${id}`);
+      const data = await response.json();
+      dispatch({ type: ADD_SINGLE_TEAM, payload: data });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const handleSelectClient = (e) => {
+    const value = JSON.parse(e.target.value);
+    dispatch({ type: SELECT_JOB_CLIENT, payload: value });
+  };
   const saveImage = (img) => {
     dispatch({ type: CANVAS_URL, payload: img });
     console.log(img);
@@ -291,12 +397,38 @@ export const FormProvider = ({ children }) => {
     const value = e.target.value;
     dispatch({ type: NEW_PROJECT_FORM, payload: { name, value } });
   };
-  const addProjectForm = () => {
-    dispatch({ type: ADD_PROJECT_FORM });
+  const addProjectForm = async () => {
+    try {
+      const response = await fetch("/api/jobs", {
+        method: "POST",
+        body: JSON.stringify({ jobForm: state.projectForm }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      dispatch({ type: ADD_PROJECT_FORM, payload: data });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const addNewClient = () => {
-    dispatch({ type: ADD_NEW_CLIENT });
+  const addNewClient = async () => {
+    try {
+      const response = await fetch("/api/client", {
+        method: "POST",
+        body: JSON.stringify({ clientForm: state.clientForm }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      dispatch({ type: ADD_NEW_CLIENT, payload: data });
+    } catch (err) {
+      console.log(err);
+    }
   };
   const newInsuranceData = (e) => {
     const name = e.target.name;
@@ -440,11 +572,23 @@ export const FormProvider = ({ children }) => {
   const addnewParts = () => {
     dispatch({ type: ADD_NEW_PARTS });
   };
-
+  // functions to load when pages start
+  useEffect(() => {
+    fetchClients();
+  }, []);
   return (
     <FormContext.Provider
       value={{
         ...state,
+        fetchClients,
+        fetchSingleClient,
+        fetchJobs,
+        fetchSingleJob,
+        fetchInsurance,
+        fetchSingleInsurance,
+        fetchTeamMembers,
+        fetchSingleMember,
+        handleSelectClient,
         saveImage,
         fuelRange,
         addProjectForm,

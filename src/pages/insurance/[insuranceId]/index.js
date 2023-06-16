@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../../../layout/Layout";
 import { BsThreeDots, BsArrowLeft } from "react-icons/bs";
 import { TbMessageCircle } from "react-icons/tb";
@@ -18,6 +18,7 @@ import NewQuotesForm from "@/components/forms/NewQuotesForm";
 import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
 import NewSMSForm from "@/components/forms/NewSMSForm";
 import { useRouter } from "next/router";
+import { useFormContext } from "@/context/form_context";
 
 const DetailsPage = ({ children }) => {
   const [invoice, setInvoice] = useState(false);
@@ -27,9 +28,16 @@ const DetailsPage = ({ children }) => {
   const [quote, setQuote] = useState(false);
   const [info, setInfo] = useState(false);
   const [sms, setSms] = useState(false);
+  const { fetchSingleInsurance, singleInsurance } = useFormContext();
   const router = useRouter();
   const query = router.query;
   const id = query.insuranceId;
+
+  useEffect(() => {
+    fetchSingleInsurance(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
   return (
     <Layout>
       {invoice && <NewInvoiceForm invoice={invoice} setInvoice={setInvoice} />}
@@ -44,8 +52,8 @@ const DetailsPage = ({ children }) => {
             Insurance / Placeholder
           </h1>
           <div className="text-sm text-[#8094ae] mt-2 flex gap-4 ">
-            <p>Client ID: AC0268</p>
-            <p> Created On: May 2, 2023 10:13am</p>
+            <p>Insurance ID: {singleInsurance.id}</p>
+            <p> Created On: {singleInsurance.date} 10:13am</p>
           </div>
         </div>
         <div className="flex items-center gap-4 relative">

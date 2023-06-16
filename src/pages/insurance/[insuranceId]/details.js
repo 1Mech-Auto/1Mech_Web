@@ -7,7 +7,9 @@ import { useFormContext } from "@/context/form_context";
 
 const Details = () => {
   const [notes, setNotes] = useState(false);
-  const { notesList } = useFormContext();
+  const { notesList, singleInsurance } = useFormContext();
+  const { fullName, phone, email, address } = singleInsurance.company;
+
   return (
     <DetailsPage>
       {notes && <NewNotes notes={notes} setNotes={setNotes} />}
@@ -20,17 +22,15 @@ const Details = () => {
         </div>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Company Name</p>
-          <p className="font-medium text-[#364a63]">
-            Jubilee Insurance Company
-          </p>
+          <p className="font-medium text-[#364a63]">{fullName}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Phone Number</p>
-          <p className="font-medium text-[#364a63]">+254720783834</p>
+          <p className="font-medium text-[#364a63]">{phone}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Email</p>
-          <p className="font-medium text-[#364a63]">kimeli@asilify.com</p>
+          <p className="font-medium text-[#364a63]">{email}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Active Jobs</p>
@@ -38,11 +38,13 @@ const Details = () => {
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Address</p>
-          <p className="font-medium text-[#364a63]">Magadi Road</p>
+          <p className="font-medium text-[#364a63]">{address}</p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Balance</p>
-          <p className="font-medium text-[#364a63]">N0.00</p>
+          <p className="font-medium text-[#364a63]">
+            N{singleInsurance.balance}.00
+          </p>
         </article>
         <article className="md:col-span-2 text-xs font-medium">
           ADDITIONAL INFORMATION

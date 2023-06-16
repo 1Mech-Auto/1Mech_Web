@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../../../layout/Layout";
 import { BsThreeDots, BsArrowLeft } from "react-icons/bs";
 import { TbMessageCircle } from "react-icons/tb";
@@ -17,6 +17,7 @@ import NewQuotesForm from "@/components/forms/NewQuotesForm";
 import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
 import NewSMSForm from "@/components/forms/NewSMSForm";
 import { useRouter } from "next/router";
+import { useFormContext } from "@/context/form_context";
 
 const DetailsPage = ({ children }) => {
   const [invoice, setInvoice] = useState(false);
@@ -26,10 +27,29 @@ const DetailsPage = ({ children }) => {
   const [quote, setQuote] = useState(false);
   const [info, setInfo] = useState(false);
   const [sms, setSms] = useState(false);
+  const {
+    fetchSingleClient,
+    singleClient,
+    singleClient_loading: loading,
+  } = useFormContext();
   const router = useRouter();
   const query = router.query;
   const id = query.clientId;
   console.log(router.pathname);
+  useEffect(() => {
+    fetchSingleClient(id);
+    console.log(singleClient);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="text-center text-2xl mx-auto">
+        <p>loading...</p>
+      </main>
+    );
+  }
+
   return (
     <Layout>
       {invoice && <NewInvoiceForm invoice={invoice} setInvoice={setInvoice} />}
@@ -44,7 +64,7 @@ const DetailsPage = ({ children }) => {
             Clients / Placeholder
           </h1>
           <div className="text-sm text-[#8094ae] mt-2 flex gap-4 ">
-            <p>Client ID: AC0268</p>
+            <p>Client ID: {id}</p>
             <p> Created On: May 2, 2023 10:13am</p>
           </div>
         </div>
