@@ -8,7 +8,6 @@ import { useFormContext } from "@/context/form_context";
 const Details = () => {
   const [notes, setNotes] = useState(false);
   const { notesList, singleTeam } = useFormContext();
-  const { fullName, phone, address, email } = singleTeam.team;
   return (
     <DetailsPage>
       {notes && <NewNotes notes={notes} setNotes={setNotes} />}
@@ -21,15 +20,21 @@ const Details = () => {
         </div>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Member Name</p>
-          <p className="font-medium text-[#364a63]">{fullName}</p>
+          <p className="font-medium text-[#364a63]">
+            {singleTeam?.team?.fullName}
+          </p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Phone Number</p>
-          <p className="font-medium text-[#364a63]">{phone}</p>
+          <p className="font-medium text-[#364a63]">
+            {singleTeam?.team?.phone}
+          </p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Email</p>
-          <p className="font-medium text-[#364a63]">{email}</p>
+          <p className="font-medium text-[#364a63]">
+            {singleTeam?.team?.email}
+          </p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Active Jobs</p>
@@ -37,7 +42,9 @@ const Details = () => {
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Address</p>
-          <p className="font-medium text-[#364a63]">{address}</p>
+          <p className="font-medium text-[#364a63]">
+            {singleTeam?.team?.address}
+          </p>
         </article>
         <article className="flex items-center justify-between">
           <p className="text-[#8094ae]">Balance</p>

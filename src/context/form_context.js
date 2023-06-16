@@ -55,6 +55,7 @@ import {
   ADD_SINGLE_TEAM,
   ADD_TEAM_LIST,
   SELECT_JOB_CLIENT,
+  SINGLE_ERROR_BEGIN,
 } from "@/action";
 const initialState = {
   // showModal1: true,
@@ -279,8 +280,8 @@ const initialState = {
   singleClient: {},
   client_loading: false,
   client_error: false,
-  singleClient_loading: false,
-  singleClient_error: false,
+  single_loading: false,
+  single_error: false,
   jobList: [],
   singleJob: {},
   singleInsurance: {},
@@ -309,11 +310,11 @@ export const FormProvider = ({ children }) => {
       const data = await response.json();
       dispatch({ type: ADD_SINGLE_CLIENT, payload: data });
     } catch (error) {
+      dispatch({ type: SINGLE_ERROR_BEGIN });
       console.error("Error fetching data:", error);
     }
   };
   const fetchJobs = async () => {
-    dispatch({ type: SINGLE_CLIENT_BEGIN });
     try {
       const res = await fetch("api/jobs");
       const data = await res.json();
@@ -323,11 +324,13 @@ export const FormProvider = ({ children }) => {
     }
   };
   const fetchSingleJob = async (id) => {
+    dispatch({ type: SINGLE_CLIENT_BEGIN });
     try {
       const response = await fetch(`/api/jobs/page?id=${id}`);
       const data = await response.json();
       dispatch({ type: ADD_SINGLE_JOB, payload: data });
     } catch (error) {
+      dispatch({ type: SINGLE_ERROR_BEGIN });
       console.error("Error fetching data:", error);
     }
   };

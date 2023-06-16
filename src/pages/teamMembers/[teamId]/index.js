@@ -51,7 +51,7 @@ const DetailsPage = ({ children }) => {
             Team / Placeholder
           </h1>
           <div className="text-sm text-[#8094ae] mt-2 flex gap-4 ">
-            <p>Team ID: {singleTeam.id}</p>
+            <p>Team ID: {singleTeam?.id}</p>
             <p>Created On: May 17, 2023 01:03pm</p>
           </div>
         </div>

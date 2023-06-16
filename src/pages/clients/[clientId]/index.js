@@ -30,7 +30,8 @@ const DetailsPage = ({ children }) => {
   const {
     fetchSingleClient,
     singleClient,
-    singleClient_loading: loading,
+    single_loading: loading,
+    single_error: error,
   } = useFormContext();
   const router = useRouter();
   const query = router.query;
@@ -46,6 +47,13 @@ const DetailsPage = ({ children }) => {
     return (
       <main className="text-center text-2xl mx-auto">
         <p>loading...</p>
+      </main>
+    );
+  }
+  if (error) {
+    return (
+      <main className="text-center text-2xl mx-auto">
+        <p>Error go back to home page...</p>
       </main>
     );
   }

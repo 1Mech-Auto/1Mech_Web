@@ -34,10 +34,9 @@ const JobDetails = ({ children }) => {
   const {
     fetchSingleJob,
     singleJob,
-    singleClient_loading: loading,
+    single_loading: loading,
+    single_error: error,
   } = useFormContext();
-
-  const { startDate } = singleJob.jobForm;
 
   useEffect(() => {
     fetchSingleJob(id);
@@ -48,6 +47,13 @@ const JobDetails = ({ children }) => {
     return (
       <main className="text-center text-2xl mx-auto">
         <p>loading...</p>
+      </main>
+    );
+  }
+  if (error) {
+    return (
+      <main className="text-center text-2xl mx-auto">
+        <p>Error go back to home page...</p>
       </main>
     );
   }
@@ -66,8 +72,8 @@ const JobDetails = ({ children }) => {
             Project / Placeholder
           </h1>
           <div className="text-sm text-[#8094ae] mt-2 flex gap-4 ">
-            <p>Project ID: {singleJob.id}</p>
-            <p> Created On: {startDate}</p>
+            <p>Project ID: {singleJob?.id}</p>
+            <p> Created On: {singleJob?.jobForm?.startDate}</p>
           </div>
         </div>
         <div className="flex items-center gap-4 relative">

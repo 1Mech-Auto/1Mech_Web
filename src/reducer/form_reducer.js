@@ -53,6 +53,7 @@ import {
   ADD_SINGLE_TEAM,
   ADD_TEAM_LIST,
   SELECT_JOB_CLIENT,
+  SINGLE_ERROR_BEGIN,
 } from "@/action";
 const date = new Date();
 const options = { month: "long", day: "numeric", year: "numeric" };
@@ -113,8 +114,15 @@ const form_reducer = (state, action) => {
   if (action.type === SINGLE_CLIENT_BEGIN) {
     return {
       ...state,
-      singleClient_loading: true,
+      single_loading: true,
+      single_error: false,
     };
+  }
+  if(action.type === SINGLE_ERROR_BEGIN){
+    return{
+      ...state,
+      single_error: true,
+    }
   }
   if (action.type === ADD_CLIENT_BEGIN) {
     return {
@@ -132,7 +140,7 @@ const form_reducer = (state, action) => {
   if (action.type === ADD_SINGLE_CLIENT) {
     return {
       ...state,
-      singleClient_loading: false,
+      single_loading: false,
       singleClient: action.payload,
     };
   }
@@ -146,7 +154,7 @@ const form_reducer = (state, action) => {
     return {
       ...state,
       singleJob: action.payload,
-      singleClient_loading: false,
+      single_loading: false,
     };
   }
   if (action.type === CANVAS_URL) {
@@ -230,7 +238,7 @@ const form_reducer = (state, action) => {
     return {
       ...state,
       jobList: action.payload,
-      singleClient_loading: false,
+      single_loading: false,
       projectForm: {
         client: "",
         valetFullName: "",
