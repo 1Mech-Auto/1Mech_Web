@@ -12,8 +12,10 @@ const Invoices = () => {
       <div className="px-6">
         <div className="flex items-center justify-between">
           <div className="py-6 md:col-span-2">
-            <h3 className="text-xl font-semibold">Company Invoices</h3>
-            <p className="text-sm text-[#526484]">
+            <h3 className="text-lg sm:text-xl font-semibold">
+              Company Invoices
+            </h3>
+            <p className="text-xs sm:text-sm text-[#526484]">
               A list of invoices for Jubilee Insurance Company.
             </p>
           </div>
@@ -21,8 +23,8 @@ const Invoices = () => {
             className="flex items-center gap-2 bg-[#0971fe] py-2 px-4 rounded-md text-sm text-white cursor-pointer font-bold"
             onClick={() => setInvoice(true)}
           >
-            <BiPlus />
-            <span>Create Invoice</span>
+            <BiPlus className="text-lg sm:text-sm" />
+            <span className="hidden sm:block">Create Invoice</span>
           </button>
         </div>
         <div className="w-full min-h-[9em] bg-white mx-auto text-[#8094ae] text-md pb-4">

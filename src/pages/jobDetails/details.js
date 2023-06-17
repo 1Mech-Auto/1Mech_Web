@@ -19,7 +19,7 @@ const Details = () => {
               Basic project info, that gives project summary.
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="grid sm:flex items-center gap-2">
             <Link
               href={"/"}
               className="flex items-center gap-2 hover:bg-[#0971fe] hover:text-white border border-[#9dc6ff] bg-[#e4efff] text-[#0971fe] py-2 px-4 rounded-md text-sm cursor-pointer font-bold"

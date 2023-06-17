@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function App({ Component, pageProps }) {
   return (
     <FormProvider>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
       <ToastContainer
         position="top-left"
         autoClose={5000}

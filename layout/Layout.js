@@ -6,7 +6,11 @@ import {
   RiSettings3Fill,
   RiMenuFill,
 } from "react-icons/ri";
-import { BsFillClipboard2CheckFill, BsChatDotsFill } from "react-icons/bs";
+import {
+  BsFillClipboard2CheckFill,
+  BsChatDotsFill,
+  BsPlusLg,
+} from "react-icons/bs";
 import NewVehicleForm from "@/components/forms/NewVehicleForm";
 import { FaUser, FaUserClock } from "react-icons/fa";
 import {
@@ -212,11 +216,14 @@ const Layout = ({ children }) => {
             </div>
             <div className="xl:mr-[18rem] ml-auto flex items-center gap-6 cursor-pointer relative">
               <div
-                className="flex items-center gap-2 bg-[#0971fe] py-1.5 px-5 rounded-sm text-xs text-white cursor-pointer font-bold"
+                className="hidden sm:flex items-center gap-2 bg-[#0971fe] py-1.5 px-5 rounded-sm text-xs text-white cursor-pointer font-bold"
                 onClick={() => setOpen(true)}
               >
                 <BiPlus />
                 <span>New Vehicle</span>
+              </div>
+              <div onClick={() => setOpen(true)}>
+                <BsPlusLg className="block sm:hidden p-2 text-3xl bg-[#0971fe] rounded-full text-white" />
               </div>
               <div
                 className="flex items-center gap-2"

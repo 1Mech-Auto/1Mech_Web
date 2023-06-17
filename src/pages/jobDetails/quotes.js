@@ -29,12 +29,12 @@ const Quotes = () => {
       <div className="px-6">
         <div className="flex items-center justify-between">
           <div className="py-6 md:col-span-2">
-            <h3 className="text-xl font-semibold">Project Quotes</h3>
-            <p className="text-sm text-[#526484]">
+            <h3 className="text-lg sm:text-xl font-semibold">Project Quotes</h3>
+            <p className="text-xs sm:text-sm text-[#526484]">
               A list of quotes for TOYOTA Camry - KSF-178-HX project.
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="grid sm:flex items-center gap-2">
             <button
               className="flex items-center gap-2 hover:bg-[#0971fe] hover:text-white border border-[#9dc6ff] bg-[#e4efff] text-[#0971fe] py-2 px-4 rounded-md text-sm cursor-pointer font-bold relative"
               onClick={() => setShow(!show)}

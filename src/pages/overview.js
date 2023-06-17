@@ -71,6 +71,7 @@ const data3 = {
   ],
 };
 const options1 = {
+  maintainAspectRatio: false,
   cutout: "65%",
   plugins: {
     legend: {
@@ -84,6 +85,7 @@ const options1 = {
   },
 };
 const options2 = {
+  maintainAspectRatio: false,
   responsive: true, // Enable responsiveness
   maintainAspectRatio: false, // Disable aspect ratio locking
   scales: {
@@ -118,7 +120,7 @@ const Overview = () => {
   const [moreInfo, setMoreInfo] = useState(false);
   return (
     <Layout>
-      <div className="mb-6 flex px-8 sm:px-0 justify-between items-center">
+      <div className="mb-6 flex px-6 sm:px-0 justify-between items-center">
         <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
           Overview
         </h1>
@@ -145,7 +147,7 @@ const Overview = () => {
           <BsThreeDotsVertical />
         </div>
       </div>
-      <div className="grid gap-6 text-[#364a63] pb-6 px-8 sm:px-0 relative">
+      <div className="grid gap-6 text-[#364a63] pb-6 px-6 sm:px-0 relative">
         <div
           className={`px-6 flex sm:hidden items-center justify-between transition-all duration-300 linear bg-white absolute w-full shadow-md ${
             moreInfo ? " h-20 opacity-100" : " h-0 opacity-0"
@@ -221,20 +223,20 @@ const Overview = () => {
               </div>
             </div>
           </article>
-          <article className="bg-white border border-t-teal-400 rounded-md p-5 h-[22rem] w-full">
+          <div className="bg-white border border-t-teal-400 rounded-md p-5 overflow-hidden h-full">
             <h2 className="font-bold capitalize text-md">job statistics</h2>
-            <div className="pb-5 h-[18.5rem] flex justify-center text-xl">
+            <div className="pb-5 h-[18.5rem] flex justify-center text-xl mt-4">
               <Doughnut data={data1} options={options1} />
             </div>
-          </article>
+          </div>
         </div>
         <div className="grid md:grid-cols-2 gap-6 ">
-          <article className="bg-white border border-t-indigo-400 rounded-md p-5">
+          <div className="bg-white border border-t-indigo-400 rounded-md p-5 overflow-hidden h-full">
             <h2 className="font-bold capitalize text-md">Task statistics</h2>
-            <div className="pb-5 h-[18.5rem] flex justify-center text-xl">
+            <div className="pb-5 h-[18.5rem] flex justify-center text-xl mt-4">
               <Doughnut data={data2} options={options1} />
             </div>
-          </article>
+          </div>
           <article className="grid md:grid-cols-2 grid-rows-2 gap-6">
             <div className="border border-t-indigo-400 bg-white rounded-md min-h-[10em] px-5 md:px-2 lg:px-5 py-3 grid items-between">
               <h4 className="font-bold text-lg tracking-tight">Income 2023</h4>
@@ -280,9 +282,9 @@ const Overview = () => {
             </div>
           </article>
         </div>
-        <div className="p-5 bg-white rounded-md h-[22em]">
+        <div className="p-5 bg-white rounded-md w-full block overflow-hidden h-full">
           <h2 className="font-bold text-sm">Payments last 12 months</h2>
-          <div className="grid max-w-full w-full h-[18.5rem]">
+          <div className="h-[20rem]">
             <Line data={data3} options={options2} />
           </div>
         </div>

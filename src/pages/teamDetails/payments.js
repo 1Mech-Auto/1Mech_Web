@@ -21,8 +21,8 @@ const Payments = () => {
             className="flex items-center gap-2 bg-[#0971fe] py-2 px-4 rounded-md text-sm text-white cursor-pointer font-bold"
             onClick={() => setPayment(true)}
           >
-            <BiPlus />
-            <span>Add Payment</span>
+            <BiPlus className="text-lg sm:text-sm" />
+            <span className="hidden sm:block">Add Payment</span>
           </button>
         </div>
         <div className="w-full min-h-[9em] bg-white mx-auto text-[#8094ae] text-md pb-4">
