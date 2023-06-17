@@ -103,3 +103,12 @@ export const newWorkRequestedSchema = yup.object().shape({
 export const newPartsSchema = yup.object().shape({
   name: yup.string().required("Required"),
 });
+export const newVehicleSchema = yup.object().shape({
+  client: yup.string().required("Required"),
+  valetPhone: yup.string().matches(/^\+?[0-9]{7,15}$/, "enter a valid number"),
+  valetEmail: yup.string().email("please enter a valid email"),
+  make: yup.string().required("Required"),
+  model: yup.string().required("Required"),
+  engNo: yup.string().required("Required"),
+  insurance: yup.string().required("Required"),
+});

@@ -38,6 +38,22 @@ import {
   ADD_NEW_PARTS,
   NEW_PARTS_FORM,
   CHANGE_TOGGLE_STATE,
+  NEW_PROJECT_FORM,
+  ADD_PROJECT_FORM,
+  FUEL_RANGE,
+  CANVAS_URL,
+  ADD_T0_CLIENT_LIST,
+  ADD_SINGLE_CLIENT,
+  ADD_T0_JOB_LIST,
+  ADD_SINGLE_JOB,
+  ADD_CLIENT_BEGIN,
+  SINGLE_CLIENT_BEGIN,
+  ADD_INSURANCE_LIST,
+  ADD_SINGLE_INSURANCE,
+  ADD_SINGLE_TEAM,
+  ADD_TEAM_LIST,
+  SELECT_JOB_CLIENT,
+  SINGLE_ERROR_BEGIN,
 } from "@/action";
 const date = new Date();
 const options = { month: "long", day: "numeric", year: "numeric" };
@@ -51,32 +67,267 @@ const dateConvert = (date) => {
 };
 
 const form_reducer = (state, action) => {
+  if (action.type === SELECT_JOB_CLIENT) {
+    console.log(action.payload);
+    const { id, fullName, phone, address, gender, email } = action.payload;
+
+    return {
+      ...state,
+      projectForm: {
+        ...state.projectForm,
+        client: {
+          id: id,
+          fullName: fullName,
+          phone: phone,
+          address: address,
+          gender: gender,
+          email: email,
+        },
+      },
+    };
+  }
+  if (action.type === ADD_TEAM_LIST) {
+    return {
+      ...state,
+      teamList: action.payload,
+    };
+  }
+  if (action.type === ADD_SINGLE_TEAM) {
+    return {
+      ...state,
+      singleTeam: action.payload,
+    };
+  }
+
+  if (action.type === ADD_INSURANCE_LIST) {
+    return {
+      ...state,
+      insuranceList: action.payload,
+    };
+  }
+  if (action.type === ADD_SINGLE_INSURANCE) {
+    return {
+      ...state,
+      singleInsurance: action.payload,
+    };
+  }
+  if (action.type === SINGLE_CLIENT_BEGIN) {
+    return {
+      ...state,
+      single_loading: true,
+      single_error: false,
+    };
+  }
+  if(action.type === SINGLE_ERROR_BEGIN){
+    return{
+      ...state,
+      single_error: true,
+    }
+  }
+  if (action.type === ADD_CLIENT_BEGIN) {
+    return {
+      ...state,
+      client_loading: true,
+    };
+  }
+  if (action.type === ADD_T0_CLIENT_LIST) {
+    return {
+      ...state,
+      clientList: action.payload,
+      client_loading: false,
+    };
+  }
+  if (action.type === ADD_SINGLE_CLIENT) {
+    return {
+      ...state,
+      single_loading: false,
+      singleClient: action.payload,
+    };
+  }
+  if (action.type === ADD_T0_JOB_LIST) {
+    return {
+      ...state,
+      jobList: action.payload,
+    };
+  }
+  if (action.type === ADD_SINGLE_JOB) {
+    return {
+      ...state,
+      singleJob: action.payload,
+      single_loading: false,
+    };
+  }
+  if (action.type === CANVAS_URL) {
+    return {
+      ...state,
+      canvasUrl: action.payload,
+    };
+  }
+  if (action.type === FUEL_RANGE) {
+    return {
+      ...state,
+      fRange: action.payload,
+    };
+  }
+  if (action.type === NEW_PROJECT_FORM) {
+    const { name, value } = action.payload;
+    return {
+      ...state,
+      projectForm: {
+        ...state.projectForm,
+        [name]: value,
+      },
+    };
+  }
+  if (action.type === ADD_PROJECT_FORM) {
+    // let project = {};
+    // project = {
+    //   client: state.projectForm.client,
+    //   valetFullName: state.projectForm.valetFullName,
+    //   valetPhone: state.projectForm.valetPhone,
+    //   valetEmail: state.projectForm.valetEmail,
+    //   valetId: state.projectForm.valetId,
+    //   make: state.projectForm.make,
+    //   model: state.projectForm.make,
+    //   regNo: state.projectForm.regNo,
+    //   vin: state.projectForm.vin,
+    //   engNo: state.projectForm.engNo,
+    //   milleageIn: state.projectForm.milleageIn,
+    //   milleageUnit: state.projectForm.milleageUnit,
+    //   color: state.projectForm.color,
+    //   carYear: state.projectForm.carYear,
+    //   insurance: state.projectForm.insurance,
+    //   dateIn: state.projectForm.dateIn,
+    //   timeIn: state.projectForm.timeIn,
+    //   status: state.projectForm.status,
+    //   startDate: state.projectForm.startDate,
+    //   expectedDate: state.projectForm.expectedDate,
+    //   roadTest: state.projectForm.roadTest,
+    //   towingDetails: state.projectForm.towingDetails,
+    //   insuranceCovered: state.projectForm.insuranceCovered,
+    //   bookNotes: state.projectForm.bookNotes,
+    //   accident: state.projectForm.accident,
+    //   workRequest: state.projectForm.workRequest,
+    //   fuelRange: state.projectForm.fuelRange,
+    //   toggleStates: {
+    //     wiper: state.projectForm.toggleStates.wiper,
+    //     mirrors: state.projectForm.toggleStates.mirrors,
+    //     badge: state.projectForm.toggleStates.badge,
+    //     spareWheel: state.projectForm.toggleStates.spareWheel,
+    //     doorLocks: state.projectForm.toggleStates.doorLocks,
+    //     fireExt: state.projectForm.toggleStates.fireExt,
+    //     tankCap: state.projectForm.toggleStates.tankCap,
+    //     tankLid: state.projectForm.toggleStates.tankLid,
+    //     relay: state.projectForm.toggleStates.relay,
+    //     horns: state.projectForm.toggleStates.horns,
+    //     oilFilter: state.projectForm.toggleStates.oilFilter,
+    //     radCap: state.projectForm.toggleStates.radCap,
+    //     battMk: state.projectForm.toggleStates.battMk,
+    //     arielAuto: state.projectForm.toggleStates.arielAuto,
+    //     seatBelts: state.projectForm.toggleStates.seatBelts,
+    //     radioSpeaker: state.projectForm.toggleStates.radioSpeaker,
+    //     rearMirror: state.projectForm.toggleStates.rearMirror,
+    //     wSpanner: state.projectForm.toggleStates.wSpanner,
+    //     wTriangle: state.projectForm.toggleStates.wTriangle,
+    //     bootMats: state.projectForm.toggleStates.bootMats,
+    //   },
+    //   image: state.canvasUrl,
+    //   fuelRange: state.fRange,
+    // };
+
+    return {
+      ...state,
+      jobList: action.payload,
+      single_loading: false,
+      projectForm: {
+        client: "",
+        valetFullName: "",
+        valetPhone: "",
+        valetEmail: "",
+        valetId: "",
+        make: "",
+        model: "",
+        regNo: "",
+        vin: "",
+        engNo: "",
+        milleageIn: "",
+        milleageUnit: "",
+        color: "",
+        carYear: "",
+        insurance: "",
+        dateIn: "",
+        timeIn: "",
+        status: "in Progress",
+        startDate: "",
+        expectedDate: "",
+        roadTest: "",
+        towingDetails: "",
+        insuranceCovered: "",
+        bookNotes: "",
+        accident: "",
+        workRequest: "",
+        fuelRange: "",
+        toggleStates: {
+          wiper: false,
+          mirrors: false,
+          badge: false,
+          spareWheel: false,
+          doorLocks: false,
+          fireExt: false,
+          tankCap: false,
+          tankLid: false,
+          relay: false,
+          horns: false,
+          oilFilter: false,
+          radCap: false,
+          battMk: false,
+          arielAuto: false,
+          seatBelts: false,
+          radioSpeaker: false,
+          rearMirror: false,
+          wSpanner: false,
+          wTriangle: false,
+          bootMats: false,
+        },
+      },
+    };
+  }
   if (action.type === NEW_CLIENT_FORM) {
     const { name, value } = action.payload;
     return { ...state, clientForm: { ...state.clientForm, [name]: value } };
   }
   if (action.type === CHANGE_TOGGLE_STATE) {
     const { id, enabled } = action.payload;
-    return { ...state, toggleStates: { ...state.toggleStates, [id]: enabled } };
-  }
-  if (action.type === ADD_NEW_CLIENT) {
-    const { names, phone, email, address, gender } = state.clientForm;
-    let addClient = {};
-    if (names && phone && email && address && gender) {
-      addClient = {
-        clientName: names,
-        clientEmail: email,
-        clientPhone: phone,
-        clientAddress: address,
-        clientGender: gender,
-        clientDate: formattedDate,
-      };
-    } else {
-      return { ...state };
-    }
     return {
       ...state,
-      clientList: [...state.clientList, addClient],
+      projectForm: {
+        ...state.projectForm,
+        toggleStates: {
+          ...state.projectForm.toggleStates,
+          [id]: enabled,
+        },
+      },
+    };
+  }
+  if (action.type === ADD_NEW_CLIENT) {
+    console.log(action.payload);
+    // const { names, phone, email, address, gender } = state.clientForm;
+    // let addClient = {};
+    // if (names && phone && email && address && gender) {
+    //   addClient = {
+    //     clientName: names,
+    //     clientEmail: email,
+    //     clientPhone: phone,
+    //     clientAddress: address,
+    //     clientGender: gender,
+    //     clientDate: formattedDate,
+    //   };
+    // } else {
+    //   return { ...state };
+    // }
+    return {
+      ...state,
+      clientList: [...state.clientList, action.payload],
       clientForm: {
         ...state.clientForm,
         names: "",
@@ -127,11 +378,11 @@ const form_reducer = (state, action) => {
     };
   }
   if (action.type === NEW_VEHICLE_TOGGLE) {
-      const { id, enabled } = action.payload;
-      return {
-        ...state,
-        newVehicleForm: { ...state.newVehicleForm, [id]: enabled },
-      };
+    const { id, enabled } = action.payload;
+    return {
+      ...state,
+      newVehicleForm: { ...state.newVehicleForm, [id]: enabled },
+    };
   }
   if (action.type === NEW_QUOTE_FORM) {
     const { name, value } = action.payload;
