@@ -1,10 +1,49 @@
-import React from "react";
+import React,{useState} from "react";
 import DetailsPage from ".";
 import { RxDotFilled } from "react-icons/rx";
 import { BsThreeDots } from "react-icons/bs";
-
+import { HiOutlinePencil } from "react-icons/hi";
+import { TbMessageCircle } from "react-icons/tb";
+import { BsTrash } from "react-icons/bs";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import { TiCancel } from "react-icons/ti";
+import MoreButton from "@/components/MoreButton";
 
 const Projects = () => {
+  const [show, setShow] = useState(false);
+
+  const extraInfo = [
+    { name: "Edit Details", icon: <HiOutlinePencil /> },
+    {
+      name: "Create Job Card",
+      icon: <HiOutlineMenuAlt2 />,
+      state: "setJobCard",
+    },
+    { name: "Create Quote", icon: <HiOutlineMenuAlt2 /> },
+    {
+      name: "Create Invoice",
+      icon: <HiOutlineMenuAlt2 />,
+    },
+    {
+      name: "Cancel Project",
+      icon: <TiCancel />,
+    },
+    { name: "Delete", icon: <BsTrash /> },
+  ];
+  const handleClick = (index) => {
+    // Perform different setState functions based on index
+    if (index === 0) {
+      setInfo(true);
+    } else if (index === 1) {
+      setJobCard(true);
+    } else if (index === 2) {
+      setQuote(true);
+    } else if (index === 3) {
+      setInvoice(true);
+    } else {
+      return "none";
+    }
+  };
   return (
     <DetailsPage>
       <div className="px-6">
@@ -69,7 +108,17 @@ const Projects = () => {
               <p className="text-xs font-bold">In Progress</p>
             </div>
             <div>
-              <BsThreeDots className="cursor-pointer text-xl" />
+              <BsThreeDots
+                className="cursor-pointer text-xl"
+                onClick={() => setShow(!show)}
+              />
+              {show && (
+                <MoreButton
+                  href={"/jobs/99/details"}
+                  extraInfo={extraInfo}
+                  handleClick={handleClick}
+                />
+              )}
             </div>
           </div>
         </div>

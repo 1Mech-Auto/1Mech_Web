@@ -22,7 +22,7 @@ export default function Client({ clients, index, handleClick, extraInfo }) {
     >
       <div>{index + 1}</div>
       <div className="flex items-center gap-2">
-        <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
+        <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block uppercase">
           {checkInitials(names)}
         </p>
         <div>

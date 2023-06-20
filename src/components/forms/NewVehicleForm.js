@@ -1,6 +1,5 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdOutlineCancel } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsShieldCheck } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
@@ -134,9 +133,6 @@ const Form1 = ({ handleChangeNext }) => {
                         address: address,
                         gender: gender,
                       })}
-                      // onClick={() =>
-                      // handleSelectClient(id, client.clientDetails)
-                      // }
                       className="h-4 p-5"
                       key={i}
                     >
@@ -145,11 +141,6 @@ const Form1 = ({ handleChangeNext }) => {
                   );
                 })}
             </optgroup>
-            {/* <option>All clients</option>
-            <option>All team members</option>
-            <option>selected team members</option>
-            <option>enter number manually</option>
-            <option>filtered clients by car make / model</option> */}
           </select>
           {errors.client && touched.client && (
             <VehicleRequiredPrompt message={errors.client} />
@@ -878,36 +869,6 @@ const NewVehicleForm = ({ open, setOpen }) => {
                     </ul>
                   </div>
                   {currentPage.component}
-                  {/* <form className="flex items-center mt-auto border py-4 bg-gray-200 justify-start gap-4 px-4">
-                    {nextPage > 0 && (
-                      <article
-                        className="flex items-center gap-2 px-4 py-3 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                        onClick={handleChangePrev}
-                      >
-                        <p className="text-xs">Prev</p>
-                      </article>
-                    )}
-
-                    {nextPage !== stages.length - 1 && (
-                      <button
-                        disabled={isSubmitting}
-                        type="submit"
-                        className="flex items-center gap-2 px-4 py-3 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                        onClick={() => console.log(errors, values)}
-                      >
-                        <p className="text-xs">Next</p>
-                      </button>
-                    )}
-                    {nextPage === stages.length - 1 && (
-                      <button
-                        type="submit"
-                        className="flex items-center gap-2 px-4 py-3 bg-blue-700 rounded-md border border-blue-400 font-bold text-white cursor-pointer"
-                        onClick={addProjectForm}
-                      >
-                        <p className="text-xs">Submit</p>
-                      </button>
-                    )}
-                  </form> */}
                 </div>
               </Dialog.Panel>
             </Transition.Child>

@@ -66,7 +66,7 @@ const DetailsPage = ({ children }) => {
       {info && <NewInfoUpdate info={info} setInfo={setInfo} />}
       {sms && <NewSMSForm sms={sms} setSms={setSms} />}
 
-      <section className="flex justify-between mb-6 px-6 sm:px-0">
+      <section className="flex justify-between mb-6 px-6 sm:px-0 ">
         <div className="mb-6">
           <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
             Clients / Placeholder
@@ -331,7 +331,7 @@ const DetailsPage = ({ children }) => {
               ></div>
             </Link>
           </div>
-          <div>{children}</div>
+          <div className="">{children}</div>
         </div>
       </div>
     </Layout>
