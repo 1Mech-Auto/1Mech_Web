@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import DetailsPage from ".";
 import { RxDotFilled } from "react-icons/rx";
 import { BsThreeDots } from "react-icons/bs";
@@ -8,9 +8,17 @@ import { BsTrash } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { TiCancel } from "react-icons/ti";
 import MoreButton from "@/components/MoreButton";
+import NewInvoiceForm from "@/components/forms/NewInvoiceForm";
+import NewJobCard from "@/components/forms/NewJobCard";
+import NewQuotesForm from "@/components/forms/NewQuotesForm";
+import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
 
 const Projects = () => {
   const [show, setShow] = useState(false);
+  const [invoice, setInvoice] = useState(false);
+  const [jobCard, setJobCard] = useState(false);
+  const [quote, setQuote] = useState(false);
+  const [info, setInfo] = useState(false);
 
   const extraInfo = [
     { name: "Edit Details", icon: <HiOutlinePencil /> },
@@ -47,6 +55,12 @@ const Projects = () => {
   return (
     <DetailsPage>
       <div className="px-6">
+        {invoice && (
+          <NewInvoiceForm invoice={invoice} setInvoice={setInvoice} />
+        )}
+        {jobCard && <NewJobCard jobCard={jobCard} setJobCard={setJobCard} />}
+        {quote && <NewQuotesForm quote={quote} setQuote={setQuote} />}
+        {info && <NewInfoUpdate info={info} setInfo={setInfo} />}
         <div className="py-6 md:col-span-2">
           <h3 className="text-xl font-semibold">Client Projects</h3>
           <p className="text-sm text-[#526484]">
