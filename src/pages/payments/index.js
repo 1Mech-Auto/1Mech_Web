@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../../layout/Layout";
 import { BsThreeDots } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
@@ -10,11 +10,12 @@ import MoreButton from "@/components/MoreButton";
 import { HiOutlinePencil } from "react-icons/hi";
 import { BsTrash, BsEye } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import PaymentList from "@/components/PaymentList";
 
 const Payments = () => {
   const [payment, setPayment] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
-  const { paymentsList } = useFormContext();
+  const { paymentsList, fetchPayment } = useFormContext();
   const [show, setShow] = useState(false);
   const checkInitials = (fullName) => {
     const words = fullName;
@@ -33,6 +34,10 @@ const Payments = () => {
       setPayment(true);
     }
   };
+  useEffect(() => {
+    fetchPayment();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Layout>
@@ -148,55 +153,13 @@ const Payments = () => {
           {paymentsList &&
             paymentsList.map((payment, index) => {
               return (
-                <div
+                <PaymentList
                   key={index}
-                  className="font-medium text-[#364a63] text-sm grid grid-cols-[6%,80%,5%] md:grid-cols-[3em,15em,7em,4em,7em,9em,7em,3em] lg:grid-cols-[3%,25%,15%,10%,12%,14%,10%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
-                >
-                  <div>{index + 1}</div>
-                  <div className="flex items-center gap-2">
-                    <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
-                      {/* {checkInitials(payment.job)} */}
-                      ME
-                    </p>
-                    <div>
-                      <h2 className="font-medium">{payment.job}</h2>
-                      <p className="text-xs text-[#8094ae]">+2348167821219</p>
-                    </div>
-                  </div>
-                  <div className="hidden md:block">
-                    <h3 className="font-medium">TOYOTA Sienna</h3>
-                    <p className="text-xs text-[#8094ae]">AAA808EJ</p>
-                  </div>
-                  <div className="hidden md:block">
-                    <p className="font-medium">Invoice #117</p>
-                  </div>
-                  <div className="hidden md:block text-[#8094ae]">
-                    <p>{payment.paymentDate}</p>
-                  </div>
-                  <div className="font-medium hidden md:block">
-                    <p>N{payment.amount}</p>
-                    <p className="text-[#8094ae] text-xs">
-                      {payment.paymentMethod}
-                    </p>
-                  </div>
-                  <div className="py-1.5 px-2.5 text-[#1ee0ac] bg-[#1ee0ac26] rounded-2xl mr-auto items-center gap-1 hidden md:flex">
-                    <RxDotFilled className="text-lg" />
-                    <p className="text-xs font-bold">Paid</p>
-                  </div>
-                  <div>
-                    <BsThreeDots
-                      className="cursor-pointer text-xl"
-                      onClick={() => setShow(!show)}
-                    />
-                    {show && (
-                      <MoreButton
-                        href={"/invoices/id"}
-                        extraInfo={extraInfo}
-                        handleClick={handleClick}
-                      />
-                    )}
-                  </div>
-                </div>
+                  payment={payment}
+                  index={index}
+                  handleClick={handleClick}
+                  extraInfo={extraInfo}
+                />
               );
             })}
         </div>

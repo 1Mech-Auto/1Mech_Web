@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import JobDetails from ".";
 import { BiPlus, BiTask } from "react-icons/bi";
 import { BsThreeDots, BsFileMedical } from "react-icons/bs";
@@ -6,12 +6,60 @@ import NewQuotesForm from "@/components/forms/NewQuotesForm";
 import { RiArrowLeftRightFill } from "react-icons/ri";
 import NewWorkRequestedForm from "@/components/forms/NewWorkRequestedForm";
 import JobCardImport from "@/components/JobCardImport";
+import { FiDownloadCloud, FiMail } from "react-icons/fi";
+import { HiOutlinePencil } from "react-icons/hi";
+import { BsTrash, BsEye } from "react-icons/bs";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import QuoteList from "@/components/QuoteList";
+import { useFormContext } from "@/context/form_context";
 
 const Quotes = () => {
   const [quote, setQuote] = useState(false);
   const [show, setShow] = useState(false);
   const [workRequested, setWorkRequested] = useState(false);
   const [jobImport, setJobImport] = useState(false);
+
+  const [singleQuote, setSingleQuote] = useState([]);
+  const { quoteList, singleJob } = useFormContext();
+  const id = singleJob?.id;
+
+  const fetchSingleQuote = (id) => {
+    const quote = quoteList.filter((p) => p.quoteForm.job.id === id);
+    setSingleQuote(quote);
+    console.log(quote);
+  };
+  useEffect(() => {
+    fetchSingleQuote(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
+  const extraInfo = [
+    { name: "Download", icon: <FiDownloadCloud /> },
+    {
+      name: "Send Via Email",
+      icon: <FiMail />,
+    },
+    { name: "Edit Quote", icon: <HiOutlinePencil /> },
+    {
+      name: "Convert to Invoice",
+      icon: <HiOutlineMenuAlt2 />,
+    },
+    { name: "Delete Quote", icon: <BsTrash /> },
+  ];
+  const handleClick = (index) => {
+    // Perform different setState functions based on index
+    if (index === 0) {
+      setInfo(true);
+    } else if (index === 1) {
+      setJobCard(true);
+    } else if (index === 2) {
+      setQuote(true);
+    } else if (index === 3) {
+      setInvoice(true);
+    } else {
+      return "none";
+    }
+  };
 
   return (
     <JobDetails>
@@ -94,7 +142,7 @@ const Quotes = () => {
             <div className="hidden md:block">Total</div>
             <div></div>
           </main>
-          <div className="font-medium text-[#364a63] text-sm grid grid-cols-[7%,75%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[4%,22%,20%,10%,15%,20%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
+          {/* <div className="font-medium text-[#364a63] text-sm grid grid-cols-[7%,75%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[4%,22%,20%,10%,15%,20%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
             <div>1</div>
             <div className="flex items-center gap-2">
               <p>TOYOTA Camry</p>
@@ -114,7 +162,19 @@ const Quotes = () => {
             <div>
               <BsThreeDots className="cursor-pointer text-xl" />
             </div>
-          </div>
+          </div> */}
+          {singleQuote &&
+            singleQuote.map((quote, index) => {
+              return (
+                <QuoteList
+                  key={index}
+                  quote={quote}
+                  index={index}
+                  handleClick={handleClick}
+                  extraInfo={extraInfo}
+                />
+              );
+            })}
         </div>
       </div>
     </JobDetails>

@@ -32,6 +32,7 @@ const JobDetails = ({ children }) => {
   const query = router.query;
   const id = query.jobId;
   const {
+    jobList,
     fetchSingleJob,
     singleJob,
     single_loading: loading,
@@ -41,7 +42,7 @@ const JobDetails = ({ children }) => {
   useEffect(() => {
     fetchSingleJob(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
 
   if (loading) {
     return (

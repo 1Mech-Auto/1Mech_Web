@@ -1,15 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import JobDetails from ".";
 import { RiInformationLine } from "react-icons/ri";
 import { BiPlus } from "react-icons/bi";
 import NewJobCard from "@/components/forms/NewJobCard";
+import JobCardList from "@/components/JobCardList";
+import { useFormContext } from "@/context/form_context";
 
 const JobCard = () => {
   const [jobCard, setJobCard] = useState(false);
+  const { singleJob, updateProjectJobCard, fetch } = useFormContext();
+  const projectName = singleJob?.jobForm;
+  const id = singleJob?.id;
+  useEffect(() => {
+    updateProjectJobCard();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   return (
     <JobDetails>
-      {jobCard && <NewJobCard jobCard={jobCard} setJobCard={setJobCard} />}
+      {jobCard && (
+        <NewJobCard
+          jobCard={jobCard}
+          setJobCard={setJobCard}
+          projectName={projectName}
+        />
+      )}
 
       <div className="px-6">
         <div className="flex items-center justify-between">
@@ -29,10 +44,16 @@ const JobCard = () => {
             <span className="hidden sm:block">Create Job Card</span>
           </button>
         </div>
-        <div className="min-h-[30vh] flex flex-col items-center justify-center gap-2 text-[#8094ae]">
-          <RiInformationLine className="text-5xl" />
-          <p>No job card created yet!t</p>
-        </div>
+        {singleJob?.jobCardList?.length >= 1 ? (
+          singleJob?.jobCardList?.map((job, index) => {
+            return <JobCardList key={index} job={job} index={index} />;
+          })
+        ) : (
+          <div className="min-h-[30vh] flex flex-col items-center justify-center gap-2 text-[#8094ae]">
+            <RiInformationLine className="text-5xl" />
+            <p>No job card created yet!t</p>
+          </div>
+        )}
       </div>
     </JobDetails>
   );

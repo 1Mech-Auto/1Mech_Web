@@ -56,6 +56,10 @@ import {
   ADD_TEAM_LIST,
   SELECT_JOB_CLIENT,
   SINGLE_ERROR_BEGIN,
+  ADD_TO_INVOICELIST,
+  ADD_TO_PAYMENTLIST,
+  ADD_TO_QUOTELIST,
+  UPDATE_PROJECT_JOBCARD,
 } from "@/action";
 const initialState = {
   // showModal1: true,
@@ -103,7 +107,16 @@ const initialState = {
   },
   invoiceList: [],
   paymentsForm: {
-    job: "",
+    job: {
+      id: 1,
+      make: "toyota",
+      regNo: "23DHDH56",
+    },
+    client: {
+      id: 300,
+      fullName: "",
+      phone: "",
+    },
     amount: "",
     paymentDate: "",
     paymentMethod: "Cash",
@@ -151,7 +164,7 @@ const initialState = {
   },
   notesList: [],
   jobCardForm: {
-    project: "",
+    project: 0,
     body: "",
     mechanical: "",
     electrical: "",
@@ -293,6 +306,36 @@ const FormContext = React.createContext();
 export const FormProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // fetching from data local api
+
+  const fetchQuote = async () => {
+    try {
+      const res = await fetch("api/quote");
+      const data = await res.json();
+      dispatch({ type: ADD_TO_QUOTELIST, payload: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchInvoice = async () => {
+    try {
+      const res = await fetch("api/invoice");
+      const data = await res.json();
+      dispatch({ type: ADD_TO_INVOICELIST, payload: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchPayment = async () => {
+    try {
+      const res = await fetch("api/payment");
+      const data = await res.json();
+      dispatch({ type: ADD_TO_PAYMENTLIST, payload: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const fetchClients = async () => {
     dispatch({ type: ADD_CLIENT_BEGIN });
     try {
@@ -301,6 +344,48 @@ export const FormProvider = ({ children }) => {
       dispatch({ type: ADD_T0_CLIENT_LIST, payload: data });
     } catch (err) {
       console.log(err);
+    }
+  };
+  const fetchJobs = async () => {
+    try {
+      const res = await fetch("api/jobs");
+      const data = await res.json();
+      dispatch({ type: ADD_T0_JOB_LIST, payload: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchInsurance = async () => {
+    try {
+      const res = await fetch("api/insurance");
+      const data = await res.json();
+      dispatch({ type: ADD_INSURANCE_LIST, payload: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchTeamMembers = async () => {
+    try {
+      const res = await fetch("api/team");
+      const data = await res.json();
+      dispatch({ type: ADD_TEAM_LIST, payload: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  //end of fetching from data local api
+
+  //fetching single page from api
+  const fetchSingleJob = async (id) => {
+    dispatch({ type: SINGLE_CLIENT_BEGIN });
+    try {
+      const response = await fetch(`/api/jobs/page?id=${id}`);
+      const data = await response.json();
+      dispatch({ type: ADD_SINGLE_JOB, payload: data });
+    } catch (error) {
+      dispatch({ type: SINGLE_ERROR_BEGIN });
+      console.error("Error fetching data:", error);
     }
   };
   const fetchSingleClient = async (id) => {
@@ -314,35 +399,7 @@ export const FormProvider = ({ children }) => {
       console.error("Error fetching data:", error);
     }
   };
-  const fetchJobs = async () => {
-    try {
-      const res = await fetch("api/jobs");
-      const data = await res.json();
-      dispatch({ type: ADD_T0_JOB_LIST, payload: data });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const fetchSingleJob = async (id) => {
-    dispatch({ type: SINGLE_CLIENT_BEGIN });
-    try {
-      const response = await fetch(`/api/jobs/page?id=${id}`);
-      const data = await response.json();
-      dispatch({ type: ADD_SINGLE_JOB, payload: data });
-    } catch (error) {
-      dispatch({ type: SINGLE_ERROR_BEGIN });
-      console.error("Error fetching data:", error);
-    }
-  };
-  const fetchInsurance = async () => {
-    try {
-      const res = await fetch("api/insurance");
-      const data = await res.json();
-      dispatch({ type: ADD_INSURANCE_LIST, payload: data });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+
   const fetchSingleInsurance = async (id) => {
     try {
       const response = await fetch(`/api/insurance/page?id=${id}`);
@@ -350,15 +407,6 @@ export const FormProvider = ({ children }) => {
       dispatch({ type: ADD_SINGLE_INSURANCE, payload: data });
     } catch (error) {
       console.error("Error fetching data:", error);
-    }
-  };
-  const fetchTeamMembers = async () => {
-    try {
-      const res = await fetch("api/team");
-      const data = await res.json();
-      dispatch({ type: ADD_TEAM_LIST, payload: data });
-    } catch (err) {
-      console.log(err);
     }
   };
   const fetchSingleMember = async (id) => {
@@ -370,36 +418,50 @@ export const FormProvider = ({ children }) => {
       console.error("Error fetching data:", error);
     }
   };
-  const handleSelectClient = (e) => {
-    const value = JSON.parse(e.target.value);
-    dispatch({ type: SELECT_JOB_CLIENT, payload: value });
-  };
-  const saveImage = (img) => {
-    dispatch({ type: CANVAS_URL, payload: img });
-    console.log(img);
-  };
-  const fuelRange = (e) => {
-    const range = e.target.value;
-    dispatch({ type: FUEL_RANGE, payload: range });
+  //end of fetching single pages from api
+
+  //posting data to api
+  const addNewNotes = async () => {
+    try {
+      const response = await fetch("/api/client/addNotes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          clientId: state.singleClient.id,
+          note: state.notesForm.note,
+        }),
+      });
+
+      const data = await response.json();
+      dispatch({ type: ADD_NEW_NOTES, payload: data });
+      console.log(data);
+    } catch (error) {
+      console.error("Error adding note:", error);
+    }
   };
 
-  const newClientForm = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    dispatch({ type: NEW_CLIENT_FORM, payload: { name, value } });
+  const addNewJobCard = async () => {
+    try {
+      const response = await fetch("/api/jobs/addJobCard", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          jobCard: state.jobCardForm,
+        }),
+      });
+
+      const data = await response.json();
+      dispatch({ type: ADD_NEW_JOBCARD, payload: data });
+      console.log(data);
+    } catch (error) {
+      console.error("Error adding note:", error);
+    }
   };
 
-  const handleToggleChange = (id, newEnabled) => {
-    dispatch({
-      type: CHANGE_TOGGLE_STATE,
-      payload: { id, enabled: newEnabled },
-    });
-  };
-  const newProjectForm = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    dispatch({ type: NEW_PROJECT_FORM, payload: { name, value } });
-  };
   const addProjectForm = async () => {
     try {
       const response = await fetch("/api/jobs", {
@@ -433,6 +495,39 @@ export const FormProvider = ({ children }) => {
       console.log(err);
     }
   };
+  //end of posting data to api
+
+  const handleSelectClient = (e) => {
+    const value = JSON.parse(e.target.value);
+    dispatch({ type: SELECT_JOB_CLIENT, payload: value });
+  };
+  const saveImage = (img) => {
+    dispatch({ type: CANVAS_URL, payload: img });
+    console.log(img);
+  };
+  const fuelRange = (e) => {
+    const range = e.target.value;
+    dispatch({ type: FUEL_RANGE, payload: range });
+  };
+
+  const newClientForm = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    dispatch({ type: NEW_CLIENT_FORM, payload: { name, value } });
+  };
+
+  const handleToggleChange = (id, newEnabled) => {
+    dispatch({
+      type: CHANGE_TOGGLE_STATE,
+      payload: { id, enabled: newEnabled },
+    });
+  };
+  const newProjectForm = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    dispatch({ type: NEW_PROJECT_FORM, payload: { name, value } });
+  };
+
   const newInsuranceData = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -502,16 +597,14 @@ export const FormProvider = ({ children }) => {
     const value = e.target.value;
     dispatch({ type: NEW_NOTES_FORM, payload: { name, value } });
   };
-  const addNewNotes = () => {
-    dispatch({ type: ADD_NEW_NOTES });
-  };
+
   const newJobCardData = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     dispatch({ type: NEW_JOBCARD_FORM, payload: { name, value } });
   };
-  const addNewJobCard = () => {
-    dispatch({ type: ADD_NEW_JOBCARD });
+  const updateProjectJobCard = () => {
+    dispatch({ type: UPDATE_PROJECT_JOBCARD });
   };
   const newTaskData = (e) => {
     const name = e.target.name;
@@ -577,13 +670,21 @@ export const FormProvider = ({ children }) => {
   };
   // functions to load when pages start
   useEffect(() => {
+    fetchInvoice();
+    fetchPayment();
     fetchClients();
+    fetchJobs();
+    fetchQuote();
   }, []);
   return (
     <FormContext.Provider
       value={{
         ...state,
         fetchClients,
+        updateProjectJobCard,
+        fetchQuote,
+        fetchPayment,
+        fetchInvoice,
         fetchSingleClient,
         fetchJobs,
         fetchSingleJob,

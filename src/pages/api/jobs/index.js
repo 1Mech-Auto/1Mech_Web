@@ -5,20 +5,12 @@ export default function handler(req, res) {
     const data = { message: "This is a GET request" };
     res.status(200).json(jobList);
   } else if (req.method === "POST") {
-    // const clientForm = req.body.clientForm;
-    // const newClient = {
-    //   id: Date.now(),
-    //   clientDetails: clientForm,
-    //   // date: formattedDate,
-    // };
-    // clientsList.push(newClient);
-    // res.status(201).json(newClient);
-    // Handle POST request
     const { body } = req;
     const data = { message: "This is a POST request", body };
     const jobForm = req.body.jobForm;
     const newForm = {
       id: Date.now(),
+      jobCardList: [],
       jobForm: jobForm,
     };
     jobList.push(newForm);

@@ -16,6 +16,7 @@ export default function handler(req, res) {
     const newClient = {
       id: Date.now(),
       clientDetails: clientForm,
+      notesList: [],
       date: formattedDate,
     };
     clientsList.push(newClient);

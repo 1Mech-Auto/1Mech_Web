@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DetailsPage from ".";
-import { RxDotFilled } from "react-icons/rx";
-import { BsThreeDots } from "react-icons/bs";
 import { HiOutlinePencil } from "react-icons/hi";
-import { TbMessageCircle } from "react-icons/tb";
 import { BsTrash } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { TiCancel } from "react-icons/ti";
-import MoreButton from "@/components/MoreButton";
 import NewInvoiceForm from "@/components/forms/NewInvoiceForm";
 import NewJobCard from "@/components/forms/NewJobCard";
 import NewQuotesForm from "@/components/forms/NewQuotesForm";
 import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
+import { useFormContext } from "@/context/form_context";
+import JobsList from "@/components/JobsList";
+import { TbMessageCircle } from "react-icons/tb";
+import MoreButton from "@/components/MoreButton";
+import { RxDotFilled } from "react-icons/rx";
+import { BsThreeDots } from "react-icons/bs";
 
 const Projects = () => {
   const [show, setShow] = useState(false);
@@ -19,6 +21,20 @@ const Projects = () => {
   const [jobCard, setJobCard] = useState(false);
   const [quote, setQuote] = useState(false);
   const [info, setInfo] = useState(false);
+  const [jobs, setJobs] = useState([]);
+  const { jobList, singleClient } = useFormContext();
+  const id = singleClient?.id;
+
+  const fetchSingleJobs = (id) => {
+    const job = jobList.filter((j) => j.jobForm.client.id === id);
+    setJobs(job);
+    console.log(job);
+  };
+
+  useEffect(() => {
+    fetchSingleJobs(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const extraInfo = [
     { name: "Edit Details", icon: <HiOutlinePencil /> },
@@ -93,7 +109,7 @@ const Projects = () => {
             <div>Status</div>
             <div></div>
           </main>
-          <div className="font-normal text-[#364a63] text-[13px] grid grid-cols-[3em,15em,10em,11em,8em,6em,9em,3em] lg:grid-cols-[3%,25%,15%,20%,15%,10%,14%,4%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 hover:shadow-hoverPurple">
+          {/* <div className="font-normal text-[#364a63] text-[13px] grid grid-cols-[3em,15em,10em,11em,8em,6em,9em,3em] lg:grid-cols-[3%,25%,15%,20%,15%,10%,14%,4%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 hover:shadow-hoverPurple">
             <div>1</div>
             <div className="flex items-center gap-2">
               <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
@@ -134,7 +150,19 @@ const Projects = () => {
                 />
               )}
             </div>
-          </div>
+          </div> */}
+          {jobs &&
+            jobs.map((job, index) => {
+              return (
+                <JobsList
+                  key={index}
+                  jobs={job}
+                  index={index}
+                  handleClick={handleClick}
+                  extraInfo={extraInfo}
+                />
+              );
+            })}
         </div>
       </div>
     </DetailsPage>

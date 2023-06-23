@@ -146,7 +146,7 @@ const Jobs = () => {
             <div>Status</div>
             <div></div>
           </main>
-          <div className="font-normal text-[#364a63] text-[13px] grid grid-cols-[3em,15em,10em,11em,8em,6em,9em,3em] lg:grid-cols-[3%,25%,15%,20%,12%,8%,14%,4%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 hover:shadow-hoverPurple">
+          {/* <div className="font-normal text-[#364a63] text-[13px] grid grid-cols-[3em,15em,10em,11em,8em,6em,9em,3em] lg:grid-cols-[3%,25%,15%,20%,12%,8%,14%,4%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 hover:shadow-hoverPurple">
             <div>1</div>
             <div className="flex items-center gap-2">
               <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
@@ -187,7 +187,7 @@ const Jobs = () => {
                 />
               )}
             </div>
-          </div>
+          </div> */}
           {jobList &&
             jobList.map((jobs, index) => {
               return (
