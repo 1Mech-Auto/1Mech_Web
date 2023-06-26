@@ -19,7 +19,7 @@ export const newMessageSchema = yup.object().shape({
   sendTo: yup.string().required("required"),
 });
 export const newJobSchema = yup.object().shape({
-  project: yup.string().required("required"),
+  project: yup.number().required("required"),
 });
 export const newQuoteSchema = yup.object().shape({
   job: yup.string().required("required"),

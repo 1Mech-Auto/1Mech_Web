@@ -16,7 +16,7 @@ export const jobList = [
       valetId: "",
       make: "lexus",
       model: "",
-      regNo: "ksf-156-26j",
+      regNo: "ksf15626j",
       vin: "3TGSGUS7890JJ",
       engNo: "",
       milleageIn: "",
@@ -59,6 +59,15 @@ export const jobList = [
         bootMats: false,
       },
     },
+    jobCardList: [
+      {
+        project: "",
+        body: "dara olu",
+        mechanical: "1st project",
+        electrical: "",
+        approval: "",
+      },
+    ],
   },
   {
     id: 2,
@@ -77,7 +86,7 @@ export const jobList = [
       valetId: "",
       make: "honda",
       model: "",
-      regNo: "lsd-156-26j",
+      regNo: "lsd15626j",
       vin: "7HGSGUS7890JJ",
       engNo: "",
       milleageIn: "",
@@ -120,6 +129,15 @@ export const jobList = [
         bootMats: false,
       },
     },
+    jobCardList: [
+      {
+        project: "",
+        body: "fope first card",
+        mechanical: "1st job",
+        electrical: "",
+        approval: "",
+      },
+    ],
   },
   {
     id: 3,
@@ -138,7 +156,7 @@ export const jobList = [
       valetId: "",
       make: "toyota",
       model: "",
-      regNo: "YSd-156-26j",
+      regNo: "YSd15626j",
       vin: "6TGSGUS7890JJ",
       engNo: "",
       milleageIn: "",
@@ -181,6 +199,15 @@ export const jobList = [
         bootMats: false,
       },
     },
+    jobCardList: [
+      {
+        project: "",
+        body: "john rex",
+        mechanical: "1st job",
+        electrical: "",
+        approval: "",
+      },
+    ],
   },
   {
     id: 4,
@@ -199,7 +226,7 @@ export const jobList = [
       valetId: "",
       make: "Audi",
       model: "",
-      regNo: "GHH-156-26j",
+      regNo: "GHH15626j",
       vin: "&9GSGUS7890JJ",
       engNo: "",
       milleageIn: "",
@@ -242,5 +269,14 @@ export const jobList = [
         bootMats: false,
       },
     },
+    jobCardList: [
+      {
+        project: "",
+        body: "dara olu",
+        mechanical: "2nd job",
+        electrical: "",
+        approval: "",
+      },
+    ],
   },
 ];

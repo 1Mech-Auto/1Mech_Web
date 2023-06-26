@@ -1,10 +1,61 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import JobDetails from ".";
 import { BiPlus } from "react-icons/bi";
 import NewPaymentForm from "@/components/forms/NewPaymentForm";
+import { HiOutlinePencil } from "react-icons/hi";
+import { BsTrash } from "react-icons/bs";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import { TiCancel } from "react-icons/ti";
+import { useFormContext } from "@/context/form_context";
+import PaymentList from "@/components/PaymentList";
 
 const Payments = () => {
   const [payment, setPayment] = useState(false);
+  const [singlePayment, setSinglePayment] = useState([]);
+  const { paymentsList, singleJob } = useFormContext();
+  const id = singleJob.id;
+
+  const extraInfo = [
+    { name: "Edit Details", icon: <HiOutlinePencil /> },
+    {
+      name: "Create Job Card",
+      icon: <HiOutlineMenuAlt2 />,
+      state: "setJobCard",
+    },
+    { name: "Create Quote", icon: <HiOutlineMenuAlt2 /> },
+    {
+      name: "Create Invoice",
+      icon: <HiOutlineMenuAlt2 />,
+    },
+    {
+      name: "Cancel Project",
+      icon: <TiCancel />,
+    },
+    { name: "Delete", icon: <BsTrash /> },
+  ];
+  const handleClick = (index) => {
+    // Perform different setState functions based on index
+    if (index === 0) {
+      setInfo(true);
+    } else if (index === 1) {
+      setJobCard(true);
+    } else if (index === 2) {
+      setQuote(true);
+    } else if (index === 3) {
+      setInvoice(true);
+    } else {
+      return "none";
+    }
+  };
+  const fetchSinglePayment = (id) => {
+    const payment = paymentsList.filter((p) => p.paymentsForm.job.id === id);
+    setSinglePayment(payment);
+    console.log(payment);
+  };
+  useEffect(() => {
+    fetchSinglePayment(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   return (
     <JobDetails>
@@ -37,7 +88,21 @@ const Payments = () => {
             <p>Status</p>
           </section>
           <hr className="mb-3" />
-          <p className="text-xs text-center">It`s empty here!</p>
+          {singlePayment && singlePayment?.length >= 1 ? (
+            singlePayment.map((payment, index) => {
+              return (
+                <PaymentList
+                  key={index}
+                  payment={payment}
+                  index={index}
+                  handleClick={handleClick}
+                  extraInfo={extraInfo}
+                />
+              );
+            })
+          ) : (
+            <p className="text-xs text-center">It`s empty here!</p>
+          )}
         </div>
       </div>
     </JobDetails>

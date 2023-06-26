@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
@@ -9,7 +9,7 @@ import { useFormik } from "formik";
 import ValidateForm from "../ValidateForm";
 import SuccessPrompt from "../SuccessPrompt";
 
-const NewJobCard = ({ jobCard, setJobCard }) => {
+const NewJobCard = ({ jobCard, setJobCard, selectOptions, projectName }) => {
   const cancelButtonRef = useRef(null);
   const [success, setSuccess] = useState(false);
   const {
@@ -91,31 +91,53 @@ const NewJobCard = ({ jobCard, setJobCard }) => {
                     className="mt-3 grid gap-8 p-4 px-6 "
                     onSubmit={handleSubmit}
                   >
-                    <div className="text-sm grid gap-2 relative">
-                      <label className="text-md font-semibold">
-                        Select Project
-                      </label>
-                      <select
-                        name="project"
-                        value={values.project}
-                        onChange={(e) => {
-                          handleChange(e);
-                          newJobCardData(e);
-                        }}
-                        onBlur={handleBlur}
-                        className={`${
-                          errors.project && touched.project
-                            ? "outline-none border border-red-800 text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                            : "outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
-                        }`}
-                      >
-                        <option>Select Project</option>
-                        <option>All clients</option>
-                      </select>
-                      {errors.project && touched.project && (
-                        <ValidateForm error={errors.project} />
-                      )}
-                    </div>
+                    {selectOptions?.length >= 1 ? (
+                      <div className="text-sm grid gap-2 relative">
+                        <label className="text-md font-semibold">
+                          Select Project
+                        </label>
+                        <select
+                          type="number"
+                          name="project"
+                          value={values.project}
+                          onChange={(e) => {
+                            handleChange(e);
+                            newJobCardData(e);
+                          }}
+                          onBlur={handleBlur}
+                          className={`${
+                            errors.project && touched.project
+                              ? "outline-none border border-red-800 text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                              : "outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
+                          }`}
+                        >
+                          <option className="text-md font-semibold">
+                            Select Project
+                          </option>
+                          {selectOptions.map((job, index) => {
+                            const { make, regNo } = job.jobForm;
+                            const id = parseInt(job?.id, 10);
+                            return (
+                              <option value={id} key={index}>
+                                {make} - {regNo}
+                              </option>
+                            );
+                          })}
+                        </select>
+                        {errors.project && touched.project && (
+                          <ValidateForm error={errors.project} />
+                        )}
+                      </div>
+                    ) : (
+                      <p className="lowercase">
+                        <span className="capitalize">Create</span> a project job
+                        card for{" "}
+                        <span className="uppercase font-bold">
+                          {projectName?.make}
+                        </span>
+                        -<span className="font-bold">{projectName?.regNo}</span>
+                      </p>
+                    )}
                     <div className="text-sm grid gap-3">
                       <label className="text-md font-semibold">
                         Body Report

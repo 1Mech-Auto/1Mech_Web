@@ -54,7 +54,12 @@ import {
   ADD_TEAM_LIST,
   SELECT_JOB_CLIENT,
   SINGLE_ERROR_BEGIN,
+  ADD_TO_INVOICELIST,
+  ADD_TO_PAYMENTLIST,
+  ADD_TO_QUOTELIST,
+  UPDATE_PROJECT_JOBCARD,
 } from "@/action";
+import { parse } from "postcss";
 const date = new Date();
 const options = { month: "long", day: "numeric", year: "numeric" };
 let formattedDate = date.toLocaleDateString("en-US", options);
@@ -67,6 +72,11 @@ const dateConvert = (date) => {
 };
 
 const form_reducer = (state, action) => {
+  if (action.type === UPDATE_PROJECT_JOBCARD) {
+    const value = state.singleJob.id;
+    console.log(value);
+    return { ...state, jobCardForm: { ...state.jobCardForm, project: value } };
+  }
   if (action.type === SELECT_JOB_CLIENT) {
     console.log(action.payload);
     const { id, fullName, phone, address, gender, email } = action.payload;
@@ -90,6 +100,24 @@ const form_reducer = (state, action) => {
     return {
       ...state,
       teamList: action.payload,
+    };
+  }
+  if (action.type === ADD_TO_PAYMENTLIST) {
+    return {
+      ...state,
+      paymentsList: action.payload,
+    };
+  }
+  if (action.type === ADD_TO_INVOICELIST) {
+    return {
+      ...state,
+      invoiceList: action.payload,
+    };
+  }
+  if (action.type === ADD_TO_QUOTELIST) {
+    return {
+      ...state,
+      quoteList: action.payload,
     };
   }
   if (action.type === ADD_SINGLE_TEAM) {
@@ -118,11 +146,11 @@ const form_reducer = (state, action) => {
       single_error: false,
     };
   }
-  if(action.type === SINGLE_ERROR_BEGIN){
-    return{
+  if (action.type === SINGLE_ERROR_BEGIN) {
+    return {
       ...state,
       single_error: true,
-    }
+    };
   }
   if (action.type === ADD_CLIENT_BEGIN) {
     return {
@@ -180,61 +208,6 @@ const form_reducer = (state, action) => {
     };
   }
   if (action.type === ADD_PROJECT_FORM) {
-    // let project = {};
-    // project = {
-    //   client: state.projectForm.client,
-    //   valetFullName: state.projectForm.valetFullName,
-    //   valetPhone: state.projectForm.valetPhone,
-    //   valetEmail: state.projectForm.valetEmail,
-    //   valetId: state.projectForm.valetId,
-    //   make: state.projectForm.make,
-    //   model: state.projectForm.make,
-    //   regNo: state.projectForm.regNo,
-    //   vin: state.projectForm.vin,
-    //   engNo: state.projectForm.engNo,
-    //   milleageIn: state.projectForm.milleageIn,
-    //   milleageUnit: state.projectForm.milleageUnit,
-    //   color: state.projectForm.color,
-    //   carYear: state.projectForm.carYear,
-    //   insurance: state.projectForm.insurance,
-    //   dateIn: state.projectForm.dateIn,
-    //   timeIn: state.projectForm.timeIn,
-    //   status: state.projectForm.status,
-    //   startDate: state.projectForm.startDate,
-    //   expectedDate: state.projectForm.expectedDate,
-    //   roadTest: state.projectForm.roadTest,
-    //   towingDetails: state.projectForm.towingDetails,
-    //   insuranceCovered: state.projectForm.insuranceCovered,
-    //   bookNotes: state.projectForm.bookNotes,
-    //   accident: state.projectForm.accident,
-    //   workRequest: state.projectForm.workRequest,
-    //   fuelRange: state.projectForm.fuelRange,
-    //   toggleStates: {
-    //     wiper: state.projectForm.toggleStates.wiper,
-    //     mirrors: state.projectForm.toggleStates.mirrors,
-    //     badge: state.projectForm.toggleStates.badge,
-    //     spareWheel: state.projectForm.toggleStates.spareWheel,
-    //     doorLocks: state.projectForm.toggleStates.doorLocks,
-    //     fireExt: state.projectForm.toggleStates.fireExt,
-    //     tankCap: state.projectForm.toggleStates.tankCap,
-    //     tankLid: state.projectForm.toggleStates.tankLid,
-    //     relay: state.projectForm.toggleStates.relay,
-    //     horns: state.projectForm.toggleStates.horns,
-    //     oilFilter: state.projectForm.toggleStates.oilFilter,
-    //     radCap: state.projectForm.toggleStates.radCap,
-    //     battMk: state.projectForm.toggleStates.battMk,
-    //     arielAuto: state.projectForm.toggleStates.arielAuto,
-    //     seatBelts: state.projectForm.toggleStates.seatBelts,
-    //     radioSpeaker: state.projectForm.toggleStates.radioSpeaker,
-    //     rearMirror: state.projectForm.toggleStates.rearMirror,
-    //     wSpanner: state.projectForm.toggleStates.wSpanner,
-    //     wTriangle: state.projectForm.toggleStates.wTriangle,
-    //     bootMats: state.projectForm.toggleStates.bootMats,
-    //   },
-    //   image: state.canvasUrl,
-    //   fuelRange: state.fRange,
-    // };
-
     return {
       ...state,
       jobList: action.payload,
@@ -310,21 +283,6 @@ const form_reducer = (state, action) => {
     };
   }
   if (action.type === ADD_NEW_CLIENT) {
-    console.log(action.payload);
-    // const { names, phone, email, address, gender } = state.clientForm;
-    // let addClient = {};
-    // if (names && phone && email && address && gender) {
-    //   addClient = {
-    //     clientName: names,
-    //     clientEmail: email,
-    //     clientPhone: phone,
-    //     clientAddress: address,
-    //     clientGender: gender,
-    //     clientDate: formattedDate,
-    //   };
-    // } else {
-    //   return { ...state };
-    // }
     return {
       ...state,
       clientList: [...state.clientList, action.payload],
@@ -695,16 +653,12 @@ const form_reducer = (state, action) => {
     return { ...state, notesForm: { ...state.notesForm, [name]: value } };
   }
   if (action.type === ADD_NEW_NOTES) {
-    const { note } = state.notesForm;
-    let addNotes = {};
-    if (note) {
-      addNotes = {
-        note,
-      };
-    }
     return {
       ...state,
-      notesList: [...state.notesList, addNotes],
+      singleClient: {
+        ...state.singleClient,
+        notesList: [...state.singleClient?.notesList, action.payload],
+      },
       notesForm: {
         ...state.notesForm,
         note: "",
@@ -716,22 +670,9 @@ const form_reducer = (state, action) => {
     return { ...state, jobCardForm: { ...state.jobCardForm, [name]: value } };
   }
   if (action.type === ADD_NEW_JOBCARD) {
-    const { project, body, mechanical, electrical, approval } =
-      state.jobCardForm;
-    let addJobCard = {};
-    if (project && body && mechanical && electrical && approval) {
-      addJobCard = {
-        project,
-        body,
-        mechanical,
-        electrical,
-        approval,
-        date: formattedDate,
-      };
-    }
     return {
       ...state,
-      jobCardList: [...state.jobCardList, addJobCard],
+      jobList: action.payload,
       jobCardForm: {
         ...state.jobCardForm,
         project: "",

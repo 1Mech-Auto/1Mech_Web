@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DetailsPage from ".";
 import { BiPlus } from "react-icons/bi";
 import NewPaymentForm from "@/components/forms/NewPaymentForm";
@@ -6,9 +6,15 @@ import { HiOutlinePencil } from "react-icons/hi";
 import { BsTrash } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { TiCancel } from "react-icons/ti";
+import { useFormContext } from "@/context/form_context";
+import PaymentList from "@/components/PaymentList";
 
 const Payments = () => {
   const [payment, setPayment] = useState(false);
+  const [singlePayment, setSinglePayment] = useState([]);
+  const { paymentsList, singleClient } = useFormContext();
+  const id = singleClient.id;
+
   const extraInfo = [
     { name: "Edit Details", icon: <HiOutlinePencil /> },
     {
@@ -41,7 +47,15 @@ const Payments = () => {
       return "none";
     }
   };
-
+  const fetchSinglePayment = (id) => {
+    const payment = paymentsList.filter((p) => p.paymentsForm.client.id === id);
+    setSinglePayment(payment);
+    console.log(payment);
+  };
+  useEffect(() => {
+    fetchSinglePayment(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
   return (
     <DetailsPage>
       {payment && <NewPaymentForm payment={payment} setPayment={setPayment} />}
@@ -63,7 +77,7 @@ const Payments = () => {
             <span className="hidden sm:block">Add Payment</span>
           </button>
         </div>
-        <div className="grid w-full border overflow-x-hidden">
+        {/* <div className="grid w-full border overflow-x-hidden">
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-black">
               <thead class="text-xs text-[#8094ae] uppercase border-b">
@@ -112,10 +126,7 @@ const Payments = () => {
                     </div>
                   </td>
                   <td class="px-6 py-4">
-                    <a
-                      href="#"
-                      class="font-medium text-blue-600"
-                    >
+                    <a href="#" class="font-medium text-blue-600">
                       Edit
                     </a>
                   </td>
@@ -123,7 +134,19 @@ const Payments = () => {
               </tbody>
             </table>
           </div>
-        </div>
+        </div> */}
+        {singlePayment &&
+          singlePayment.map((payment, index) => {
+            return (
+              <PaymentList
+                key={index}
+                payment={payment}
+                index={index}
+                handleClick={handleClick}
+                extraInfo={extraInfo}
+              />
+            );
+          })}
       </div>
     </DetailsPage>
   );

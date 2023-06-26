@@ -29,6 +29,7 @@ const DetailsPage = ({ children }) => {
   const [sms, setSms] = useState(false);
   const {
     fetchSingleClient,
+    jobList,
     singleClient,
     single_loading: loading,
     single_error: error,

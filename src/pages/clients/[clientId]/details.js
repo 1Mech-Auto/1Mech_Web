@@ -90,8 +90,8 @@ const Details = () => {
               <p className="font-medium cursor-pointer text-xs">Add Note</p>
             </div>
           </div>
-          {notesList.length >= 1 ? (
-            notesList.map((note, index) => {
+          {singleClient?.notesList?.length >= 1 ? (
+            singleClient?.notesList?.map((note, index) => {
               return (
                 <div
                   key={index}

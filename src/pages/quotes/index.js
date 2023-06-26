@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../../layout/Layout";
 import { BsThreeDots } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
@@ -7,15 +7,16 @@ import { useFormContext } from "@/context/form_context";
 import MoreButton from "@/components/MoreButton";
 import { FiDownloadCloud, FiMail } from "react-icons/fi";
 import { HiOutlinePencil } from "react-icons/hi";
-import { TbMessageCircle } from "react-icons/tb";
 import { BsTrash, BsEye } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import { TbMessageCircle } from "react-icons/tb";
 import NewQuotesForm from "@/components/forms/NewQuotesForm";
+import QuoteList from "@/components/QuoteList";
 
 const Quotes = () => {
   const [quote, setQuote] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
-  const { quoteList } = useFormContext();
+  const { quoteList, fetchQuote } = useFormContext();
   const [show, setShow] = useState(false);
   const extraInfo = [
     { name: "Download", icon: <FiDownloadCloud /> },
@@ -37,6 +38,10 @@ const Quotes = () => {
       setQuote(true);
     }
   };
+  useEffect(() => {
+    fetchQuote();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Layout>
       {quote && <NewQuotesForm quote={quote} setQuote={setQuote} />}
@@ -139,42 +144,13 @@ const Quotes = () => {
           {quoteList &&
             quoteList.map((quote, index) => {
               return (
-                <div
+                <QuoteList
                   key={index}
-                  className="font-medium text-[#364a63] text-sm grid grid-cols-[7%,75%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[4%,22%,17%,10%,15%,20%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
-                >
-                  <div>{index + 1}</div>
-                  <div className="flex items-center gap-2">
-                    <p>{quote.job}</p>
-                  </div>
-                  <div className="hidden md:block">
-                    <h3 className="font-medium text-black">
-                      {quote.itemDescription}
-                    </h3>
-                  </div>
-                  <div className="hidden md:block">
-                    <p className="font-medium text-black">{quote.quantity}</p>
-                  </div>
-                  <div className="hidden md:block text-[#8094ae]">
-                    <p>{quote.date}</p>
-                  </div>
-                  <div className="font-medium text-black hidden md:block">
-                    N538,075.00
-                  </div>
-                  <div>
-                    <BsThreeDots
-                      className="cursor-pointer text-xl"
-                      onClick={() => setShow(!show)}
-                    />
-                    {show && (
-                      <MoreButton
-                        href={"/quotes/id"}
-                        extraInfo={extraInfo}
-                        handleClick={handleClick}
-                      />
-                    )}
-                  </div>
-                </div>
+                  quote={quote}
+                  index={index}
+                  handleClick={handleClick}
+                  extraInfo={extraInfo}
+                />
               );
             })}
         </div>

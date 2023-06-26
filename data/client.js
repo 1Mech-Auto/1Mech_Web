@@ -8,6 +8,7 @@ export const clientsList = [
       address: "13 babyo street",
       gender: "male",
     },
+    notesList: [{ id: 1, note: "for olu" }],
     date: "March 6, 2012",
   },
   {
@@ -19,6 +20,7 @@ export const clientsList = [
       address: "14 fabyo street",
       gender: "female",
     },
+    notesList: [{ id: 2, note: "for fope" }],
     date: "June 6, 2012",
   },
   {
@@ -30,6 +32,12 @@ export const clientsList = [
       address: "25 neyo street",
       gender: "male",
     },
+    notesList: [
+      {
+        id: 3,
+        note: "for rex",
+      },
+    ],
     date: "May 6, 2012",
   },
 ];
