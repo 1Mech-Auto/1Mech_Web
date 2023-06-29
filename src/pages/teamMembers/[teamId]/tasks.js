@@ -59,7 +59,7 @@ const Tasks = () => {
         </div>
         <div class="relative min-h-[70vh] overflow-x-auto shadow-md sm:rounded-lg">
           <table class="w-full text-sm text-left text-black">
-            <thead class="text-xs text-[#8094ae] uppercase border-b">
+            <thead class="text-xs text-[#8094ae] capitalize border-b">
               <tr>
                 <th scope="col" class="px-6 py-3">
                   #

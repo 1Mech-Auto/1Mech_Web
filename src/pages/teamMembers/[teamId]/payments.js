@@ -51,7 +51,9 @@ const Payments = () => {
 
   return (
     <DetailsPage>
-      {payment && <NewTeamPaymentForm payment={payment} setPayment={setPayment} />}
+      {payment && (
+        <NewTeamPaymentForm payment={payment} setPayment={setPayment} />
+      )}
       <div className="px-6">
         <div className="flex items-center justify-between">
           <div className="py-6 md:col-span-2">
@@ -70,7 +72,7 @@ const Payments = () => {
         </div>
         <div class="relative min-h-[70vh] overflow-x-auto shadow-md sm:rounded-lg">
           <table class="w-full text-sm text-left text-black">
-            <thead class="text-xs text-[#8094ae] uppercase border-b">
+            <thead class="text-xs text-[#8094ae] capitalize border-b">
               <tr>
                 <th scope="col" class="px-6 py-3">
                   #
