@@ -19,7 +19,7 @@ const NewTeamPaymentForm = ({ payment, setPayment }) => {
     addNewPayment,
   } = useFormContext();
   const onSubmit = async (values, actions) => {
-    addNewPayment();
+    // addNewPayment();
     setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();

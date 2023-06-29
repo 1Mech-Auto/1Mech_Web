@@ -212,7 +212,10 @@ export default function NewTeamMemberForm({ open, setOpen }) {
                         }}
                       >
                         <option>Staff</option>
-                        <option>All clients</option>
+                        <option>Manager</option>
+                        <option>booking manager</option>
+                        <option>Inventory manager</option>
+                        <option>Owner</option>
                       </select>
                       <p className="text-xs text-[#8094ae] normal-case italic">
                         Owner has full access of the system. Manager have full
@@ -234,7 +237,8 @@ export default function NewTeamMemberForm({ open, setOpen }) {
                           }}
                         >
                           <option>Full Time</option>
-                          <option>All clients</option>
+                          <option>Part time</option>
+                          <option>Subcontractor</option>
                         </select>
                       </div>
                       <div className="text-sm grid gap-2">
@@ -249,7 +253,8 @@ export default function NewTeamMemberForm({ open, setOpen }) {
                           }}
                         >
                           <option>Active</option>
-                          <option>All clients</option>
+                          <option>Un available</option>
+                          <option>On Leave</option>
                         </select>
                       </div>
                     </section>

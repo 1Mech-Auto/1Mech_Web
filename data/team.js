@@ -13,6 +13,14 @@ export const teamMember = [
     role: "owner",
     type: "Full Time",
     status: "Active",
+    payment: [
+      {
+        amount: "110",
+        paymentDate: "May 24,2023",
+        paymentNote: "",
+        paymentMode: "transfer",
+      },
+    ],
   },
   {
     id: 20000,
@@ -28,5 +36,6 @@ export const teamMember = [
     role: "Staff",
     type: "Full Time",
     status: "Active",
+    payment: [],
   },
 ];

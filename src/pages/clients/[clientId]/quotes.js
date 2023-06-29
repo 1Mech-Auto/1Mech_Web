@@ -87,8 +87,8 @@ const Quotes = () => {
             </select>
           </div>
         </div>
-        {/* <div className="border rounded-md min-h-[30vh] overflow-x-auto ">
-          <main className="font-semibold text-[#8094ae] text-sm grid grid-cols-[7%,75%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[4%,22%,20%,10%,15%,20%,5%] p-2.5 border border-transparent border-b-gray-200 gap-2">
+        <div className="border rounded-md min-h-[30vh] overflow-x-auto ">
+          <main className="font-semibold text-[#8094ae] text-sm grid grid-cols-[7%,75%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[4%,22%,17%,10%,15%,20%,5%] p-2.5 border border-transparent border-b-gray-200 gap-2">
             <div>#</div>
             <div className="hidden md:block">Project</div>
             <div>Registration</div>
@@ -97,7 +97,7 @@ const Quotes = () => {
             <div className="hidden md:block">Total</div>
             <div></div>
           </main>
-          <div className="font-medium text-[#364a63] text-sm grid grid-cols-[7%,75%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[4%,22%,20%,10%,15%,20%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
+          {/* <div className="font-medium text-[#364a63] text-sm grid grid-cols-[7%,75%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[4%,22%,20%,10%,15%,20%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
             <div>1</div>
             <div className="flex items-center gap-2">
               <p>TOYOTA Camry</p>
@@ -117,20 +117,20 @@ const Quotes = () => {
             <div>
               <BsThreeDots className="cursor-pointer text-xl" />
             </div>
-          </div>
-        </div> */}
-        {singleQuote &&
-          singleQuote.map((quote, index) => {
-            return (
-              <QuoteList
-                key={index}
-                quote={quote}
-                index={index}
-                handleClick={handleClick}
-                extraInfo={extraInfo}
-              />
-            );
-          })}
+          </div> */}
+          {singleQuote &&
+            singleQuote.map((quote, index) => {
+              return (
+                <QuoteList
+                  key={index}
+                  quote={quote}
+                  index={index}
+                  handleClick={handleClick}
+                  extraInfo={extraInfo}
+                />
+              );
+            })}
+        </div>
       </div>
     </DetailsPage>
   );

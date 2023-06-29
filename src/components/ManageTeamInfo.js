@@ -10,7 +10,7 @@ import { newPaymentSchema } from "@/schemas";
 import SuccessPrompt from "./SuccessPrompt";
 import ToggleInputForm from "./ToggleInputForm";
 
-const ManageTeamInfo = ({ payment, setPayment }) => {
+const ManageTeamInfo = ({ payment, setPayment, task }) => {
   const cancelButtonRef = useRef(null);
   const [success, setSuccess] = useState(false);
 
@@ -60,33 +60,37 @@ const ManageTeamInfo = ({ payment, setPayment }) => {
                   <div className="mt-3 grid gap-8 px-4 pb-4">
                     <div className="grid gap-2">
                       <h2 className="text-lg font-semibold">
-                        Brake pad change
+                        {task?.taskTitle}
                       </h2>
                       <div className="font-medium bg-[#1ee0ac26] text-[#1ee0ac] py-1 px-4 text-center text-xs rounded-xl mr-auto">
-                        Completed
+                        {task?.status}
                       </div>
                     </div>
                     <div className="font-medium">
                       <div className="text-xs flex w-3/5 justify-between">
                         <h3 className="text-[#8094ae]">Cost:</h3>
-                        <p>KSh120.00</p>
+                        <p>KSh{task?.taskCost}.00</p>
                       </div>
                       <div className="text-xs flex w-3/5 justify-between">
                         <h3 className="text-[#8094ae]">Due Date:</h3>
-                        <p>Apr 17, 2023 • 02:21pm</p>
+                        <p>
+                          {task?.dueDate} • {task?.dueTime}
+                        </p>
                       </div>
                     </div>
                     <div className="font-medium">
                       <div className="text-xs grid">
                         <h3 className="text-[#8094ae]">Task Description</h3>
-                        <p>Change brake</p>
+                        <p>{task?.taskDesc}</p>
                       </div>
                     </div>
                     <div className="font-medium">
                       <div className="text-xs grid">
                         <h3 className="text-[#8094ae]">Required Parts</h3>
                         <p className="italic">
-                          No parts required for this task
+                          {task?.requiredParts
+                            ? task?.requiredParts
+                            : "No parts required for this task"}
                         </p>
                       </div>
                     </div>

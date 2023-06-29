@@ -673,6 +673,10 @@ const form_reducer = (state, action) => {
     return {
       ...state,
       jobList: action.payload,
+      singleJob: {
+        ...state.singleJob,
+        jobCardList: [...state.singleJob?.jobCardList, state.jobCardForm],
+      },
       jobCardForm: {
         ...state.jobCardForm,
         project: "",

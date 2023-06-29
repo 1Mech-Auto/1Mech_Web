@@ -11,6 +11,7 @@ export default function handler(req, res) {
     const newForm = {
       id: Date.now(),
       jobCardList: [],
+      task: [],
       jobForm: jobForm,
     };
     jobList.push(newForm);

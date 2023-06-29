@@ -68,6 +68,19 @@ export const jobList = [
         approval: "",
       },
     ],
+    task: [
+      {
+        id: 11,
+        taskTitle: "brake",
+        assignTo: 20000,
+        status: "complete",
+        taskCost: "120",
+        taskDesc: "change brake",
+        dueDate: "April 20,2019",
+        dueTime: "2:21pm",
+        requiredParts: "",
+      },
+    ],
   },
   {
     id: 2,
@@ -138,6 +151,7 @@ export const jobList = [
         approval: "",
       },
     ],
+    task: [],
   },
   {
     id: 3,
@@ -208,6 +222,19 @@ export const jobList = [
         approval: "",
       },
     ],
+    task: [
+      {
+        id: 31,
+        taskTitle: "screen",
+        assignTo: 10000,
+        status: "in progress",
+        taskCost: "120",
+        taskDesc: "change screen",
+        dueDate: "June 20,2019",
+        dueTime: "2:21pm",
+        requiredParts: "",
+      },
+    ],
   },
   {
     id: 4,
@@ -276,6 +303,19 @@ export const jobList = [
         mechanical: "2nd job",
         electrical: "",
         approval: "",
+      },
+    ],
+    task: [
+      {
+        id: 41,
+        taskTitle: "window",
+        assignTo: 10000,
+        status: "in progress",
+        taskCost: "120",
+        taskDesc: "change window",
+        dueDate: "May 20,2019",
+        dueTime: "2:21pm",
+        requiredParts: "",
       },
     ],
   },

@@ -48,7 +48,7 @@ const DetailsPage = ({ children }) => {
       <section className="flex justify-between mb-6 px-6 sm:px-0">
         <div className="mb-6">
           <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
-            Team / Placeholder
+            Team / {singleTeam?.team?.fullName}
           </h1>
           <div className="text-sm text-[#8094ae] mt-2 flex gap-4 ">
             <p>Team ID: {singleTeam?.id}</p>

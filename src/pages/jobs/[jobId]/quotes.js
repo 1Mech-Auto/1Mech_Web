@@ -133,7 +133,7 @@ const Quotes = () => {
           </div>
         </div>
         <div className="border rounded-md min-h-[30vh] overflow-x-auto ">
-          <main className="font-semibold text-[#8094ae] text-sm grid grid-cols-[7%,75%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[4%,22%,20%,10%,15%,20%,5%] p-2.5 border border-transparent border-b-gray-200 gap-2">
+          <main className="font-semibold text-[#8094ae] text-sm grid grid-cols-[7%,75%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[4%,22%,17%,10%,15%,20%,5%] p-2.5 border border-transparent border-b-gray-200 gap-2">
             <div>#</div>
             <div className="hidden md:block">Project</div>
             <div>Registration</div>
