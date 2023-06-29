@@ -114,7 +114,7 @@ const Payments = () => {
                         <BsThreeDots onClick={() => setShow(!show)} />
                         {show && (
                           <MoreButton
-                            href={"clients/:99/details"}
+                            // href={"clients/:99/details"}
                             extraInfo={extraInfo}
                             handleClick={handleClick}
                           />

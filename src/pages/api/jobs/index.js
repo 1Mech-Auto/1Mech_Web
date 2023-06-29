@@ -12,6 +12,7 @@ export default function handler(req, res) {
       id: Date.now(),
       jobCardList: [],
       task: [],
+      expenses: [],
       jobForm: jobForm,
     };
     jobList.push(newForm);

@@ -81,6 +81,24 @@ export const jobList = [
         requiredParts: "",
       },
     ],
+    expenses: [
+      {
+        id: 310,
+        expenseForm: {
+          source: "",
+          itemName: "screen",
+          supplier: "",
+          quantity: "10",
+          quantityUnit: "10",
+          total: "100",
+          expense: "100",
+          type: "part",
+          status: "delivered",
+          paymentDue: "June 6, 2023",
+          paid: "true",
+        },
+      },
+    ],
   },
   {
     id: 2,
@@ -152,6 +170,7 @@ export const jobList = [
       },
     ],
     task: [],
+    expenses: [],
   },
   {
     id: 3,
@@ -233,6 +252,24 @@ export const jobList = [
         dueDate: "June 20,2019",
         dueTime: "2:21pm",
         requiredParts: "",
+      },
+    ],
+    expenses: [
+      {
+        id: 310,
+        expenseForm: {
+          source: "suplier",
+          itemName: "window",
+          supplier: "okoro",
+          quantity: "10",
+          quantityUnit: "10",
+          total: "100",
+          expense: "100",
+          type: "part",
+          status: "delivered",
+          paymentDue: "May 6, 2023",
+          paid: "true",
+        },
       },
     ],
   },
@@ -318,5 +355,6 @@ export const jobList = [
         requiredParts: "",
       },
     ],
+    expenses: [],
   },
 ];

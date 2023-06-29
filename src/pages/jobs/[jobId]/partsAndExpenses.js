@@ -15,39 +15,25 @@ import NewInvoiceForm from "@/components/forms/NewInvoiceForm";
 import NewJobCard from "@/components/forms/NewJobCard";
 import NewQuotesForm from "@/components/forms/NewQuotesForm";
 import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
+import { useFormContext } from "@/context/form_context";
 
 const PartsAndExpenses = () => {
   const [parts, setParts] = useState(false);
   const [show, setShow] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
   const [workRequested, setWorkRequested] = useState(false);
   const [jobImport, setJobImport] = useState(false);
   const [invoice, setInvoice] = useState(false);
   const [jobCard, setJobCard] = useState(false);
   const [quote, setQuote] = useState(false);
   const [info, setInfo] = useState(false);
+  const { singleJob } = useFormContext();
 
-  const extraInfo = [
-    { name: "Edit Details", icon: <HiOutlinePencil /> },
-    {
-      name: "Create Job Card",
-      icon: <HiOutlineMenuAlt2 />,
-      state: "setJobCard",
-    },
-    { name: "Create Quote", icon: <HiOutlineMenuAlt2 /> },
-    {
-      name: "Create Invoice",
-      icon: <HiOutlineMenuAlt2 />,
-    },
-    {
-      name: "Cancel Project",
-      icon: <TiCancel />,
-    },
-    { name: "Delete", icon: <BsTrash /> },
-  ];
+  const extraInfo = [{ name: "Delete", icon: <BsTrash /> }];
   const handleClick = (index) => {
     // Perform different setState functions based on index
     if (index === 0) {
-      setInfo(true);
+      // setInfo(true);
     } else if (index === 1) {
       setJobCard(true);
     } else if (index === 2) {
@@ -152,7 +138,7 @@ const PartsAndExpenses = () => {
                   <th scope="col" class="px-6 py-3"></th>
                 </tr>
               </thead>
-              <tbody>
+              {/* <tbody>
                 <tr class="bg-white border-b hover:bg-gray-50">
                   <td class="px-4 py-3">
                     <div className="flex items-center">1</div>
@@ -193,7 +179,69 @@ const PartsAndExpenses = () => {
                     </div>
                   </td>
                 </tr>
-              </tbody>
+              </tbody> */}
+              {singleJob?.expenses?.length >= 1 &&
+                singleJob?.expenses?.map((expense, index) => {
+                  return (
+                    <tbody key={index}>
+                      <tr class="bg-white border-b hover:bg-gray-50">
+                        <td class="px-4 py-3">
+                          <div className="flex items-center">1</div>
+                        </td>
+                        <td class="px-6 py-4">
+                          {expense?.expenseForm?.supplier
+                            ? expense.expenseForm?.supplier
+                            : "From inventory"}
+                        </td>
+                        <th
+                          scope="row"
+                          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                        >
+                          <div>
+                            <h3 className="font-medium text-black">
+                              {expense?.expenseForm?.itemName}
+                            </h3>
+                            <p className="text-[#8094ae] font-light">
+                              {expense?.expenseForm?.quantityUnit}{" "}
+                              {expense?.expenseForm?.type}
+                            </p>
+                          </div>
+                        </th>
+                        <td class="px-6 py-4">
+                          {expense?.expenseForm?.paymentDue}
+                        </td>
+                        <td class="px-6 py-4">Ksh 10.00</td>
+                        <td class="px-6 py-4">
+                          <div className="font-medium bg-[#1ee0ac26] text-[#1ee0ac] py-1.5 px-4 text-center text-xs rounded-xl">
+                            {expense?.expenseForm?.status}
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <div className="font-bold text-[#1ee0ac] text-xs">
+                            {expense?.expenseForm?.paid === "true"
+                              ? "paid"
+                              : "not paid"}
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <div>
+                            <BsThreeDots
+                              className="cursor-pointer text-xl"
+                              onClick={() => setShowOptions(!showOptions)}
+                            />
+                            {showOptions && (
+                              <MoreButton
+                                // href={"/jobs/99/details"}
+                                extraInfo={extraInfo}
+                                handleClick={handleClick}
+                              />
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  );
+                })}
             </table>
           </div>
         </div>
