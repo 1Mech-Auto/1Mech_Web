@@ -121,7 +121,7 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                         onBlur={handleBlur}
                       >
                         <option>External Suppliers</option>
-                        <option>All clients</option>
+                        <option>From inventory</option>
                       </select>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-4">
@@ -164,7 +164,14 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                           onBlur={handleBlur}
                         >
                           <option>Select Supplier</option>
-                          <option>All clients</option>
+                          <optgroup>
+                            <label>New Supplier</label>
+                            <option>Create new suplier</option>
+                          </optgroup>
+                          <optgroup>
+                            <label>New Supplier</label>
+                            <option>okon</option>
+                          </optgroup>
                         </select>
                       </div>
                     </div>
@@ -202,8 +209,13 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                             newExpenseData(e);
                           }}
                         >
-                          <option>Pieces</option>
-                          <option>All clients</option>
+                          <option>units</option>
+                          <option>Litres</option>
+                          <option>kilograms</option>
+                          <option>pounds</option>
+                          <option>Galons</option>
+                          <option>Metres</option>
+                          <option>Set</option>
                         </select>
                       </div>
                     </div>
@@ -266,7 +278,9 @@ const NewPartsAndExpenses = ({ parts, setParts }) => {
                           }}
                         >
                           <option>Delivered</option>
-                          <option>All clients</option>
+                          <option>Ordered</option>
+                          <option>Awaiting Delivery</option>
+                          <option>To Order</option>
                         </select>
                       </div>
                     </div>

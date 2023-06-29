@@ -8,6 +8,7 @@ import { BsTrash } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { TiCancel } from "react-icons/ti";
 import NewTeamPaymentForm from "@/components/forms/NewTeamPaymentForm";
+import { useFormContext } from "@/context/form_context";
 
 const Payments = () => {
   const [payment, setPayment] = useState(false);
@@ -16,22 +17,9 @@ const Payments = () => {
   const [jobCard, setJobCard] = useState(false);
   const [quote, setQuote] = useState(false);
   const [info, setInfo] = useState(false);
+  const { singleTeam } = useFormContext();
   const extraInfo = [
     { name: "Edit Details", icon: <HiOutlinePencil /> },
-    {
-      name: "Create Job Card",
-      icon: <HiOutlineMenuAlt2 />,
-      state: "setJobCard",
-    },
-    { name: "Create Quote", icon: <HiOutlineMenuAlt2 /> },
-    {
-      name: "Create Invoice",
-      icon: <HiOutlineMenuAlt2 />,
-    },
-    {
-      name: "Cancel Project",
-      icon: <TiCancel />,
-    },
     { name: "Delete", icon: <BsTrash /> },
   ];
   const handleClick = (index) => {
@@ -95,38 +83,47 @@ const Payments = () => {
                 <th scope="col" class="px-6 py-3"></th>
               </tr>
             </thead>
-            <tbody>
-              <tr class="bg-white border-b hover:bg-gray-50">
-                <td class="px-6 py-3">
-                  <div className="flex items-center">1</div>
-                </td>
-                <th
-                  scope="row"
-                  class="px-4 py-4 font-medium text-gray-900 whitespace-nowrap"
-                >
-                  <div>
-                    <h3 className="font-medium text-black">Okon Ikpotorok</h3>
-                    <p className="text-[#8094ae] text-[13px]">+2348028288272</p>
-                  </div>
-                </th>
-                <td class="px-4 py-4">KSh120.00</td>
-                <td class="px-4 py-4 text-[#8094ae] text-[13px]">
-                  June 26, 2023
-                </td>
-                <td class="px-4 py-4">Cash</td>
-                <td class="px-6 py-4"></td>
-                <td class="px-6 py-4 text-lg cursor-pointer">
-                  <BsThreeDots onClick={() => setShow(!show)} />
-                  {show && (
-                    <MoreButton
-                      href={"clients/:99/details"}
-                      extraInfo={extraInfo}
-                      handleClick={handleClick}
-                    />
-                  )}
-                </td>
-              </tr>
-            </tbody>
+            {singleTeam?.payment?.length >= 1 &&
+              singleTeam?.payment?.map((payment, index) => {
+                return (
+                  <tbody key={index}>
+                    <tr class="bg-white border-b hover:bg-gray-50">
+                      <td class="px-6 py-3">
+                        <div className="flex items-center">{index + 1}</div>
+                      </td>
+                      <th
+                        scope="row"
+                        class="px-4 py-4 font-medium text-gray-900 whitespace-nowrap"
+                      >
+                        <div>
+                          <h3 className="font-medium text-black">
+                            {singleTeam?.team?.fullName}
+                          </h3>
+                          <p className="text-[#8094ae] text-[13px]">
+                            {singleTeam?.team?.phone}
+                          </p>
+                        </div>
+                      </th>
+                      <td class="px-4 py-4">KSh{payment?.amount}.00</td>
+                      <td class="px-4 py-4 text-[#8094ae] text-[13px]">
+                        {payment?.paymentDate}
+                      </td>
+                      <td class="px-4 py-4">{payment?.paymentMode}</td>
+                      <td class="px-6 py-4">{payment?.paymentNote}</td>
+                      <td class="px-6 py-4 text-lg cursor-pointer">
+                        <BsThreeDots onClick={() => setShow(!show)} />
+                        {show && (
+                          <MoreButton
+                            // href={"clients/:99/details"}
+                            extraInfo={extraInfo}
+                            handleClick={handleClick}
+                          />
+                        )}
+                      </td>
+                    </tr>
+                  </tbody>
+                );
+              })}
           </table>
         </div>
       </div>

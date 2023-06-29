@@ -1,41 +1,37 @@
-import { useState } from "react";
-import DetailsPage from ".";
+import { useEffect, useState } from "react";
+import DetailsPage from "..";
 import { BiPlus } from "react-icons/bi";
-import { BsThreeDots } from "react-icons/bs";
+import { BsEye, BsThreeDots } from "react-icons/bs";
 import MoreButton from "@/components/MoreButton";
 import { HiOutlinePencil } from "react-icons/hi";
 import { BsTrash } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { TiCancel } from "react-icons/ti";
+import { useFormContext } from "@/context/form_context";
+import TaskList from "@/components/TaskList";
 
 const Tasks = () => {
   const [show, setShow] = useState(false);
+  const [singleTaskList, setSingleTaskList] = useState([]);
+  const [taskCard, setTaskCard] = useState(false);
+  const { jobList, singleTeam } = useFormContext();
+  const id = singleTeam?.id;
+
   const [invoice, setInvoice] = useState(false);
   const [jobCard, setJobCard] = useState(false);
   const [quote, setQuote] = useState(false);
   const [info, setInfo] = useState(false);
   const extraInfo = [
+    { name: "view Details", icon: <BsEye /> },
+
     { name: "Edit Details", icon: <HiOutlinePencil /> },
-    {
-      name: "Create Job Card",
-      icon: <HiOutlineMenuAlt2 />,
-      state: "setJobCard",
-    },
-    { name: "Create Quote", icon: <HiOutlineMenuAlt2 /> },
-    {
-      name: "Create Invoice",
-      icon: <HiOutlineMenuAlt2 />,
-    },
-    {
-      name: "Cancel Project",
-      icon: <TiCancel />,
-    },
+
     { name: "Delete", icon: <BsTrash /> },
   ];
   const handleClick = (index) => {
     // Perform different setState functions based on index
     if (index === 0) {
-      setInfo(true);
+      setTaskCard(true);
     } else if (index === 1) {
       setJobCard(true);
     } else if (index === 2) {
@@ -46,6 +42,28 @@ const Tasks = () => {
       return "none";
     }
   };
+
+  function fetchSingleTaskList(jobList, memberId) {
+    const result = [];
+
+    for (const job of jobList) {
+      for (const task of job.task) {
+        if (task.assignTo === memberId) {
+          result.push(task);
+          // console.log(job);
+        }
+      }
+    }
+
+    setSingleTaskList(result);
+    return result;
+  }
+
+  useEffect(() => {
+    fetchSingleTaskList(jobList, id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jobList]);
+
   return (
     <DetailsPage>
       <div className="px-6">
@@ -82,7 +100,22 @@ const Tasks = () => {
                 <th scope="col" class="px-6 py-3"></th>
               </tr>
             </thead>
-            <tbody>
+            {singleTaskList?.length >= 1 ? (
+              singleTaskList.map((task, index) => {
+                return (
+                  <TaskList
+                    key={index}
+                    extraInfo={extraInfo}
+                    handleClick={handleClick}
+                    task={task}
+                    index={index}
+                  />
+                );
+              })
+            ) : (
+              <p className="text-xs text-center mx-auto">It`s empty here!</p>
+            )}
+            {/* <tbody>
               <tr class="bg-white border-b hover:bg-gray-50">
                 <td class="px-6 py-3">
                   <div className="flex items-center">1</div>
@@ -117,12 +150,12 @@ const Tasks = () => {
                   )}
                 </td>
               </tr>
-            </tbody>
+            </tbody> */}
           </table>
         </div>
       </div>
     </DetailsPage>
   );
-}
+};
 
-export default Tasks
+export default Tasks;

@@ -176,7 +176,7 @@ const Details = () => {
             </p>
             <div
               className="flex gap-1 text-[#0971fe]"
-              onClick={() => setNotes(true)}
+              // onClick={() => setNotes(true)}
             >
               <BsPlus />
               <p className="font-medium cursor-pointer text-xs">Add Note</p>

@@ -8,7 +8,7 @@ import { useFormContext } from "@/context/form_context";
 
 const JobCard = () => {
   const [jobCard, setJobCard] = useState(false);
-  const { singleJob, updateProjectJobCard, fetch } = useFormContext();
+  const { singleJob, updateProjectJobCard } = useFormContext();
   const projectName = singleJob?.jobForm;
   const id = singleJob?.id;
   useEffect(() => {

@@ -296,7 +296,9 @@ const initialState = {
   single_loading: false,
   single_error: false,
   jobList: [],
-  singleJob: {},
+  singleJob: {
+    jobCardList: [],
+  },
   singleInsurance: {},
   singleTeam: {},
 };

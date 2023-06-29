@@ -130,7 +130,7 @@ const TeamMembers = () => {
             <div className="hidden md:block">Status</div>
             <div></div>
           </main>
-          <div className="font-normal text-[#364a63] text-sm grid grid-cols-[6%,40%,22%,22%,5%] gap-2 md:grid-cols-[3em,15em,8em,8em,7em,9em,7em,3em] lg:grid-cols-[3%,25%,12%,12%,10%,15%,10%,4%] items-center p-2.5 border border-transparent border-b-gray-200 hover:shadow-hoverPurple">
+          {/* <div className="font-normal text-[#364a63] text-sm grid grid-cols-[6%,40%,22%,22%,5%] gap-2 md:grid-cols-[3em,15em,8em,8em,7em,9em,7em,3em] lg:grid-cols-[3%,25%,12%,12%,10%,15%,10%,4%] items-center p-2.5 border border-transparent border-b-gray-200 hover:shadow-hoverPurple">
             <div>1</div>
             <div className="flex items-center gap-2">
               <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
@@ -162,7 +162,7 @@ const TeamMembers = () => {
                 />
               )}
             </div>
-          </div>
+          </div> */}
           {teamList &&
             teamList.map((team, index) => {
               return (

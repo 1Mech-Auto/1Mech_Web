@@ -8,6 +8,7 @@ import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { TiCancel } from "react-icons/ti";
 import { useFormContext } from "@/context/form_context";
 import PaymentList from "@/components/PaymentList";
+import SinglePaymentList from "@/components/SinglePaymentList";
 
 const Payments = () => {
   const [payment, setPayment] = useState(false);
@@ -77,7 +78,7 @@ const Payments = () => {
             <span className="hidden sm:block">Add Payment</span>
           </button>
         </div>
-        {/* <div className="grid w-full border overflow-x-hidden">
+        <div className="grid w-full border overflow-x-hidden">
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-black">
               <thead class="text-xs text-[#8094ae] uppercase border-b">
@@ -103,7 +104,7 @@ const Payments = () => {
                   <th scope="col" class="px-6 py-3"></th>
                 </tr>
               </thead>
-              <tbody>
+              {/* <tbody>
                 <tr class="bg-white border-b hover:bg-gray-50">
                   <td class="px-6 py-3">
                     <div className="flex items-center">1</div>
@@ -131,22 +132,22 @@ const Payments = () => {
                     </a>
                   </td>
                 </tr>
-              </tbody>
+              </tbody> */}
+              {singlePayment &&
+                singlePayment.map((payment, index) => {
+                  return (
+                    <SinglePaymentList
+                      key={index}
+                      payment={payment}
+                      index={index}
+                      handleClick={handleClick}
+                      extraInfo={extraInfo}
+                    />
+                  );
+                })}
             </table>
           </div>
-        </div> */}
-        {singlePayment &&
-          singlePayment.map((payment, index) => {
-            return (
-              <PaymentList
-                key={index}
-                payment={payment}
-                index={index}
-                handleClick={handleClick}
-                extraInfo={extraInfo}
-              />
-            );
-          })}
+        </div>
       </div>
     </DetailsPage>
   );
