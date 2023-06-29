@@ -100,59 +100,74 @@ const Quotes = () => {
             </select>
           </div>
         </div>
-        <div className="border rounded-md min-h-[30vh] overflow-x-auto ">
-          <main className="font-semibold text-[#8094ae] text-sm grid grid-cols-[7%,75%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[4%,22%,17%,10%,15%,20%,5%] p-2.5 border border-transparent border-b-gray-200 gap-2">
-            <div>#</div>
-            <div className="hidden md:block">Project</div>
-            <div>Registration</div>
-            <div className="hidden md:block">Items</div>
-            <div className="hidden md:block">Date</div>
-            <div className="hidden md:block">Total</div>
-            <div></div>
-          </main>
-          <div className="font-medium text-[#364a63] text-sm grid grid-cols-[7%,75%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[4%,22%,17%,10%,15%,20%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
-            <div>1</div>
-            <div className="flex items-center gap-2">
-              <p>TOYOTA Camry</p>
-            </div>
-            <div className="hidden md:block">
-              <h3 className="font-medium text-black">KSF-178-HX</h3>
-            </div>
-            <div className="hidden md:block">
-              <p className="font-medium text-black">22</p>
-            </div>
-            <div className="hidden md:block text-[#8094ae]">
-              <p>May 2, 2023</p>
-            </div>
-            <div className="font-medium text-black hidden md:block">
-              N538,075.00
-            </div>
-            <div>
-              <BsThreeDots
-                className="cursor-pointer text-xl"
-                onClick={() => setShow(!show)}
-              />
-              {show && (
-                <MoreButton
-                  href={"/quotes/id"}
-                  extraInfo={extraInfo}
-                  handleClick={handleClick}
-                />
-              )}
-            </div>
-          </div>
-          {quoteList &&
-            quoteList.map((quote, index) => {
-              return (
-                <QuoteList
-                  key={index}
-                  quote={quote}
-                  index={index}
-                  handleClick={handleClick}
-                  extraInfo={extraInfo}
-                />
-              );
-            })}
+        <div class="relative min-h-[70vh] overflow-x-auto shadow-md sm:rounded-lg border-t">
+          <table class="w-full text-sm text-left text-black">
+            <thead class="text-xs text-[#8094ae] capitalize border-b">
+              <tr>
+                <th scope="col" class="px-4 py-3">
+                  #
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Client
+                </th>
+                <th scope="col" class="px-4 py-3">
+                  Project
+                </th>
+                <th scope="col" class="px-4 py-3">
+                  Items
+                </th>
+                <th scope="col" class="px-4 py-3">
+                  Date
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Total
+                </th>
+                <th scope="col" class="px-6 py-3"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-white border-b hover:bg-gray-50">
+                <td class="px-4 py-3">
+                  <div className="flex items-center">1</div>
+                </td>
+                <th
+                  scope="row"
+                  class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                >
+                  <div className="flex items-center gap-2">
+                    <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
+                      ME
+                    </p>
+                    <div>
+                      <h2 className="font-medium">Mr. Emmanuel Afolabi</h2>
+                      <p className="text-xs text-[#8094ae]">+2348167821219</p>
+                    </div>
+                  </div>
+                </th>
+                <td class="px-4 py-4">
+                  <div>
+                    <h3 className="font-medium text-black">RENAULT ZOOM</h3>
+                    <p className="text-[#8094ae] text-xs">u7687o89</p>
+                  </div>
+                </td>
+                <td class="px-4 py-4">2</td>
+                <td class="px-4 py-4 text-[#8094ae] text-[13px]">
+                  Apr 17, 2023 • 02:21pm
+                </td>
+                <td class="px-6 py-4">KSh120.00</td>
+                <td class="px-6 py-4 text-lg cursor-pointer">
+                  <BsThreeDots onClick={() => setShow(!show)} />
+                  {show && (
+                    <MoreButton
+                      href={"clients/:99/details"}
+                      extraInfo={extraInfo}
+                      handleClick={handleClick}
+                    />
+                  )}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </Layout>
