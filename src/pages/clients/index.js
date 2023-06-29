@@ -17,6 +17,7 @@ import { TbMessageCircle } from "react-icons/tb";
 import { BsTrash } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import Client from "@/components/Client";
+import Loading from "@/components/Loading";
 
 const Clients = () => {
   const [open, setOpen] = useState(false);
@@ -82,7 +83,7 @@ const Clients = () => {
   if (loading) {
     return (
       <main className="text-center text-2xl mx-auto">
-        <p>loading...</p>
+        <Loading />
       </main>
     );
   }
