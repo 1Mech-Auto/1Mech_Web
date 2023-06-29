@@ -19,6 +19,7 @@ import NewInfoUpdate from "@/components/forms/NewInfoUpdate";
 import NewSMSForm from "@/components/forms/NewSMSForm";
 import { useRouter } from "next/router";
 import { useFormContext } from "@/context/form_context";
+import Loading from "@/components/Loading";
 
 const JobDetails = ({ children }) => {
   const [invoice, setInvoice] = useState(false);
@@ -47,7 +48,7 @@ const JobDetails = ({ children }) => {
   if (loading) {
     return (
       <main className="text-center text-2xl mx-auto">
-        <p>loading...</p>
+        <Loading/>
       </main>
     );
   }
