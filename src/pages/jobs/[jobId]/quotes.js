@@ -12,6 +12,7 @@ import { BsTrash, BsEye } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import QuoteList from "@/components/QuoteList";
 import { useFormContext } from "@/context/form_context";
+import SingleQuoteList from "@/components/SingleQuoteList";
 
 const Quotes = () => {
   const [quote, setQuote] = useState(false);
@@ -166,7 +167,7 @@ const Quotes = () => {
           {singleQuote &&
             singleQuote.map((quote, index) => {
               return (
-                <QuoteList
+                <SingleQuoteList
                   key={index}
                   quote={quote}
                   index={index}

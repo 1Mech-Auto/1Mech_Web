@@ -9,6 +9,7 @@ import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import NewQuotesForm from "@/components/forms/NewQuotesForm";
 import { useFormContext } from "@/context/form_context";
 import QuoteList from "@/components/QuoteList";
+import SingleQuoteList from "@/components/SingleQuoteList";
 
 const Quotes = () => {
   const [quote, setQuote] = useState(false);
@@ -121,7 +122,7 @@ const Quotes = () => {
           {singleQuote &&
             singleQuote.map((quote, index) => {
               return (
-                <QuoteList
+                <SingleQuoteList
                   key={index}
                   quote={quote}
                   index={index}

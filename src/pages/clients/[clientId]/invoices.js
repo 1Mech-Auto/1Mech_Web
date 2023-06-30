@@ -8,6 +8,7 @@ import { HiOutlinePencil } from "react-icons/hi";
 import { BsTrash } from "react-icons/bs";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { TiCancel } from "react-icons/ti";
+import SingleInvoiceList from "@/components/SingleInvoiceList";
 
 const Invoices = () => {
   const [invoice, setInvoice] = useState(false);
@@ -79,28 +80,88 @@ const Invoices = () => {
             <span className="hidden sm:block">Create Invoice</span>
           </button>
         </div>
-        <div className="w-full min-h-[9em] bg-white mx-auto text-[#8094ae] text-md pb-4">
-          <section className="flex items-center justify-between pt-6 pb-4 text-xs font-bold">
-            <p>#</p>
-            <p>Project</p>
-            <p>Items</p>
-            <p>Date/Due</p>
-            <p>Total / Balance</p>
-            <p>Status</p>
-          </section>
-          <hr className="mb-3" />
-          {singleInvoice &&
-            singleInvoice.map((invoice, index) => {
-              return (
-                <InvoiceList
-                  key={index}
-                  invoice={invoice}
-                  index={index}
-                  handleClick={handleClick}
-                  extraInfo={extraInfo}
-                />
-              );
-            })}
+        <div class="relative min-h-[70vh] overflow-x-auto shadow-md sm:rounded-lg border-t">
+          <table class="w-full text-sm text-left text-black">
+            <thead class="text-xs text-[#8094ae] capitalize border-b">
+              <tr>
+                <th scope="col" class="px-4 py-3">
+                  #
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Project
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Items
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Date / Due
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Total / Balance
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Status
+                </th>
+                <th scope="col" class="px-6 py-3"></th>
+              </tr>
+            </thead>
+            {singleInvoice &&
+              singleInvoice?.length >= 1 &&
+              singleInvoice.map((invoice, index) => {
+                return (
+                  <SingleInvoiceList
+                    key={index}
+                    invoice={invoice}
+                    index={index}
+                    handleClick={handleClick}
+                    extraInfo={extraInfo}
+                  />
+                );
+              })}
+            {/* <tbody>
+              <tr class="bg-white border-b hover:bg-gray-50">
+                <td class="px-4 py-3">
+                  <div className="flex items-center">1</div>
+                </td>
+                <th
+                  scope="row"
+                  class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                >
+                  <div>
+                    <h3 className="font-medium text-black">RENAULT ZOOM</h3>
+                    <p className="text-[#8094ae] text-xs">u7687o89</p>
+                  </div>
+                </th>
+                <td class="px-6 py-4">2</td>
+                <td class="px-6 py-4 text-[#8094ae] text-[13px]">
+                  <div>May 25, 2023</div>
+                  <div>May 25, 2023</div>
+                </td>
+                <td class="px-6 py-4 text-[#8094ae] text-[13px]">
+                  <div className="text-black">KSh120.00</div>
+                  <div>KSh120.00</div>
+                </td>
+                <td class="px-6 py-4">
+                  <div className="font-medium bg-[#1ee0ac26] text-[#1ee0ac] py-1.5 px-4 text-center text-xs rounded-xl">
+                    Paid
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-lg cursor-pointer">
+                  <BsThreeDots onClick={() => setShow(!show)} />
+                  {show && (
+                    <MoreButton
+                      href={"clients/:99/details"}
+                      extraInfo={extraInfo}
+                      handleClick={handleClick}
+                    />
+                  )}
+                </td>
+              </tr>
+            </tbody> */}
+          </table>
+          {singleInvoice?.length < 1 && (
+            <p className="text-xs text-center mt-5">It`s empty here!</p>
+          )}
         </div>
       </div>
     </DetailsPage>

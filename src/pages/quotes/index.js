@@ -125,7 +125,20 @@ const Quotes = () => {
                 <th scope="col" class="px-6 py-3"></th>
               </tr>
             </thead>
-            <tbody>
+            {quoteList &&
+              quoteList?.length >= 1 &&
+              quoteList.map((quote, index) => {
+                return (
+                  <QuoteList
+                    key={index}
+                    quote={quote}
+                    index={index}
+                    handleClick={handleClick}
+                    extraInfo={extraInfo}
+                  />
+                );
+              })}
+            {/* <tbody>
               <tr class="bg-white border-b hover:bg-gray-50">
                 <td class="px-4 py-3">
                   <div className="flex items-center">1</div>
@@ -166,7 +179,7 @@ const Quotes = () => {
                   )}
                 </td>
               </tr>
-            </tbody>
+            </tbody> */}
           </table>
         </div>
       </div>

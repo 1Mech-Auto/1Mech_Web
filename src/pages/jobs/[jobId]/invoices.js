@@ -13,6 +13,7 @@ import { TiCancel } from "react-icons/ti";
 import { useFormContext } from "@/context/form_context";
 import InvoiceList from "@/components/InvoiceList";
 import MoreButton from "@/components/MoreButton";
+import SingleInvoiceList from "@/components/SingleInvoiceList";
 
 const Invoices = () => {
   const [invoice, setInvoice] = useState(false);
@@ -82,76 +83,6 @@ const Invoices = () => {
       )}
 
       <div className="px-6 pb-4">
-        {/* <div className="flex items-center justify-between">
-          <div className="py-6 md:col-span-2">
-            <h3 className="text-lg sm:text-xl font-semibold">
-              Project Invoices
-            </h3>
-            <p className="text-xs sm:text-sm text-[#526484]">
-              A list of invoices for TOYOTA Camry - KSF-178-HX project.
-            </p>
-          </div>
-          <div className="grid sm:flex items-center gap-2">
-            <button
-              className="flex items-center gap-2 hover:bg-[#0971fe] hover:text-white border border-[#9dc6ff] bg-[#e4efff] text-[#0971fe] py-2 px-4 rounded-md text-sm cursor-pointer font-bold relative"
-              onClick={() => setShow(!show)}
-            >
-              <RiArrowLeftRightFill />
-              <span>Import From</span>
-              {show && (
-                <div className="absolute py-6 shadow-lg sm:grid hidden gap-4 bg-white rounded-md text-lg font-medium top-[2.4rem] -left-7 z-10">
-                  <div
-                    className="flex items-center gap-2 px-4 cursor-pointer text-[#364a63]"
-                    onClick={() => setWorkRequested(true)}
-                  >
-                    <BiTask />
-                    <p className="text-[0.76rem]">Work Requested</p>
-                  </div>
-                  <div
-                    className="flex items-center px-4 gap-2 cursor-pointer text-[#364a63]"
-                    onClick={() => setJobImport(true)}
-                  >
-                    <BsFileMedical />
-                    <p className="text-[0.76rem]">Approved Jobcard</p>
-                  </div>
-                </div>
-              )}
-            </button>
-            <button
-              className="flex items-center gap-2 bg-[#0971fe] py-2 px-4 rounded-md text-sm text-white cursor-pointer font-bold"
-              onClick={() => setInvoice(true)}
-            >
-              <BiPlus />
-              <span>Create Invoice</span>
-            </button>
-          </div>
-        </div> */}
-        {/* <div className="w-full min-h-[9em] bg-white mx-auto text-[#8094ae] text-md pb-4">
-          <section className="flex items-center justify-between pt-6 pb-4 text-xs font-bold">
-            <p>#</p>
-            <p>Project / Assigned To</p>
-            <p>Title</p>
-            <p>Due Date</p>
-            <p>Cost</p>
-            <p>Status</p>
-          </section>
-          <hr className="mb-3" />
-          {singleInvoice && singleInvoice?.length >= 1 ? (
-            singleInvoice.map((invoice, index) => {
-              return (
-                <InvoiceList
-                  key={index}
-                  invoice={invoice}
-                  index={index}
-                  handleClick={handleClick}
-                  extraInfo={extraInfo}
-                />
-              );
-            })
-          ) : (
-            <p className="text-xs text-center">It`s empty here!</p>
-          )}
-        </div> */}
         <div className="flex items-center justify-between">
           <div className="py-6 md:col-span-2">
             <h3 className="text-lg sm:text-xl font-semibold">
@@ -209,7 +140,22 @@ const Invoices = () => {
                 <th scope="col" class="px-6 py-3"></th>
               </tr>
             </thead>
-            <tbody>
+            {singleInvoice && singleInvoice?.length >= 1 ? (
+              singleInvoice.map((invoice, index) => {
+                return (
+                  <SingleInvoiceList
+                    key={index}
+                    invoice={invoice}
+                    index={index}
+                    handleClick={handleClick}
+                    extraInfo={extraInfo}
+                  />
+                );
+              })
+            ) : (
+              <p className="text-xs text-center">It`s empty here!</p>
+            )}
+            {/* <tbody>
               <tr class="bg-white border-b hover:bg-gray-50">
                 <td class="px-4 py-3">
                   <div className="flex items-center">1</div>
@@ -248,7 +194,7 @@ const Invoices = () => {
                   )}
                 </td>
               </tr>
-            </tbody>
+            </tbody> */}
           </table>
         </div>
       </div>
