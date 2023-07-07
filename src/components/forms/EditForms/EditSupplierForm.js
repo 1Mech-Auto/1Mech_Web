@@ -18,7 +18,7 @@ const EditSuppliersForm = ({ open, setOpen, supplier }) => {
     editSupplier,
   } = useFormContext();
   const onSubmit = async (values, actions) => {
-    editSupplier(supplier.id);
+    editSupplier(supplier?.id);
     setSuccess(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
@@ -209,7 +209,7 @@ const EditSuppliersForm = ({ open, setOpen, supplier }) => {
                         }`}
                       >
                         <MdTaskAlt />
-                        <p className="text-xs">Add Supplier</p>
+                        <p className="text-xs">Save Changes</p>
                       </button>
                     </div>
                   </form>

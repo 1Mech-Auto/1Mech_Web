@@ -537,7 +537,7 @@ export const FormProvider = ({ children }) => {
         },
         body: JSON.stringify({
           supplierId: id,
-          supplierForm: state.editSupplierForm,
+          supplierForm: state.supplierForm,
         }),
       });
 
