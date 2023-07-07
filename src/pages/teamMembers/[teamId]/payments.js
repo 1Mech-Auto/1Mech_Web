@@ -86,7 +86,7 @@ const Payments = () => {
             {singleTeam?.payment?.length >= 1 &&
               singleTeam?.payment?.map((payment, index) => {
                 return (
-                  <tbody key={index}>
+                  <tbody key={payment?.id}>
                     <tr class="bg-white border-b hover:bg-gray-50">
                       <td class="px-6 py-3">
                         <div className="flex items-center">{index + 1}</div>

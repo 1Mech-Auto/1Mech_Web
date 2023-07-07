@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, use, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { MdOutlineCancel, MdTaskAlt } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
@@ -9,10 +9,25 @@ import { useFormik } from "formik";
 import { newInvoiceSchema } from "@/schemas";
 import ValidateForm from "../ValidateForm";
 import SuccessPrompt from "../SuccessPrompt";
+import NewInvoiceInputs from "./NewInvoiceInputs";
 
 const NewInvoiceForm = ({ invoice, setInvoice }) => {
   const cancelButtonRef = useRef(null);
   const [success, setSuccess] = useState(false);
+  const [inputArray, setInputArray] = useState([{ id: 1 }]);
+  const [taxRate, setTaxRate] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [totals, setTotals] = useState(0);
+
+  const addInput = () => {
+    const newArray = { id: Date.now() };
+    setInputArray([...inputArray, newArray]);
+  };
+  // const calcTotal = () => {
+  //   let total;
+  //   total = quantity * unitCost;
+  //   if (tax) setTotalAmount(total);
+  // };
   const {
     invoiceForm: {
       job,
@@ -133,7 +148,18 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                       )}
                     </div>
                     <hr />
-                    <section className="grid grid-cols-[40%,5%,15%,15%,15%] gap-4">
+                    {inputArray.length >= 1 &&
+                      inputArray.map((input, i) => {
+                        return (
+                          <NewInvoiceInputs
+                            input={input}
+                            key={i + 4}
+                            setInputArray={setInputArray}
+                            inputArray={inputArray}
+                          />
+                        );
+                      })}
+                    {/* <section className="grid grid-cols-[40%,5%,15%,15%,15%] gap-4">
                       <div className="text-sm grid gap-2 relative">
                         <label>Item Description</label>
                         <input
@@ -212,9 +238,12 @@ const NewInvoiceForm = ({ invoice, setInvoice }) => {
                           placeholder="0.00"
                         />
                       </div>
-                    </section>
+                    </section> */}
                     <section className="flex items-center justify-between gap-4">
-                      <button className="flex items-center gap-2 bg-blue-300 hover:bg-blue-500 p-2.5 rounded-md text-sm text-blue-500 hover:text-white cursor-pointer font-bold">
+                      <button
+                        onClick={() => addInput()}
+                        className="flex items-center gap-2 bg-blue-300 hover:bg-blue-500 p-2.5 rounded-md text-sm text-blue-500 hover:text-white cursor-pointer font-bold"
+                      >
                         <BiPlus />
                         <span>Add Item</span>
                       </button>

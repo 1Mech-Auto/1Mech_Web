@@ -48,7 +48,7 @@ const JobDetails = ({ children }) => {
   if (loading) {
     return (
       <main className="text-center text-2xl mx-auto">
-        <Loading/>
+        <Loading />
       </main>
     );
   }
@@ -174,7 +174,7 @@ const JobDetails = ({ children }) => {
           {moreInfo && (
             <div className="flex items-center gap-4 relative">
               <Link
-                href={"/clients"}
+                href={"/jobs"}
                 className="flex sm:hidden items-center gap-2 bg-white py-2 px-4 border rounded-sm text-sm text-[#364a63] cursor-pointer font-bold ml-auto"
               >
                 <BsArrowLeft />

@@ -66,7 +66,7 @@ const Insurance = () => {
 
   useEffect(() => {
     fetchInsurance();
-    fetchSingleInsurance(1000);
+    fetchSingleInsurance("1000");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -146,7 +146,7 @@ const Insurance = () => {
             <div className="hidden md:block">Status</div>
             <div></div>
           </main>
-          <div className="font-medium text-[#364a63] text-sm grid grid-cols-[4%,50%,35%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[3%,25%,20%,14%,6%,12%,10%,4%] items-center p-2.5 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
+          {/* <div className="font-medium text-[#364a63] text-sm grid grid-cols-[4%,50%,35%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[3%,25%,20%,14%,6%,12%,10%,4%] items-center p-2.5 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
             <div>1</div>
             <div className="flex items-center gap-2">
               <p className="p-2.5 bg-blue-500 rounded-full text-white">ME</p>
@@ -182,12 +182,12 @@ const Insurance = () => {
                 />
               )}
             </div>
-          </div>
+          </div> */}
           {insuranceList &&
             insuranceList.map((insurance, index) => {
               return (
                 <InsuranceList
-                  key={index}
+                  key={insurance?.id}
                   insurance={insurance}
                   index={index}
                   handleClick={handleClick}

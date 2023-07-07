@@ -4,14 +4,15 @@ export const paymentsList = [
     paymentsForm: {
       job: {
         id: 1,
-        make: "Toyota",
-        regNo: "23DHDH56",
+        make: "Lexus",
+        regNo: "ksf15626j",
       },
       client: {
         id: 100,
         fullName: "Dara olu",
         phone: "08086923111",
       },
+      insuranceCovered: "1000",
       amount: "50,000",
       paymentDate: "May 22,2013",
       paymentMethod: "Cash",
@@ -31,6 +32,7 @@ export const paymentsList = [
         fullName: "Fope Olu",
         phone: "09186923111",
       },
+      insuranceCovered: "",
       amount: "100,000",
       paymentDate: "March 22,2013",
       paymentMethod: "Cash",

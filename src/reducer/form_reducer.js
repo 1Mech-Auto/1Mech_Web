@@ -58,6 +58,11 @@ import {
   ADD_TO_PAYMENTLIST,
   ADD_TO_QUOTELIST,
   UPDATE_PROJECT_JOBCARD,
+  ADD_TO_SUPPLIERLIST,
+  EDIT_SUPPLIER_DETAILS,
+  EDIT_SUPPLIER_FORM,
+  FILL_SUPPLIER_FORM,
+  CLEAR_SUPPLIER_DATA,
 } from "@/action";
 import { parse } from "postcss";
 const date = new Date();
@@ -72,6 +77,13 @@ const dateConvert = (date) => {
 };
 
 const form_reducer = (state, action) => {
+  if (action.type === ADD_TO_SUPPLIERLIST) {
+    return {
+      ...state,
+      supplierList: action.payload,
+      client_loading: false,
+    };
+  }
   if (action.type === UPDATE_PROJECT_JOBCARD) {
     const value = state.singleJob.id;
     console.log(value);
@@ -543,22 +555,53 @@ const form_reducer = (state, action) => {
       supplierForm: { ...state.supplierForm, [name]: value },
     };
   }
-  if (action.type === ADD_NEW_SUPPLIER) {
-    const { supplierName, phone, email, address, vat } = state.supplierForm;
-
-    let addSupplier = {};
-    if (supplierName && phone && email && address && vat) {
-      addSupplier = {
-        supplierName,
-        phone,
-        email,
-        address,
-        vat,
-      };
-    }
+  if (action.type === EDIT_SUPPLIER_FORM) {
+    const { name, value } = action.payload;
     return {
       ...state,
-      supplierList: [...state.supplierList, addSupplier],
+      editSupplierForm: { ...state.editSupplierForm, [name]: value },
+    };
+  }
+  if (action.type === ADD_NEW_SUPPLIER) {
+    // const { supplierName, phone, email, address, vat } = state.supplierForm;
+    return {
+      ...state,
+      supplierList: [...state.supplierList, action.payload],
+      supplierForm: {
+        ...state.supplierForm,
+        supplierName: "",
+        phone: "",
+        email: "",
+        address: "",
+        vat: "",
+      },
+    };
+  }
+  if (action.type === EDIT_SUPPLIER_DETAILS) {
+    // const { supplierName, phone, email, address, vat } = state.supplierForm;
+    return {
+      ...state,
+      supplierList: action.payload,
+      supplierForm: {
+        ...state.supplierForm,
+        supplierName: "",
+        phone: "",
+        email: "",
+        address: "",
+        vat: "",
+      },
+    };
+  }
+  if (action.type === FILL_SUPPLIER_FORM) {
+    const newSupplierForm = action.payload.supplierForm;
+    return {
+      ...state,
+      supplierForm: newSupplierForm,
+    };
+  }
+  if (action.type === CLEAR_SUPPLIER_DATA) {
+    return {
+      ...state,
       supplierForm: {
         ...state.supplierForm,
         supplierName: "",

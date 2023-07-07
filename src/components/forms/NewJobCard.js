@@ -118,7 +118,7 @@ const NewJobCard = ({ jobCard, setJobCard, selectOptions, projectName }) => {
                             const { make, regNo } = job.jobForm;
                             const id = parseInt(job?.id, 10);
                             return (
-                              <option value={id} key={index}>
+                              <option value={id} key={job?.id}>
                                 {make} - {regNo}
                               </option>
                             );

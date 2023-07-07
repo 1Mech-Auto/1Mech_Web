@@ -144,7 +144,7 @@ const Layout = ({ children }) => {
               <div className="text-md font-bold">Clients</div>
             </Link>
             {menuItems?.map((menu, index) => (
-              <div key={index} className="flex flex-col gap-1">
+              <div key={index + 1} className="flex flex-col gap-1">
                 <MenuItems data={menu} />
               </div>
             ))}

@@ -1,6 +1,6 @@
 export const insuranceList = [
   {
-    id: 1000,
+    id: "1000",
     company: {
       fullName: "centralcee Insurance Company",
       phone: "08086923111",
@@ -11,7 +11,7 @@ export const insuranceList = [
     balance: "",
   },
   {
-    id: 2000,
+    id: "2000",
     company: {
       fullName: "Jubilee Insurance Company",
       phone: "09186923111",
@@ -19,6 +19,6 @@ export const insuranceList = [
       address: "14 fabyo street",
     },
     date: "may 2,2023",
-    balance: 290000,
+    balance: "290000",
   },
 ];

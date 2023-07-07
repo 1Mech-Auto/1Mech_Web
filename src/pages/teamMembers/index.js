@@ -167,7 +167,7 @@ const TeamMembers = () => {
             teamList.map((team, index) => {
               return (
                 <TeamList
-                  key={index}
+                  key={team?.id}
                   team={team}
                   index={index}
                   handleClick={handleClick}

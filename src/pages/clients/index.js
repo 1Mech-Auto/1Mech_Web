@@ -206,7 +206,7 @@ const Clients = () => {
             clientList.map((clients, index) => {
               return (
                 <Client
-                  key={index}
+                  key={clients?.id}
                   clients={clients}
                   index={index}
                   handleClick={handleClick}

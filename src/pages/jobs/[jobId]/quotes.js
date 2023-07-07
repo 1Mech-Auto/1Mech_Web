@@ -168,7 +168,7 @@ const Quotes = () => {
             singleQuote.map((quote, index) => {
               return (
                 <SingleQuoteList
-                  key={index}
+                  key={quote?.id}
                   quote={quote}
                   index={index}
                   handleClick={handleClick}

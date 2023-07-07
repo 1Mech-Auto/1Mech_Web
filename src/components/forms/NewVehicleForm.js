@@ -18,6 +18,7 @@ import SuccessPrompt from "../SuccessPrompt";
 const Form1 = ({ handleChangeNext }) => {
   const [clicked, setClicked] = useState(false);
   const [clientHolder, setClientHolder] = useState("");
+  let id = "";
   const {
     newVehicleForm: { toggle1, toggle2 },
     projectForm: {
@@ -50,6 +51,7 @@ const Form1 = ({ handleChangeNext }) => {
     clientList,
     handleSelectClient,
     projectForm,
+    insuranceList,
   } = useFormContext();
 
   // validationSchema for file1
@@ -69,6 +71,8 @@ const Form1 = ({ handleChangeNext }) => {
     model: yup.string().required("This field is required"),
     engNo: yup.string().required("This field is required"),
     insurance: yup.string().required("This field is required"),
+    insuranceCovered:
+      toggle2 && yup.string().required("This field is required"),
   });
 
   const onSubmit = async (values) => {
@@ -92,6 +96,7 @@ const Form1 = ({ handleChangeNext }) => {
       model: model,
       insurance: insurance,
       engNo: engNo,
+      insuranceCovered: id,
     },
     validationSchema: newVehicleSchema,
     onSubmit,
@@ -134,7 +139,7 @@ const Form1 = ({ handleChangeNext }) => {
                         gender: gender,
                       })}
                       className="h-4 p-5"
-                      key={i}
+                      key={id}
                     >
                       {names} - {phone}
                     </option>
@@ -142,6 +147,7 @@ const Form1 = ({ handleChangeNext }) => {
                 })}
             </optgroup>
           </select>
+
           {errors.client && touched.client && (
             <VehicleRequiredPrompt message={errors.client} />
           )}
@@ -398,18 +404,37 @@ const Form1 = ({ handleChangeNext }) => {
           onChange={(newEnabled) => newVehicleData("toggle2", newEnabled)}
         />
         {toggle2 && (
-          <div className="text-sm grid gap-2">
+          <div className="text-sm grid gap-2 relative">
             <label>Insurance Company</label>
             <select
               name="insuranceCovered"
-              onChange={newProjectForm}
-              value={insuranceCovered}
+              // onChange={newProjectForm}
+              value={values.insuranceCovered}
+              onChange={(e) => {
+                handleChange(e);
+                newProjectForm(e);
+              }}
+              onBlur={handleBlur}
               className="outline-none border text-[#8094ae] rounded-md py-2 px-2 font-medium capitalize"
               // value={user}
             >
               <option>Select Insurance Company</option>
-              <option>All clients</option>
+              {insuranceList &&
+                insuranceList.map((insurance, i) => {
+                  const { fullName, phone } = insurance?.company;
+                  id = insurance.id;
+                  return (
+                    <option value={id} className="h-4 p-5" key={id}>
+                      {fullName} - {phone}
+                    </option>
+                  );
+                })}
+              {/* <option>All clients</option> */}
             </select>
+
+            {errors.insuranceCovered && touched.insuranceCovered && (
+              <VehicleRequiredPrompt message={errors.insuranceCovered} />
+            )}
           </div>
         )}
       </div>

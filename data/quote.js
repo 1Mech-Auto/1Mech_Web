@@ -4,14 +4,15 @@ export const quoteList = [
     quoteForm: {
       job: {
         id: 1,
-        make: "Toyota",
-        regNo: "23DHDH56",
+        make: "Lexus",
+        regNo: "ksf15626j",
       },
       client: {
         id: 100,
         fullName: "Dara Olu",
         phone: "08086923111",
       },
+      insuranceCovered: "1000",
       itemDesc: "windscreen",
       quantity: "1",
       unitCost: "100000",
@@ -34,6 +35,7 @@ export const quoteList = [
         fullName: "Fope Olu",
         phone: "09186923111",
       },
+      insuranceCovered: "",
       itemDesc: "windscreen",
       quantity: "1",
       unitCost: "85000",

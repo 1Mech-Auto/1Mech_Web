@@ -46,7 +46,7 @@ const JobCard = () => {
         </div>
         {singleJob?.jobCardList?.length >= 1 ? (
           singleJob?.jobCardList?.map((job, index) => {
-            return <JobCardList key={index} job={job} index={index} />;
+            return <JobCardList key={job?.id} job={job} index={index} />;
           })
         ) : (
           <div className="min-h-[30vh] flex flex-col items-center justify-center gap-2 text-[#8094ae]">

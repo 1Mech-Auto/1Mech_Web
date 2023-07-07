@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../layout/Layout";
 import { BsThreeDots } from "react-icons/bs";
 import { BiPlus } from "react-icons/bi";
@@ -9,26 +9,37 @@ import { HiOutlinePencil } from "react-icons/hi";
 import { TbReportAnalytics } from "react-icons/tb";
 import { BsTrash } from "react-icons/bs";
 import MoreButton from "@/components/MoreButton";
+import Loading from "@/components/Loading";
+import SupplierList from "@/components/SupplierList";
 
 const Suppliers = () => {
   const [open, setOpen] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
   const [show, setShow] = useState(false);
-  const { supplierList } = useFormContext();
-  const extraInfo = [
-    { name: "Edit Details", icon: <HiOutlinePencil /> },
-    {
-      name: "View Report",
-      icon: <TbReportAnalytics />,
-    },
-    { name: "Delete Supplier", icon: <BsTrash />},
-  ];
-   const handleClick = (index) => {
-     // Perform different setState functions based on index
-     if (index === 0) {
-       setOpen(true);
-     }
-   };
+  const {
+    fetchSuppliers,
+    clearSupplierForm,
+    supplierList,
+    client_loading: loading,
+  } = useFormContext();
+
+  const handleClick = () => {
+    clearSupplierForm();
+    setOpen(true);
+  };
+
+  useEffect(() => {
+    fetchSuppliers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="text-center text-2xl mx-auto">
+        <Loading />
+      </main>
+    );
+  }
 
   return (
     <Layout>
@@ -45,7 +56,7 @@ const Suppliers = () => {
         </div>
         <button
           className="sm:flex hidden items-center gap-2 bg-blue-500 p-2.5 rounded-md text-sm text-white cursor-pointer font-bold ml-auto"
-          onClick={() => setOpen(true)}
+          onClick={() => handleClick()}
         >
           <BiPlus />
           <span>Add Supplier</span>
@@ -100,7 +111,7 @@ const Suppliers = () => {
             <div className="hidden sm:block">Owed</div>
             <div></div>
           </main>
-          <div className="font-normal text-[#364a63] text-sm grid grid-cols-[6%,50%,30%,6%] lg:grid-cols-[3%,25%,25%,15%,9%,12%,4%] items-center p-2.5 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
+          {/* <div className="font-normal text-[#364a63] text-sm grid grid-cols-[6%,50%,30%,6%] lg:grid-cols-[3%,25%,25%,15%,9%,12%,4%] items-center p-2.5 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple">
             <div>1</div>
             <div className="flex items-center gap-2">
               <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
@@ -130,44 +141,15 @@ const Suppliers = () => {
                 />
               )}
             </div>
-          </div>
+          </div> */}
           {supplierList &&
             supplierList.map((supplier, index) => {
               return (
-                <div
-                  key={index}
-                  className="font-normal text-[#364a63] text-sm grid grid-cols-[6%,50%,30%,6%] lg:grid-cols-[3%,25%,25%,15%,9%,12%,4%] items-center p-2.5 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
-                >
-                  <div>{index + 1}</div>
-                  <div className="flex items-center gap-2">
-                    <p className="p-2.5 bg-blue-500 rounded-full text-white hidden sm:block">
-                      ME
-                    </p>
-                    <div>
-                      <h2 className="font-medium">{supplier.supplierName}</h2>
-                      <p className="text-xs text-[#8094ae]">{supplier.phone}</p>
-                    </div>
-                  </div>
-                  <div className="hidden sm:block text-[#8094ae]">
-                    {supplier.email}
-                  </div>
-                  <div className="text-[#8094ae]">0</div>
-                  <div className="hidden sm:block text-[#8094ae]">0</div>
-                  <div className="hidden sm:block">N0.00</div>
-                  <div>
-                    <BsThreeDots
-                      className="cursor-pointer text-xl"
-                      onClick={() => setShow(!show)}
-                    />
-                    {show && (
-                      <MoreButton
-                        href={""}
-                        extraInfo={extraInfo}
-                        handleClick={handleClick}
-                      />
-                    )}
-                  </div>
-                </div>
+                <SupplierList
+                  key={supplier?.id}
+                  index={index}
+                  supplier={supplier}
+                />
               );
             })}
         </div>

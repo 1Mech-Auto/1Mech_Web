@@ -154,7 +154,7 @@ const Payments = () => {
             paymentsList.map((payment, index) => {
               return (
                 <PaymentList
-                  key={index}
+                  key={payment?.id}
                   payment={payment}
                   index={index}
                   handleClick={handleClick}

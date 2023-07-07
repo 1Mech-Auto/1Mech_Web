@@ -31,7 +31,7 @@ export const jobList = [
       expectedDate: "May 9,2013",
       roadTest: "",
       towingDetails: "",
-      insuranceCovered: "",
+      insuranceCovered: "1000",
       bookNotes: "",
       accident: "",
       workRequest: "",

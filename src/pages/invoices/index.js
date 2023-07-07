@@ -162,7 +162,7 @@ const Invoices = () => {
             invoiceList.map((invoice, index) => {
               return (
                 <InvoiceList
-                  key={index}
+                  key={invoice?.id}
                   invoice={invoice}
                   index={index}
                   handleClick={handleClick}

@@ -145,7 +145,7 @@ const InventoryList = () => {
             inventoryList.map((inventory, index) => {
               return (
                 <div
-                  key={index}
+                  key={index + 5}
                   className="font-medium text-[#364a63] text-sm grid grid-cols-[3em,8em,10em,7em,8em,8em,3em] md:grid-cols-[3em,8em,10em,7em,5em,8em,3em] lg:grid-cols-[3%,20%,20%,17%,12%,15%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
                 >
                   <div>{index + 1}</div>

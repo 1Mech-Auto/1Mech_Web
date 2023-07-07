@@ -34,7 +34,7 @@ const DetailsPage = ({ children }) => {
   const id = query.insuranceId;
 
   useEffect(() => {
-    fetchSingleInsurance(id);
+    fetchSingleInsurance(`${id}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -49,11 +49,11 @@ const DetailsPage = ({ children }) => {
       <section className="flex justify-between mb-6 px-6 sm:px-0">
         <div className="mb-6">
           <h1 className="text-2xl lg:text-[1.75rem] font-bold text-[#364a63]">
-            Insurance / Placeholder
+            Insurance / {singleInsurance?.company?.fullName}
           </h1>
           <div className="text-sm text-[#8094ae] mt-2 flex gap-4 ">
-            <p>Insurance ID: {singleInsurance.id}</p>
-            <p> Created On: {singleInsurance.date} 10:13am</p>
+            <p>Insurance ID: {singleInsurance?.id}</p>
+            <p> Created On: {singleInsurance?.date} 10:13am</p>
           </div>
         </div>
         <div className="flex items-center gap-4 relative">

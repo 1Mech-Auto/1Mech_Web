@@ -16,7 +16,7 @@ export default function TeamList({ team, index, handleClick, extraInfo }) {
   };
   return (
     <div
-      key={index}
+      // key={index}
       className="font-normal text-[#364a63] text-sm grid grid-cols-[6%,40%,22%,22%,5%] gap-2 md:grid-cols-[3em,15em,8em,8em,7em,9em,7em,3em] lg:grid-cols-[3%,25%,12%,12%,10%,15%,10%,4%] items-center p-2.5 border border-transparent border-b-gray-200 hover:shadow-hoverPurple"
     >
       <div>{index + 1}</div>

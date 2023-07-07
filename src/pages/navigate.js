@@ -8,25 +8,25 @@ import vaultImg from "../../public/vault.svg";
 import wifiImg from "../../public/wifi.svg";
 
 export default function Home() {
-  useEffect(() => {
-    const axios = require("axios");
+  // useEffect(() => {
+  //   const axios = require("axios");
 
-    const config = {
-      method: "get",
-      url: "https://api.vehicledatabases.com/vehicle-history/{vin}",
-      headers: {
-        "x-AuthKey": "{X-AUTHKEY}",
-      },
-    };
+  //   const config = {
+  //     method: "get",
+  //     url: "https://api.vehicledatabases.com/vehicle-history/{vin}",
+  //     headers: {
+  //       "x-AuthKey": "{X-AUTHKEY}",
+  //     },
+  //   };
 
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
+  //   axios(config)
+  //     .then(function (response) {
+  //       console.log(JSON.stringify(response.data));
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }, []);
   return (
     <main className="h-full relative">
       <div className="min-h-[5em]">

@@ -110,7 +110,7 @@ const Invoices = () => {
               singleInvoice.map((invoice, index) => {
                 return (
                   <SingleInvoiceList
-                    key={index}
+                    key={invoice?.id}
                     invoice={invoice}
                     index={index}
                     handleClick={handleClick}

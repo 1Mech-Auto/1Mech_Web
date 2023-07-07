@@ -140,21 +140,19 @@ const Invoices = () => {
                 <th scope="col" class="px-6 py-3"></th>
               </tr>
             </thead>
-            {singleInvoice && singleInvoice?.length >= 1 ? (
+            {singleInvoice &&
+              singleInvoice?.length >= 1 &&
               singleInvoice.map((invoice, index) => {
                 return (
                   <SingleInvoiceList
-                    key={index}
+                    key={invoice?.id}
                     invoice={invoice}
                     index={index}
                     handleClick={handleClick}
                     extraInfo={extraInfo}
                   />
                 );
-              })
-            ) : (
-              <p className="text-xs text-center">It`s empty here!</p>
-            )}
+              })}
             {/* <tbody>
               <tr class="bg-white border-b hover:bg-gray-50">
                 <td class="px-4 py-3">

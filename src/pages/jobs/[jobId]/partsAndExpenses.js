@@ -183,7 +183,7 @@ const PartsAndExpenses = () => {
               {singleJob?.expenses?.length >= 1 &&
                 singleJob?.expenses?.map((expense, index) => {
                   return (
-                    <tbody key={index}>
+                    <tbody key={index + 6}>
                       <tr class="bg-white border-b hover:bg-gray-50">
                         <td class="px-4 py-3">
                           <div className="flex items-center">1</div>

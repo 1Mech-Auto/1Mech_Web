@@ -94,7 +94,7 @@ const Details = () => {
             singleClient?.notesList?.map((note, index) => {
               return (
                 <div
-                  key={index}
+                  key={note.id}
                   className="h-12 mb-4 grid items-center pl-4 bg-gray-50"
                 >
                   {note.note}

@@ -130,7 +130,7 @@ const Quotes = () => {
               quoteList.map((quote, index) => {
                 return (
                   <QuoteList
-                    key={index}
+                    key={quote?.id}
                     quote={quote}
                     index={index}
                     handleClick={handleClick}

@@ -60,6 +60,10 @@ import {
   ADD_TO_PAYMENTLIST,
   ADD_TO_QUOTELIST,
   UPDATE_PROJECT_JOBCARD,
+  ADD_TO_SUPPLIERLIST,
+  EDIT_SUPPLIER_DETAILS,
+  FILL_SUPPLIER_FORM,
+  CLEAR_SUPPLIER_DATA,
 } from "@/action";
 const initialState = {
   // showModal1: true,
@@ -348,6 +352,16 @@ export const FormProvider = ({ children }) => {
       console.log(err);
     }
   };
+  const fetchSuppliers = async () => {
+    dispatch({ type: ADD_CLIENT_BEGIN });
+    try {
+      const res = await fetch("api/supplier");
+      const data = await res.json();
+      dispatch({ type: ADD_TO_SUPPLIERLIST, payload: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const fetchJobs = async () => {
     try {
       const res = await fetch("api/jobs");
@@ -497,6 +511,44 @@ export const FormProvider = ({ children }) => {
       console.log(err);
     }
   };
+  const addNewSupplier = async () => {
+    try {
+      const response = await fetch("/api/supplier", {
+        method: "POST",
+        body: JSON.stringify({ supplierForm: state.supplierForm }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      dispatch({ type: ADD_NEW_SUPPLIER, payload: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const editSupplier = async (id) => {
+    try {
+      const response = await fetch("/api/supplier/editDetails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          supplierId: id,
+          supplierForm: state.editSupplierForm,
+        }),
+      });
+
+      const data = await response.json();
+      dispatch({ type: EDIT_SUPPLIER_DETAILS, payload: data });
+      console.log(data);
+    } catch (error) {
+      console.error("Error adding note:", error);
+    }
+  };
+
   //end of posting data to api
 
   const handleSelectClient = (e) => {
@@ -528,6 +580,10 @@ export const FormProvider = ({ children }) => {
     const name = e.target.name;
     const value = e.target.value;
     dispatch({ type: NEW_PROJECT_FORM, payload: { name, value } });
+  };
+  const fillSupplierForm = (supplier) => {
+    dispatch({ type: FILL_SUPPLIER_FORM, payload: supplier });
+    console.log(supplier);
   };
 
   const newInsuranceData = (e) => {
@@ -575,9 +631,10 @@ export const FormProvider = ({ children }) => {
     const value = e.target.value;
     dispatch({ type: NEW_SUPPLIER_FORM, payload: { name, value } });
   };
-  const addNewSupplier = () => {
-    dispatch({ type: ADD_NEW_SUPPLIER });
+  const clearSupplierForm = () => {
+    dispatch({ type: CLEAR_SUPPLIER_DATA });
   };
+
   const newTeamMemberData = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -673,15 +730,21 @@ export const FormProvider = ({ children }) => {
   // functions to load when pages start
   useEffect(() => {
     fetchInvoice();
+    fetchInsurance();
     fetchPayment();
     fetchClients();
     fetchJobs();
     fetchQuote();
+    fetchSuppliers();
   }, []);
   return (
     <FormContext.Provider
       value={{
         ...state,
+        fetchSuppliers,
+        editSupplier,
+        fillSupplierForm,
+        clearSupplierForm,
         fetchClients,
         updateProjectJobCard,
         fetchQuote,

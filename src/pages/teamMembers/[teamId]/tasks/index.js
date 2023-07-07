@@ -104,7 +104,7 @@ const Tasks = () => {
               singleTaskList.map((task, index) => {
                 return (
                   <TaskList
-                    key={index}
+                    key={task?.id}
                     extraInfo={extraInfo}
                     handleClick={handleClick}
                     task={task}

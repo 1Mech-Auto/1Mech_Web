@@ -192,7 +192,7 @@ const Jobs = () => {
             jobList.map((jobs, index) => {
               return (
                 <JobsList
-                  key={index}
+                  key={jobs?.id}
                   jobs={jobs}
                   index={index}
                   handleClick={handleClick}

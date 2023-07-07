@@ -19,7 +19,7 @@ export default function SingleQuoteList({
   };
   return (
     <div
-      key={index}
+      // key={index}
       className="font-medium text-[#364a63] text-sm grid grid-cols-[7%,75%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[4%,22%,17%,10%,15%,20%,5%] items-center p-2.5 py-4 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
     >
       <div>{index + 1}</div>

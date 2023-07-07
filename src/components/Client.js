@@ -17,7 +17,7 @@ export default function Client({ clients, index, handleClick, extraInfo }) {
 
   return (
     <div
-      key={index}
+      // key={index + 2}
       className="font-medium min-w-full text-[#364a63] text-sm grid grid-cols-[4%,50%,35%,5%] md:grid-cols-[3em,15em,14em,9em,6em,9em,8em,3em] lg:grid-cols-[3%,25%,23%,12%,5%,12%,10%,4%] items-center p-2.5 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
     >
       <div>{index + 1}</div>

@@ -37,7 +37,7 @@ const MenuItems = ({ data }) => {
         className="pl-[4.5em] overflow-hidden grid gap-2"
       >
         {data.subMenus?.map((menu) => (
-          <li key={menu}>
+          <li key={menu.name}>
             <Link
               href={menu.href}
               className={`${router.pathname === menu.href && "text-blue-500"}

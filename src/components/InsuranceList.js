@@ -22,7 +22,7 @@ export default function InsuranceList({
 
   return (
     <div
-      key={index}
+      // key={index}
       className="font-medium text-[#364a63] text-sm grid grid-cols-[4%,50%,35%,5%] md:grid-cols-[3em,15em,14em,9em,7em,9em,8em,3em] lg:grid-cols-[3%,25%,20%,14%,6%,12%,10%,4%] items-center p-2.5 border border-transparent border-b-gray-200 gap-2 hover:shadow-hoverPurple"
     >
       <div>{index + 1}</div>
